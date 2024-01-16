@@ -114,7 +114,7 @@ public class BookingView extends JFrame {
 		String[] orarioDisponibile = new String[11];
 		for (int i = 0; i < 11; i++) {
 			int ora = 8 + i;
-			orarioDisponibile[i] = String.format("%02d:00", ora); // Formatta l'ora come "HH:00"
+			orarioDisponibile[i] = String.format("%02d:00", ora); // Formatto l'ora come "HH:00"
 		}
 		return orarioDisponibile;
 	}
