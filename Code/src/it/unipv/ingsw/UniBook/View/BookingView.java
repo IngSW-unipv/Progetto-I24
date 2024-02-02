@@ -2,17 +2,16 @@ package it.unipv.ingsw.UniBook.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import com.toedter.calendar.JDateChooser;
-
 import it.unipv.ingsw.UniBook.Controller.BookingController;
-
+import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import com.toedter.calendar.JDateChooser;
 
 public class BookingView extends JFrame {
 
+	private BookingController controller;
+	
 	private JDateChooser dateChooser;
 
 	private JComboBox<String> oraComboBox;
@@ -23,7 +22,15 @@ public class BookingView extends JFrame {
 
 	private JButton confermaButton;
 
+	private JButton storicoButton; // Nuovo pulsante
+	private JButton cancellaButton;
+
 	public BookingView() {
+		//controller = new BookingController();
+		
+		this.controller = SingletonManager.getInstance().getBookingController();
+
+		
 		// Impostazioni del frame
 		setTitle("Prenotazione Risorse");
 		setSize(400, 200);
@@ -37,16 +44,26 @@ public class BookingView extends JFrame {
 		dateChooser.setDateFormatString("dd/MM/yyyy");
 
 		JLabel oraLabel = new JLabel("Ora:");
-		oraComboBox = new JComboBox<>(sceltaOrario());
+		oraComboBox = new JComboBox<>(controller.sceltaOrario());
 		oraComboBox.setSelectedIndex(0); // Imposto l'ora predefinita a 8
 
 		JLabel durataLabel = new JLabel("Durata (ore):");
-		durataComboBox = new JComboBox<>(sceltaDurata());
+		durataComboBox = new JComboBox<>(controller.sceltaDurata());
 
 		JLabel risorsaLabel = new JLabel("Risorsa:");
-		risorsaComboBox = new JComboBox<>(sceltaOrario());
-
+		risorsaComboBox = new JComboBox<String>(controller.aggiornaJListRisorse().toArray(new String[0]));
+		/*
+		 toArray(new String[0]) è utilizzata per convertire la lista restituita dal metodo 
+		 in un array di Stringhe, che è il tipo di dati accettato dal costruttore di JComboBox.
+		  */
+		
+		
+		
+		
 		confermaButton = new JButton("Conferma Prenotazione");
+
+		storicoButton = new JButton("Storico Prenotazioni");
+		cancellaButton = new JButton("Cancella Prenotazione");
 
 		Font font = new Font("Arial", Font.PLAIN, 22);
 
@@ -55,16 +72,19 @@ public class BookingView extends JFrame {
 		durataLabel.setFont(font);
 		risorsaLabel.setFont(font);
 		confermaButton.setFont(font);
-		
+		storicoButton.setFont(font);
+		cancellaButton.setFont(font);
+
 		oraComboBox.setFont(font);
 		durataComboBox.setFont(font);
 		risorsaComboBox.setFont(font);
 		dateChooser.setFont(font);
 
-		
-			
 		// Layout del frame
-		setLayout(new GridLayout(5, 2));
+		setLayout(new GridLayout(6, 2));
+		add(storicoButton);
+
+		add(cancellaButton);
 		add(dataLabel);
 		add(dateChooser);
 		add(oraLabel);
@@ -79,12 +99,20 @@ public class BookingView extends JFrame {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize(screenSize.width, screenSize.height);
 		validate();
-		
+
 		setVisible(true);
 	}
 
 	public JButton getConfermaButton() {
 		return confermaButton;
+	}
+
+	public JButton getStoricoButton() {
+		return storicoButton;
+	}
+
+	public JButton getCancellaButton() {
+		return cancellaButton;
 	}
 
 	public String getData() {
@@ -109,21 +137,10 @@ public class BookingView extends JFrame {
 		return (String) risorsaComboBox.getSelectedItem();
 	}
 
-	private String[] sceltaOrario() {
-		// Creo un array di orari disponibili da 8 a 18
-		String[] orarioDisponibile = new String[11];
-		for (int i = 0; i < 11; i++) {
-			int ora = 8 + i;
-			orarioDisponibile[i] = String.format("%02d:00", ora); // Formatto l'ora come "HH:00"
-		}
-		return orarioDisponibile;
+	public JComboBox<String> getRisorsaComboBox() {
+		return risorsaComboBox;
 	}
 
-	private Integer[] sceltaDurata() {
-		// Creo un array di durate disponibili da 1 a 4 ore
-		return new Integer[] { 1, 2, 3, 4 };
-	}
-	
-	
+
 
 }

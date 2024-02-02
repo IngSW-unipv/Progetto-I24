@@ -51,8 +51,6 @@ public class Prenotazione {
 
 	public boolean isDurataValida() {
 
-		boolean b = true;
-
 		int orarioChiusura = 19;
 
 		int oraInizioPrenotazione = Integer.parseInt(ora.substring(0, 2));

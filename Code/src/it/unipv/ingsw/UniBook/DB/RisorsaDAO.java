@@ -19,30 +19,30 @@ public class RisorsaDAO implements IRisorsaDAO {
 	}
 
 	@Override
-	public ArrayList<Risorsa> selectAll() {
+	public ArrayList<String> selectAll() {
+	    ArrayList<String> result = new ArrayList<>();
 
-		ArrayList<Risorsa> result = new ArrayList<>();
+	    conn = DBConnection.startConnection(conn, schema);
+	    Statement st1;
+	    ResultSet rs1;
 
-		conn = DBConnection.startConnection(conn, schema);
-		Statement st1;
-		ResultSet rs1;
+	    try {
+	        st1 = conn.createStatement();
+	        String query = "SELECT Nome FROM unibook.risorsa " +
+	                	   "WHERE Tipo='P'";
 
-		try {
-			st1 = conn.createStatement();
-			String query = "SELECT * from RISORSA";
-			rs1 = st1.executeQuery(query);
+	        rs1 = st1.executeQuery(query);
 
-			while (rs1.next()) {
-				Risorsa r = new Risorsa(rs1.getString(1), rs1.getString(2), rs1.getString(3));
+	        while (rs1.next()) {
+	            String nomeRisorsa = rs1.getString("NOME");
+	            result.add(nomeRisorsa);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 
-				result.add(r);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		DBConnection.closeConnection(conn);
-		return result;
+	    DBConnection.closeConnection(conn);
+	    return result;
 	}
 
 	public boolean insertRisorsa(Risorsa r) {
@@ -53,7 +53,7 @@ public class RisorsaDAO implements IRisorsaDAO {
 		boolean esito = true;
 
 		try {
-			String query = "INSERT INTO FORNITORI (NOME,DESCRIZIONE,TIPO) VALUES(?,?,?)";
+			String query = "INSERT INTO RISORSA (NOME,DESCRIZIONE,TIPO) VALUES(?,?,?)";
 			st1 = conn.prepareStatement(query);
 			st1.setString(1, r.getNome());
 			st1.setString(2, r.getDescrizione());
