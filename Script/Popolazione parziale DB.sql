@@ -28,3 +28,10 @@ INSERT INTO `unibook`.`Prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tem
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('11', 'S500816', '2024/05/08', '1', '20');
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('12', 'R509822', '2024/04/09', '1', '30');
 	
+UPDATE `unibook`.`utente` SET `Password` = '123' WHERE (`Matricola` = 'P501934');
+UPDATE `unibook`.`utente` SET `Password` = '234' WHERE (`Matricola` = 'P503454');
+UPDATE `unibook`.`utente` SET `Password` = '345' WHERE (`Matricola` = 'P509899');
+UPDATE `unibook`.`utente` SET `Password` = '456' WHERE (`Matricola` = 'R509822');
+UPDATE `unibook`.`utente` SET `Password` = '567' WHERE (`Matricola` = 'S500816');
+UPDATE `unibook`.`utente` SET `Password` = '678' WHERE (`Matricola` = 'S506567');
+UPDATE `unibook`.`utente` SET `Password` = '789' WHERE (`Matricola` = 'S589231');
