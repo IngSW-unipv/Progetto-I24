@@ -1,11 +1,11 @@
 -- SCRIPT DB UTENTE
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('S500816', 'Mario', 'Rossi', 'Studente', 'mario.rossi01@universitadipavia.it', 'INF');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('P501934', 'Luca', 'Neri', 'Professore', 'lucaneri01@universitadipavia.it', 'INF');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('R509822', 'Nicola', 'Verdi', 'Ricercatore', 'nicolaverdi01@universitadipavia.it', 'ELE');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('S589231', 'Marco', 'Bianchi', 'Studente', 'marco.bianchi01@universitadipavia.it', 'ELE');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('P503454', 'Andrea', 'Bruni', 'Professore', 'andrea.bruni01@universitadipavia.it', 'ELE');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('S506567', 'Michele', 'Lombardi', 'Studente', 'michele.lombardi01@universitadipavia.it', 'INF');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`) VALUES ('P509899', 'Luigi', 'Esposito', 'Professore', 'luigi.esposito01@universitadipavia.it', 'INF');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('S500816', 'Mario', 'Rossi', 'Studente', 'mario.rossi01@universitadipavia.it', 'INF', '123');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('P501934', 'Luca', 'Neri', 'Professore', 'lucaneri01@universitadipavia.it', 'INF', '234');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('R509822', 'Nicola', 'Verdi', 'Ricercatore', 'nicolaverdi01@universitadipavia.it', 'ELE', '345');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('S589231', 'Marco', 'Bianchi', 'Studente', 'marco.bianchi01@universitadipavia.it', 'ELE', '456');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('P503454', 'Andrea', 'Bruni', 'Professore', 'andrea.bruni01@universitadipavia.it', 'ELE', '567');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('S506567', 'Michele', 'Lombardi', 'Studente', 'michele.lombardi01@universitadipavia.it', 'INF', '678');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, 'Password') VALUES ('P509899', 'Luigi', 'Esposito', 'Professore', 'luigi.esposito01@universitadipavia.it', 'INF', '789);
 
 -- Laboratorio
 INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`) VALUES ('1', '30');
@@ -27,11 +27,4 @@ INSERT INTO `unibook`.`Prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tem
 -- Affitto
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('11', 'S500816', '2024/05/08', '1', '20');
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('12', 'R509822', '2024/04/09', '1', '30');
-	
-UPDATE `unibook`.`utente` SET `Password` = '123' WHERE (`Matricola` = 'P501934');
-UPDATE `unibook`.`utente` SET `Password` = '234' WHERE (`Matricola` = 'P503454');
-UPDATE `unibook`.`utente` SET `Password` = '345' WHERE (`Matricola` = 'P509899');
-UPDATE `unibook`.`utente` SET `Password` = '456' WHERE (`Matricola` = 'R509822');
-UPDATE `unibook`.`utente` SET `Password` = '567' WHERE (`Matricola` = 'S500816');
-UPDATE `unibook`.`utente` SET `Password` = '678' WHERE (`Matricola` = 'S506567');
-UPDATE `unibook`.`utente` SET `Password` = '789' WHERE (`Matricola` = 'S589231');
+
