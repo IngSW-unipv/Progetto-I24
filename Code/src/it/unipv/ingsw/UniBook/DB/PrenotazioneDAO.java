@@ -4,9 +4,6 @@ import java.sql.PreparedStatement;
 
 import it.unipv.ingsw.UniBook.Model.Prenotazione;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
 

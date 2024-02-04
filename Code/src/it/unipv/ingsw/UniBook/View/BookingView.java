@@ -26,15 +26,14 @@ public class BookingView extends JFrame {
 	private JButton cancellaButton;
 
 	public BookingView() {
-		//controller = new BookingController();
+		controller = new BookingController();
 		
-		this.controller = SingletonManager.getInstance().getBookingController();
+		//this.controller = SingletonManager.getInstance().getBookingController();
 
 		
 		// Impostazioni del frame
 		setTitle("Prenotazione Risorse");
 		setSize(400, 200);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		getContentPane().setBackground(new Color(214, 255, 255));
 

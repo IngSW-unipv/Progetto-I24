@@ -1,17 +1,11 @@
 package it.unipv.ingsw.UniBook.Controller;
 
-import javax.swing.*;
-
 import it.unipv.ingsw.UniBook.Model.Prenotazione;
 import it.unipv.ingsw.UniBook.Model.Risorsa;
 import it.unipv.ingsw.UniBook.View.BookingView;
 import it.unipv.ingsw.UniBook.View.ManagementView;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,7 +28,7 @@ public class HomeController {
 
 			private void manageAction() {
 				
-					view.getbuttonGR();
+					//view.getbuttonGR();
 					apriGestioneRisorseFrame();
 			
 				}
@@ -51,7 +45,7 @@ public class HomeController {
 
 			private void manageAction() {
 				
-					view.getbuttonPR();
+					//view.getbuttonPR();
 					apriPrenotazioneRisorse();
 			
 				}
