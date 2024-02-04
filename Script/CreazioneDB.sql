@@ -49,3 +49,5 @@ foreign key (ID_Risorsa) references Risorsa (ID),
 foreign key (Matricola) references Utente(Matricola)
 );
 
+ALTER TABLE `unibook`.`utente` 
+ADD COLUMN `Password` VARCHAR(15) NOT NULL AFTER `Corso`;
