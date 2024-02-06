@@ -33,7 +33,7 @@ ID_Risorsa int not null,
 Matricola varchar(7) not null,
 DataOra datetime not null,
 tempo smallint,
-primary key (ID_Risorsa, Matricola),
+primary key (ID_Risorsa, Matricola, DataOra),
 foreign key (ID_Risorsa) references Risorsa (ID),
 foreign key (Matricola) references Utente(Matricola)
 );
