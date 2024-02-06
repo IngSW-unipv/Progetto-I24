@@ -65,6 +65,29 @@ public class BookingController {
 		// Aggiungo il listener al bottone
 		view.getConfermaButton().addActionListener(confirm);
 
+		ActionListener remove = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+
+				try {
+					
+					
+					
+				}catch (NullPointerException e) {
+					//e.mostraPopup();
+					System.out.println(e.toString());
+				}
+
+			}
+
+		};
+
+		view.getRemoveButton().addActionListener(remove);
+		
 	}
 
 }

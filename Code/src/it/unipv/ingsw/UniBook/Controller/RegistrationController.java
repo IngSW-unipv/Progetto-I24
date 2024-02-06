@@ -14,6 +14,10 @@ public class RegistrationController {
 	private RegistrationView view;
 	private User model;
 
+	public RegistrationController(RegistrationView view) {
+		this.view=view;
+	}
+	
 	public RegistrationController(RegistrationView view, User model) {
 		this.view = view;
 		this.model = model;
@@ -31,7 +35,7 @@ public class RegistrationController {
 			private void manageAction() {
 
 				try {
-					model =new User();
+					//model =new User();
 					
 					model.setMatricola(view.getMatricola());
 					model.setNome(view.getNome());

@@ -25,7 +25,7 @@ public class BookingView extends JFrame {
 	private JButton confermaButton;
 
 	private JButton storicoButton; // Nuovo pulsante
-	private JButton cancellaButton;
+	private JButton removeButton;
 
 	public BookingView() {
 		//controller = new BookingController();
@@ -64,7 +64,7 @@ public class BookingView extends JFrame {
 		confermaButton = new JButton("Conferma Prenotazione");
 
 		storicoButton = new JButton("Storico Prenotazioni");
-		cancellaButton = new JButton("Cancella Prenotazione");
+		removeButton = new JButton("Cancella Prenotazione");
 
 		Font font = new Font("Arial", Font.PLAIN, 22);
 
@@ -74,7 +74,7 @@ public class BookingView extends JFrame {
 		risorsaLabel.setFont(font);
 		confermaButton.setFont(font);
 		storicoButton.setFont(font);
-		cancellaButton.setFont(font);
+		removeButton.setFont(font);
 
 		oraComboBox.setFont(font);
 		durataComboBox.setFont(font);
@@ -85,7 +85,7 @@ public class BookingView extends JFrame {
 		setLayout(new GridLayout(6, 2));
 		add(storicoButton);
 
-		add(cancellaButton);
+		add(removeButton);
 		add(dataLabel);
 		add(dateChooser);
 		add(oraLabel);
@@ -112,8 +112,8 @@ public class BookingView extends JFrame {
 		return storicoButton;
 	}
 
-	public JButton getCancellaButton() {
-		return cancellaButton;
+	public JButton getRemoveButton() {
+		return removeButton;
 	}
 
 	public String getData() {
@@ -146,6 +146,10 @@ public class BookingView extends JFrame {
 		return risorsaComboBox;
 	}
 
+	
+	public void removeInterface() {
+		
+	}
 
 
 }

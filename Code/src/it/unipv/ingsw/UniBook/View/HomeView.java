@@ -11,6 +11,7 @@ public class HomeView extends JFrame {
 	private JButton buttonGR;
 	private JButton buttonC;
 	private JButton buttonF;
+	private JButton exitButton;
 
 	public HomeView() {
 
@@ -74,7 +75,7 @@ public class HomeView extends JFrame {
 		leftPanel.add(buttonGR);
 		leftPanel.add(buttonC);
 		leftPanel.add(buttonF);
-		JButton topRightButton1 = new JButton("ESCI");
+		exitButton = new JButton("ESCI");
 		
 		// Pannello centrale (vuoto)
 		JPanel centerPanel = new JPanel();
@@ -83,7 +84,7 @@ public class HomeView extends JFrame {
 		constraints1.weightx = 0.1;
 		constraints1.gridx = 4;
 		
-		topCenterPanel.add(topRightButton1, constraints1);
+		topCenterPanel.add(exitButton, constraints1);
 		constraints1.gridx = 5;
 
 		add(topCenterPanel, BorderLayout.NORTH);
@@ -92,24 +93,30 @@ public class HomeView extends JFrame {
 		
 	}
 	
-	public JButton getbuttonPR() {
+	public JButton getButtonPR() {
 		return buttonPR;
 	}
 
-	public JButton getbuttonAF() {
+	public JButton getButtonAF() {
 		return buttonAF;
 	}
 
-	public JButton getbuttonGR() {
+	public JButton getButtonGR() {
 		return buttonGR;
 	}
 
-	public JButton getbuttonC() {
+	public JButton getButtonC() {
 		return buttonC;
 	}
 
-	public JButton getbuttonF() {
+	public JButton getButtonF() {
 		return buttonF;
 	}
+	
+	public JButton getExitButton() {
+		return exitButton;
+	}
+	
+	
 
 }
