@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import it.unipv.ingsw.UniBook.Controller.BookingController;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
+import it.unipv.ingsw.UniBook.Model.Booking;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import com.toedter.calendar.JDateChooser;
@@ -11,6 +12,7 @@ import com.toedter.calendar.JDateChooser;
 public class BookingView extends JFrame {
 
 	private BookingController controller;
+	private Booking b;
 	
 	private JDateChooser dateChooser;
 
@@ -26,8 +28,8 @@ public class BookingView extends JFrame {
 	private JButton cancellaButton;
 
 	public BookingView() {
-		controller = new BookingController();
-		
+		//controller = new BookingController();
+		b = new Booking();
 		//this.controller = SingletonManager.getInstance().getBookingController();
 
 		
@@ -43,14 +45,14 @@ public class BookingView extends JFrame {
 		dateChooser.setDateFormatString("dd/MM/yyyy");
 
 		JLabel oraLabel = new JLabel("Ora:");
-		oraComboBox = new JComboBox<>(controller.sceltaOrario());
+		oraComboBox = new JComboBox<>(b.sceltaOrario());
 		oraComboBox.setSelectedIndex(0); // Imposto l'ora predefinita a 8
 
 		JLabel durataLabel = new JLabel("Durata (ore):");
-		durataComboBox = new JComboBox<>(controller.sceltaDurata());
+		durataComboBox = new JComboBox<>(b.sceltaDurata());
 
 		JLabel risorsaLabel = new JLabel("Risorsa:");
-		risorsaComboBox = new JComboBox<String>(controller.aggiornaJListRisorse().toArray(new String[0]));
+		risorsaComboBox = new JComboBox<String>(b.aggiornaJListRisorse().toArray(new String[0]));
 		/*
 		 toArray(new String[0]) è utilizzata per convertire la lista restituita dal metodo 
 		 in un array di Stringhe, che è il tipo di dati accettato dal costruttore di JComboBox.
@@ -78,7 +80,7 @@ public class BookingView extends JFrame {
 		durataComboBox.setFont(font);
 		risorsaComboBox.setFont(font);
 		dateChooser.setFont(font);
-
+		
 		// Layout del frame
 		setLayout(new GridLayout(6, 2));
 		add(storicoButton);
@@ -117,6 +119,10 @@ public class BookingView extends JFrame {
 	public String getData() {
 		Date selectedDate = dateChooser.getDate();
 
+		if (selectedDate == null) {
+	        return "";
+	    }
+		
 		// Formatto la data come stringa usando quel formato
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 

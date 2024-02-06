@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import it.unipv.ingsw.UniBook.View.LoginView;
 import it.unipv.ingsw.UniBook.Model.User;
 import it.unipv.ingsw.UniBook.Model.Login;
+import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Exception.*;
 
 public class LoginController {
@@ -30,9 +31,14 @@ public class LoginController {
 
 				try {
 					
-					model.setMatricola(view.getMatricola());
-					model.setPassword(String.valueOf(view.getPassword()));
+					 
 
+					
+					//model.setMatricola(view.getMatricola());
+					//model.setPassword(String.valueOf(view.getPassword()));
+					SingletonManager.getInstance().setLoggedUser(new User( view.getMatricola(), null,
+							null, null, null, null, String.valueOf(view.getPassword())));
+					
 					Login logger = new Login(model);
 					
 					logger.fieldCheck();

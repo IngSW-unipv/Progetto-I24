@@ -11,7 +11,7 @@ public class EmptyFieldException extends Exception {
 	}
 
 	public void mostraPopup() {
-		JOptionPane.showMessageDialog(null, errorMessage, "Sistema", JOptionPane.INFORMATION_MESSAGE);
+		PopupManager.mostraPopup(errorMessage);
 	}
 
 }

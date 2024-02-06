@@ -81,4 +81,35 @@ public class UserDAO implements IUserDAO {
 	    return result;
 	}
 
+public String selectMatricola(User u) {
+		
+		String matricola = u.getMatricola();
+		
+	    String result = new String();
+
+	    conn = DBConnection.startConnection(conn, schema);
+	    Statement st1;
+	    ResultSet rs1;
+
+	    try {
+	        st1 = conn.createStatement();
+	        String query = "SELECT Matricola FROM unibook.utente " +
+	                	   "WHERE Matricola= '"+matricola+"'";
+
+	        rs1 = st1.executeQuery(query);
+
+
+	        if (rs1.next()) {
+	            result = rs1.getString("Matricola");
+	        }
+	            
+	  
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    DBConnection.closeConnection(conn);
+	    return result;
+	}
+	
 }

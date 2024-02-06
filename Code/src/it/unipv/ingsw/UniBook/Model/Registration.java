@@ -14,7 +14,7 @@ public class Registration {
 
 	public Registration(User u) {
 		this.u = new User();
-		
+
 		this.u.setMatricola(u.getMatricola());
 		this.u.setNome(u.getNome());
 		this.u.setCognome(u.getCognome());
@@ -22,15 +22,13 @@ public class Registration {
 		this.u.setCorso(u.getCorso());
 		this.u.setEmail(u.getEmail());
 		this.u.setPassword(String.valueOf(u.getPassword()));
-		
+
 		this.uDAO = SingletonManager.getInstance().getUserDAO();
 
 	}
 
 	public void register() {
 
-		
-		
 		HomeView f = new HomeView();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
@@ -40,30 +38,68 @@ public class Registration {
 	}
 
 	public void fieldCheck(String password) throws EmptyFieldException {
-		System.out.println(u.getMatricola());
 		if (this.u.getMatricola().isEmpty() || this.u.getNome().isEmpty() || this.u.getCognome().isEmpty()
 				|| this.u.getEmail().isEmpty() || this.u.getCorso().isEmpty()
-				|| String.valueOf(this.u.getPassword()).equals("")
-				|| password.equals("")) {
+				|| String.valueOf(this.u.getPassword()).equals("") || password.equals("")) {
 			throw new EmptyFieldException();
 		}
+	}
+
+	// Controlla che se un utente inserisce la matricola con S, sia effettivaemente
+	// uno studente..
+	public void matricolaCompatibileCheck() throws WrongFieldException {
+
+		// Verifica formato matricola
+		if (this.u.getMatricola().matches("[SPR]\\d{6}")) {
+		
+			char tipoMatricola = this.u.getMatricola().charAt(0);
+			
+			switch (tipoMatricola) {
+			case 'S':
+				if (!this.u.getTipo().toLowerCase().contains("studente")) {
+					throw new WrongFieldException();
+				}
+				break;
+			case 'P':
+				if (!this.u.getTipo().toLowerCase().contains("professore")) {
+					throw new WrongFieldException();
+				}
+				break;
+			case 'R':
+				if (!this.u.getTipo().toLowerCase().contains("ricercatore")) {
+					throw new WrongFieldException();
+				}
+				break;
+			default:
+				// Tipo non riconosciuto
+				throw new WrongFieldException();
+			}
+		} else {
+			// Il formato della matricola non è valido
+			throw new WrongFieldException();
+		}
+
 	}
 
 	public void passwordCheck(String password) throws WrongFieldException {
 
 		if (!String.valueOf(this.u.getPassword()).equals(password))
 			throw new WrongFieldException();
-		}
-	
-	public void succesfulOperationCheck() throws DatabaseException{
-		
+	}
+
+	public void succesfulOperationCheck() throws DatabaseException {
+
 		boolean inserimentoRiuscito = uDAO.insertUser(u);
-		
+
 		if (!inserimentoRiuscito)
 			throw new DatabaseException();
-		
+
 	}
-		
 	
-	
+	public void accountCheck() throws AccountAlreadyExistsException {
+		if(this.u.getMatricola().equals(uDAO.selectMatricola(u))) {	
+			throw new AccountAlreadyExistsException();
+		}
+	}
+
 }

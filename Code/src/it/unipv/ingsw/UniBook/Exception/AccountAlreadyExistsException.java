@@ -2,11 +2,11 @@ package it.unipv.ingsw.UniBook.Exception;
 
 import javax.swing.JOptionPane;
 
-public class DatabaseException extends Exception {
+public class AccountAlreadyExistsException extends Exception{
 
-	private static String errorMessage = "C'è stato un problema nella comunicazione col database";
+	private static String errorMessage = "Account già esistente";
 
-	public DatabaseException() {
+	public AccountAlreadyExistsException() {
 		
 		super(errorMessage);
 
@@ -15,5 +15,5 @@ public class DatabaseException extends Exception {
 	public void mostraPopup() {
 		PopupManager.mostraPopup(errorMessage);
 	}
-
+	
 }

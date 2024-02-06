@@ -10,12 +10,15 @@ import java.util.Properties;
 public class DBConnection {
 	
 	
-	  private static final String PROPERTYDBDRIVER = "DBDRIVER"; private static
-	  final String PROPERTYDBURL = "DBURL"; private static final String
-	  PROPERTYNAME = "db_usn"; private static final String PROPERTYPSW = "db_psw";
-	  private static String username; private static String password; private
-	  static String dbDriver; private static String dbURL; private static
-	  DBConnection conn;
+	  private static final String PROPERTYDBDRIVER = "DBDRIVER"; 
+	  private static final String PROPERTYDBURL = "DBURL"; 
+	  private static final String PROPERTYNAME = "db_usn"; 
+	  private static final String PROPERTYPSW = "db_psw";
+	  private static String username; 
+	  private static String password; private
+	  static String dbDriver; 
+	  private static String dbURL; 
+	  private static DBConnection conn;
 	 
 	
 	private static void init() {

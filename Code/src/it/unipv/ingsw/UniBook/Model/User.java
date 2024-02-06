@@ -10,6 +10,21 @@ public class User {
 	private String corso;
 	private String password;
 
+	public User() {
+		
+	}
+	
+	public User(String matricola, String nome, String cognome, String tipo, String email, String corso,
+			String password) {
+		this.matricola = matricola;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.tipo = tipo;
+		this.email = email;
+		this.corso = corso;
+		this.password = password;
+	}
+
 	public String getMatricola() {
 		return matricola;
 	}
@@ -65,5 +80,5 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 }

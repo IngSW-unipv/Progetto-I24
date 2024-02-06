@@ -31,6 +31,7 @@ public class RegistrationController {
 			private void manageAction() {
 
 				try {
+					model =new User();
 					
 					model.setMatricola(view.getMatricola());
 					model.setNome(view.getNome());
@@ -39,10 +40,11 @@ public class RegistrationController {
 					model.setCorso(view.getCorso());
 					model.setEmail(view.getEmail());
 					model.setPassword(String.valueOf(view.getPassword()));
-					
 
 					Registration reg = new Registration(model);
 					
+					reg.matricolaCompatibileCheck();
+					reg.accountCheck();
 					reg.fieldCheck(String.valueOf(view.getConfermaPassword()));
 					reg.passwordCheck(String.valueOf(view.getConfermaPassword()));
 					reg.succesfulOperationCheck();
@@ -59,6 +61,11 @@ public class RegistrationController {
 					System.out.println(e.toString());
 
 				} catch (DatabaseException e) {
+					e.mostraPopup();
+					System.out.println(e.toString());
+				}
+				
+				catch (AccountAlreadyExistsException e) {
 					e.mostraPopup();
 					System.out.println(e.toString());
 				}

@@ -6,15 +6,16 @@ import it.unipv.ingsw.UniBook.DB.UserDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
-public class Login {
+public class Login{
 
 	private User u;
 	private UserDAO uDAO;
 
 	public Login(User u) {
-		this.u = new User();
-		this.u.setMatricola(u.getMatricola());
-		this.u.setPassword(u.getPassword());
+		//this.u = new User();
+		this.u = SingletonManager.getInstance().getLoggedUser();
+		//this.u.setMatricola(u.getMatricola());
+		//this.u.setPassword(u.getPassword());
 		this.uDAO = SingletonManager.getInstance().getUserDAO();
 
 	}
