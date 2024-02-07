@@ -32,7 +32,7 @@ public class HomeController {
 
 			private void manageAction() {
 
-				apriGestioneRisorseFrame();
+				openResourceManagementFrame();
 
 			}
 		};
@@ -48,7 +48,7 @@ public class HomeController {
 
 			private void manageAction() {
 
-				apriPrenotazioneRisorse();
+				openResourceBooking();
 
 			}
 		};
@@ -56,29 +56,25 @@ public class HomeController {
 		// Aggiungo il listener al bottone
 		hv.getButtonPR().addActionListener(PR);
 
-		ActionListener EX = new ActionListener(){
-			
+		ActionListener EX = new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				manageAction();
 			}
 
 			private void manageAction() {
-				System.out.println("AAAA");
-				getBack();
+
+				goBack();
 
 			}
-			
+
 		};
-		
+
 		hv.getExitButton().addActionListener(EX);
-	
+
 	}
-	
-	
-	
-	
-	
-	private void apriGestioneRisorseFrame() {
+
+	private void openResourceManagementFrame() {
 
 		mv = new ManagementView();
 		Resource r = new Resource();
@@ -86,23 +82,23 @@ public class HomeController {
 		mv.setVisible(true);
 	}
 
-	private void apriPrenotazioneRisorse() {
+	private void openResourceBooking() {
 
 		bv = new BookingView();
 		Booking p = new Booking();
 		BookingController c = new BookingController(p, bv);
 		bv.setVisible(true);
 	}
-	
-	private void getBack() {
-		
-		hv.dispose();
+
+	private void goBack() {
+
+		hv.dispose(); 
 		bv.dispose();
 		mv.dispose();
 		RegistrationView v = new RegistrationView();
 		RegistrationController c = new RegistrationController(v);
 		v.setVisible(true);
-		
+
 	}
 
 }

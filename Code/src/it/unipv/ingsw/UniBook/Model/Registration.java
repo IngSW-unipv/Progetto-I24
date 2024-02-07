@@ -15,7 +15,7 @@ public class Registration {
 	public Registration(User u) {
 		this.u = new User();
 
-		this.u.setMatricola(u.getMatricola());
+		this.u.setId(u.getId());
 		this.u.setNome(u.getNome());
 		this.u.setCognome(u.getCognome());
 		this.u.setTipo(u.getTipo());
@@ -38,7 +38,7 @@ public class Registration {
 	}
 
 	public void fieldCheck(String password) throws EmptyFieldException {
-		if (this.u.getMatricola().isEmpty() || this.u.getNome().isEmpty() || this.u.getCognome().isEmpty()
+		if (this.u.getId().isEmpty() || this.u.getNome().isEmpty() || this.u.getCognome().isEmpty()
 				|| this.u.getEmail().isEmpty() || this.u.getCorso().isEmpty()
 				|| String.valueOf(this.u.getPassword()).equals("") || password.equals("")) {
 			throw new EmptyFieldException();
@@ -50,9 +50,9 @@ public class Registration {
 	public void matricolaCompatibileCheck() throws WrongFieldException {
 
 		// Verifica formato matricola
-		if (this.u.getMatricola().matches("[SPR]\\d{6}")) {
+		if (this.u.getId().matches("[SPR]\\d{6}")) {
 		
-			char tipoMatricola = this.u.getMatricola().charAt(0);
+			char tipoMatricola = this.u.getId().charAt(0);
 			
 			switch (tipoMatricola) {
 			case 'S':
@@ -97,7 +97,7 @@ public class Registration {
 	}
 	
 	public void accountCheck() throws AccountAlreadyExistsException {
-		if(this.u.getMatricola().equals(uDAO.selectMatricola(u))) {	
+		if(this.u.getId().equals(uDAO.selectMatricola(u))) {	
 			throw new AccountAlreadyExistsException();
 		}
 	}

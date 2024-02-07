@@ -1,6 +1,7 @@
 package it.unipv.ingsw.UniBook.Model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -13,22 +14,22 @@ public class Booking {
 
 	private Resource r;
 	private User u;
-	private String data;
-	private String ora;
-	private int durata;
+	private String date;
+	private String time;
+	private int duration;
 	private BookingDAO bDAO;
 
 	public Booking() {
 		this.bDAO = SingletonManager.getInstance().getBookingDAO();
 	}
 
-	public Booking(Resource r, User u, String data, String ora, int durata) {
+	public Booking(Resource r, User u, String date, String time, int duration) {
 		this.r = r;
 		this.u = u;
 		this.bDAO = SingletonManager.getInstance().getBookingDAO();
-		this.data = data;
-		this.ora = ora;
-		this.durata = durata;
+		this.date = date;
+		this.time = time;
+		this.duration = duration;
 	}
 
 	public Resource getR() {
@@ -39,90 +40,90 @@ public class Booking {
 		this.r = r;
 	}
 
-	public String getData() {
-		return data;
+	public String getDate() {
+		return date;
 	}
 
-	public void setData(String data) {
-		this.data = data;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
-	public String getOra() {
-		return ora;
+	public String getTime() {
+		return time;
 	}
 
-	public void setOra(String ora) {
-		this.ora = ora;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
-	public String getNomeResource() {
-		return r.getNome();
+	public String getResourceName() {
+		return r.getName();
 	}
 
-	public void setNomeResource(String nome) {
-		r.setNome(nome);
+	public void setResourceName(String name) {
+		r.setNome(name);
 		;
 	}
 
-	public String getMatricolaUser() {
-		return u.getMatricola();
+	public String getUserId() {
+		return u.getId();
 	}
 
-	public void setMatricolaUser(String Id) {
-		u.setMatricola(Id);
+	public void setUserId(String Id) {
+		u.setId(Id);
 		;
 	}
 
-	public int getDurata() {
-		return durata;
+	public int getDuration() {
+		return duration;
 	}
 
-	public void setDurata(int durata) {
-		this.durata = durata;
+	public void setDuration(int duration) {
+		this.duration = duration;
 	}
 
-	// Logica
+	// Logica-------
 
-	public String getFinePrenotazione() {
-		String oraToInt = ora.substring(0, 2);
-		int oraInt = Integer.parseInt(oraToInt) + durata;
-		return oraInt + ":00";
+	public String getBookingEnd() {
+		String timeToInt = time.substring(0, 2);
+		int timeInt = Integer.parseInt(timeToInt) + duration;
+		return timeInt + ":00";
 	}
 
-	public boolean isDurataValida() {
+	public boolean validDuration() {
 
-		int orarioChiusura = 19;
+		int close = 19;
 
-		int oraInizioPrenotazione = Integer.parseInt(ora.substring(0, 2));
+		int startBooking = Integer.parseInt(time.substring(0, 2));
 
-		if (durata > (orarioChiusura - oraInizioPrenotazione))
+		if (duration > (close - startBooking))
 			return false;
 
 		return true;
 
 	}
 
-	public String[] sceltaOrario() {
+	public String[] timeChoice() {
 		// Creo un array di orari disponibili da 8 a 18
-		String[] orarioDisponibile = new String[11];
+		String[] availableTime = new String[11];
 		for (int i = 0; i < 11; i++) {
 			int ora = 8 + i;
-			orarioDisponibile[i] = String.format("%02d:00", ora); // Formatto l'ora come "HH:00"
+			availableTime[i] = String.format("%02d:00", ora); // Formatto l'ora come "HH:00"
 		}
-		return orarioDisponibile;
+		return availableTime;
 	}
 
-	public Integer[] sceltaDurata() {
+	public Integer[] durationChoice() {
 		// Creo un array di durate disponibili da 1 a 4 ore
 		return new Integer[] { 1, 2, 3, 4 };
 	}
 
-	public ArrayList<String> aggiornaJListRisorse() {
+	public ArrayList<String> updateJListResources() {
 
-		ResourceDAO risorsaDAO = new ResourceDAO();
-		ArrayList<String> risorseDisponibili = risorsaDAO.selectAll();
+		ResourceDAO resourceDAO = new ResourceDAO();
+		ArrayList<String> availableResources = resourceDAO.selectAll();
 
-		return risorseDisponibili;
+		return availableResources;
 	}
 
 	public void tryToBook() throws DatabaseException {
@@ -130,33 +131,47 @@ public class Booking {
 		// Setto l'ID alla risorsa sulla base del nome
 		r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
 
-		Booking ttb = new Booking(r, u, data, ora, durata);
+		Booking ttb = new Booking(r, u, date, time, duration);
 
-		boolean inserimentoRiuscito = bDAO.insertPrenotazione(ttb, SingletonManager.getInstance().getLoggedUser());
+		boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
 
-		if (inserimentoRiuscito) {
-			PopupManager.mostraPopup("Prenotazione effettuata con successo! " + "\n Data: " + data + "\n Dalle: " + ora + " alle: "
-					+ getFinePrenotazione() + "\n Risorsa: " + r.getNome());
+		if (succesfulInsertion) {
+			PopupManager.mostraPopup("Prenotazione effettuata con successo! " + "\n Data: " + date + "\n Dalle: " + time
+					+ " alle: " + getBookingEnd() + "\n Risorsa: " + r.getName());
 		} else {
 			throw new DatabaseException();
 		}
 	}
 
-	public void checkDurata() {
-		if (!isDurataValida()) {
-			PopupManager.mostraPopup("La durata selezionata non è valida per l'orario di prenotazione."
-					+ "Ti ricordiamo che l'università chiude alle 19:00.");
+	public void checkDuration() throws DurationException{
+		if (!validDuration()) {
+			throw new DurationException();
+			//PopupManager.mostraPopup("La durata selezionata non è valida per l'orario di prenotazione."
+				//	+ "Ti ricordiamo che l'università chiude alle 19:00.");
 		}
 	}
 
 	public void checkEmptyDate() throws EmptyFieldException {
-		if (data == "")
+		if (date == "")
 			throw new EmptyFieldException();
 	}
 
-	/*private void mostraPopup(String messaggio) {
-		JOptionPane.showMessageDialog(null, messaggio, "Sistema", JOptionPane.INFORMATION_MESSAGE);
-	}*/
 	
+	public ArrayList<Booking> getUserBookings(User u) {
+		return bDAO.selectBookingFromUser(u);
+	}
+	
+	public void removeBooking(ArrayList<Booking> bookings,int index) {
+		System.out.println("ECCOLO "+ index);
+		//DA QUI DEVO RIMUOVERLO
+		
+        bookings.remove(index);
+       // bDAO.deleteSelectedBooking(u, index);
+    }
+	
+
+	//public void rimuoviPrenotazione(int index) {
+		//bookings.remove(index);
+	//}
 
 }

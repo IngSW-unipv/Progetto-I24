@@ -6,7 +6,7 @@ import it.unipv.ingsw.UniBook.Model.Resource;
 
 public interface IBookingDAO {
 
-	public boolean insertPrenotazione(Booking p, User u);
+	public boolean insertBooking(Booking p, User u);
 	
 	public String getIDbyName(Resource r);
 	

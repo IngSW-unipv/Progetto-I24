@@ -30,7 +30,7 @@ public class UserDAO implements IUserDAO {
 					+ " VALUES(?,?,?,?,?,?,?)";
 			st1 = conn.prepareStatement(query);
 
-			st1.setString(1, u.getMatricola());
+			st1.setString(1, u.getId());
 			st1.setString(2, u.getNome());
 			st1.setString(3, u.getCognome());
 			st1.setString(4, u.getTipo());
@@ -52,7 +52,7 @@ public class UserDAO implements IUserDAO {
 	
 	public String selectPassword(User u) {
 		
-		String matricola = u.getMatricola();
+		String matricola = u.getId();
 		
 	    String result = new String();
 
@@ -83,7 +83,7 @@ public class UserDAO implements IUserDAO {
 
 public String selectMatricola(User u) {
 		
-		String matricola = u.getMatricola();
+		String matricola = u.getId();
 		
 	    String result = new String();
 

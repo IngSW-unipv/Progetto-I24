@@ -9,14 +9,17 @@ import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.Resource;
 import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.View.BookingView;
+import it.unipv.ingsw.UniBook.View.DeleteBookingView;
 import it.unipv.ingsw.UniBook.DB.BookingDAO;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Exception.*;
+import it.unipv.ingsw.UniBook.View.DeleteBookingView;
 
 public class BookingController {
 
 	private Booking model;
 	private BookingView view;
+	private DeleteBookingView dview;
 
 	public BookingController() {
 
@@ -39,21 +42,23 @@ public class BookingController {
 			private void manageAction() {
 
 				try {
-					model.setData(view.getData());
-					model.setOra(view.getOra());
+					model.setDate(view.getData());
+					model.setTime(view.getOra());
 					model.setR(new Resource(0, view.getRisorsa(), null, null));
-					model.setDurata(view.getDurata());
-					
+					model.setDuration(view.getDurata());
+
 					model.checkEmptyDate();
-					model.checkDurata();
-					
+					model.checkDuration();
+
 					model.tryToBook();
 
-
-				}catch (DatabaseException e) {
+				} catch (DatabaseException e) {
 					e.mostraPopup();
 					System.out.println(e.toString());
 				} catch (EmptyFieldException e) {
+					e.mostraPopup();
+					System.out.println(e.toString());
+				} catch (DurationException e) {
 					e.mostraPopup();
 					System.out.println(e.toString());
 				}
@@ -72,21 +77,40 @@ public class BookingController {
 			}
 
 			private void manageAction() {
-
-				try {
-					
-					
-					
-				}catch (NullPointerException e) {
-					//e.mostraPopup();
-					System.out.println(e.toString());
-				}
-
+				
+				dview = new DeleteBookingView();
+				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
+				remove();
 			}
 
 		};
 
 		view.getRemoveButton().addActionListener(remove);
+
+
+	}
+	
+	private void remove() {
+		
+		ActionListener delete=new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+	            // Ottieni l'indice della riga selezionata dalla vista
+	            int selectedRow = dview.getSelectedRow();
+	            // Rimuovi la prenotazione dal modello
+	            //DEVO ESTRARRE LA PK DALLA RIGA SELEZIONATA PER ELIMINARLA
+	            model.removeBooking(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()), selectedRow);
+	            // Aggiorna la vista
+
+			}
+			
+		};
+		
+	dview.getDeleteButton().addActionListener(delete);
 		
 	}
 

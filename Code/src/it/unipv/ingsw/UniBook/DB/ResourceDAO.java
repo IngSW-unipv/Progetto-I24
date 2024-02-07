@@ -56,7 +56,7 @@ public class ResourceDAO implements IResourceDAO {
 		try {
 			String query = "INSERT INTO RISORSA (NOME,DESCRIZIONE,TIPO) VALUES(?,?,?)";
 			st1 = conn.prepareStatement(query);
-			st1.setString(1, r.getNome());
+			st1.setString(1, r.getName());
 			st1.setString(2, r.getDescrizione());
 			st1.setString(3, r.getTipo());
 

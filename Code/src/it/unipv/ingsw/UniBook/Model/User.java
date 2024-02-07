@@ -25,11 +25,11 @@ public class User {
 		this.password = password;
 	}
 
-	public String getMatricola() {
+	public String getId() {
 		return matricola;
 	}
 
-	public void setMatricola(String matricola) {
+	public void setId(String matricola) {
 		this.matricola = matricola;
 	}
 

@@ -37,7 +37,7 @@ public class RegistrationController {
 				try {
 					//model =new User();
 					
-					model.setMatricola(view.getMatricola());
+					model.setId(view.getMatricola());
 					model.setNome(view.getNome());
 					model.setCognome(view.getCognome());
 					model.setTipo(view.getTipo());

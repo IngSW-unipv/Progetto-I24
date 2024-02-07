@@ -31,7 +31,7 @@ public class Login{
 	}
 
 	public void fieldCheck() throws EmptyFieldException {
-		if (this.u.getMatricola().isEmpty() == true || this.u.getPassword().isEmpty() == true) {
+		if (this.u.getId().isEmpty() == true || this.u.getPassword().isEmpty() == true) {
 			throw new EmptyFieldException();
 		}
 	}
