@@ -77,41 +77,40 @@ public class BookingController {
 			}
 
 			private void manageAction() {
-				
+
 				dview = new DeleteBookingView();
 				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
 				remove();
-				//dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
 			}
 
 		};
 
 		view.getRemoveButton().addActionListener(remove);
-		
+
 	}
-	
+
 	private void remove() {
-		
-		ActionListener deleteBooking=new ActionListener() {
-			
+
+		ActionListener deleteBooking = new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				manageAction();
 			}
 
 			private void manageAction() {
-	            // Ottieni l'indice della riga selezionata dalla vista
-	            int selectedRow = dview.getSelectedRow();
-	            // Rimuovi la prenotazione dal modello	            
-	            model.removeBooking(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()), selectedRow);
-	            
-	            
-	            // Aggiorna la vista
+
+				// Rimuovo la prenotazione dal modello
+				model.removeBooking(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()),
+						dview.getSelectedRow());
+
+				// Aggiorno la vista
+				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
 
 			}
-			
+
 		};
-		
-	dview.getDeleteButton().addActionListener(deleteBooking);
+
+		dview.getDeleteButton().addActionListener(deleteBooking);
 		//
 	}
 
