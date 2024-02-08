@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import it.unipv.ingsw.UniBook.Controller.BookingController;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
+import it.unipv.ingsw.UniBook.Model.Booking;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import com.toedter.calendar.JDateChooser;
@@ -11,7 +12,8 @@ import com.toedter.calendar.JDateChooser;
 public class BookingView extends JFrame {
 
 	private BookingController controller;
-	
+	private Booking b;
+
 	private JDateChooser dateChooser;
 
 	private JComboBox<String> oraComboBox;
@@ -23,18 +25,16 @@ public class BookingView extends JFrame {
 	private JButton confermaButton;
 
 	private JButton storicoButton; // Nuovo pulsante
-	private JButton cancellaButton;
+	private JButton removeButton;
 
 	public BookingView() {
-		//controller = new BookingController();
-		
-		this.controller = SingletonManager.getInstance().getBookingController();
+		// controller = new BookingController();
+		b = new Booking();
+		// this.controller = SingletonManager.getInstance().getBookingController();
 
-		
 		// Impostazioni del frame
 		setTitle("Prenotazione Risorse");
 		setSize(400, 200);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		getContentPane().setBackground(new Color(214, 255, 255));
 
@@ -44,26 +44,24 @@ public class BookingView extends JFrame {
 		dateChooser.setDateFormatString("dd/MM/yyyy");
 
 		JLabel oraLabel = new JLabel("Ora:");
-		oraComboBox = new JComboBox<>(controller.sceltaOrario());
+		oraComboBox = new JComboBox<>(b.timeChoice());
 		oraComboBox.setSelectedIndex(0); // Imposto l'ora predefinita a 8
 
 		JLabel durataLabel = new JLabel("Durata (ore):");
-		durataComboBox = new JComboBox<>(controller.sceltaDurata());
+		durataComboBox = new JComboBox<>(b.durationChoice());
 
 		JLabel risorsaLabel = new JLabel("Risorsa:");
-		risorsaComboBox = new JComboBox<String>(controller.aggiornaJListRisorse().toArray(new String[0]));
+		risorsaComboBox = new JComboBox<String>(b.updateJListResources().toArray(new String[0]));
 		/*
-		 toArray(new String[0]) è utilizzata per convertire la lista restituita dal metodo 
-		 in un array di Stringhe, che è il tipo di dati accettato dal costruttore di JComboBox.
-		  */
-		
-		
-		
-		
+		 * toArray(new String[0]) è utilizzata per convertire la lista restituita dal
+		 * metodo in un array di Stringhe, che è il tipo di dati accettato dal
+		 * costruttore di JComboBox.
+		 */
+
 		confermaButton = new JButton("Conferma Prenotazione");
 
 		storicoButton = new JButton("Storico Prenotazioni");
-		cancellaButton = new JButton("Cancella Prenotazione");
+		removeButton = new JButton("Cancella Prenotazione");
 
 		Font font = new Font("Arial", Font.PLAIN, 22);
 
@@ -73,7 +71,7 @@ public class BookingView extends JFrame {
 		risorsaLabel.setFont(font);
 		confermaButton.setFont(font);
 		storicoButton.setFont(font);
-		cancellaButton.setFont(font);
+		removeButton.setFont(font);
 
 		oraComboBox.setFont(font);
 		durataComboBox.setFont(font);
@@ -84,7 +82,7 @@ public class BookingView extends JFrame {
 		setLayout(new GridLayout(6, 2));
 		add(storicoButton);
 
-		add(cancellaButton);
+		add(removeButton);
 		add(dataLabel);
 		add(dateChooser);
 		add(oraLabel);
@@ -111,12 +109,16 @@ public class BookingView extends JFrame {
 		return storicoButton;
 	}
 
-	public JButton getCancellaButton() {
-		return cancellaButton;
+	public JButton getRemoveButton() {
+		return removeButton;
 	}
 
 	public String getData() {
 		Date selectedDate = dateChooser.getDate();
+
+		if (selectedDate == null) {
+			return "";
+		}
 
 		// Formatto la data come stringa usando quel formato
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

@@ -2,7 +2,7 @@ package it.unipv.ingsw.UniBook.Controller;
 
 import javax.swing.*;
 
-import it.unipv.ingsw.UniBook.Model.Risorsa;
+import it.unipv.ingsw.UniBook.Model.Resource;
 import it.unipv.ingsw.UniBook.View.ManagementView;
 
 import java.awt.event.ActionEvent;
@@ -11,11 +11,11 @@ import java.awt.event.ActionListener;
 public class ManagementController {
 
 	private ManagementView interfaccia;
-	private Risorsa r;
+	private Resource r;
 	private JCheckBox checkBox1;
 	private JCheckBox checkBox2;
 
-	public ManagementController(ManagementView interfaccia, Risorsa r) {
+	public ManagementController(ManagementView interfaccia, Resource r) {
 		this.interfaccia = interfaccia;
 		this.r=r;
 		initComponents();

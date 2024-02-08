@@ -1,9 +1,11 @@
 package it.unipv.ingsw.UniBook.Controller;
 
-import it.unipv.ingsw.UniBook.Model.Prenotazione;
-import it.unipv.ingsw.UniBook.Model.Risorsa;
+import it.unipv.ingsw.UniBook.Model.Booking;
+import it.unipv.ingsw.UniBook.Model.Resource;
+import it.unipv.ingsw.UniBook.Model.User;
 import it.unipv.ingsw.UniBook.View.BookingView;
 import it.unipv.ingsw.UniBook.View.ManagementView;
+import it.unipv.ingsw.UniBook.View.RegistrationView;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
 import java.awt.event.ActionEvent;
@@ -11,10 +13,12 @@ import java.awt.event.ActionListener;
 
 public class HomeController {
 
-	private HomeView view;
+	private HomeView hv;
+	private ManagementView mv;
+	private BookingView bv;
 
 	public HomeController(HomeView view) {
-		this.view = view;
+		hv = view;
 		initComponents();
 	}
 
@@ -27,16 +31,15 @@ public class HomeController {
 			}
 
 			private void manageAction() {
-				
-					//view.getbuttonGR();
-					apriGestioneRisorseFrame();
-			
-				}
-			};
-			
+
+				openResourceManagementFrame();
+
+			}
+		};
+
 		// Aggiungo il listener al bottone
-		view.getbuttonGR().addActionListener(GR);
-		
+		hv.getButtonGR().addActionListener(GR);
+
 		ActionListener PR = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -44,32 +47,58 @@ public class HomeController {
 			}
 
 			private void manageAction() {
-				
-					//view.getbuttonPR();
-					apriPrenotazioneRisorse();
-			
-				}
-			};
-			
+
+				openResourceBooking();
+
+			}
+		};
+
 		// Aggiungo il listener al bottone
-		view.getbuttonPR().addActionListener(PR);
+		hv.getButtonPR().addActionListener(PR);
+
+		ActionListener EX = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+
+				goBack();
+
+			}
+
+		};
+
+		hv.getExitButton().addActionListener(EX);
 
 	}
-	
-	private void apriGestioneRisorseFrame() {
-        
-        ManagementView g = new ManagementView();
-		Risorsa r=new Risorsa();
-		ManagementController c = new ManagementController(g,r);
-        g.setVisible(true);
-    }
-	
-private void apriPrenotazioneRisorse() {
-        
-	BookingView v = new BookingView();
-	Prenotazione p = new Prenotazione();
-	BookingController c = new BookingController(p,v);
-    v.setVisible(true);
-    }
-	
+
+	private void openResourceManagementFrame() {
+
+		mv = new ManagementView();
+		Resource r = new Resource();
+		ManagementController c = new ManagementController(mv, r);
+		mv.setVisible(true);
+	}
+
+	private void openResourceBooking() {
+
+		bv = new BookingView();
+		Booking p = new Booking();
+		BookingController c = new BookingController(p, bv);
+		bv.setVisible(true);
+	}
+
+	private void goBack() {
+
+		hv.dispose(); 
+		bv.dispose();
+		mv.dispose();
+		RegistrationView v = new RegistrationView();
+		RegistrationController c = new RegistrationController(v);
+		v.setVisible(true);
+
+	}
+
 }
