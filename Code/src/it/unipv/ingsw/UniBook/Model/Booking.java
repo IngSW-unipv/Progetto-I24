@@ -133,6 +133,8 @@ public class Booking {
 
 		Booking ttb = new Booking(r, u, date, time, duration);
 
+		System.out.println(SingletonManager.getInstance().getLoggedUser().getId());
+		
 		boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
 
 		if (succesfulInsertion) {
