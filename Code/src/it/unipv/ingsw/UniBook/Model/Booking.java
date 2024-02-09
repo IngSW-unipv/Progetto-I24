@@ -126,15 +126,15 @@ public class Booking {
 		return availableResources;
 	}
 
-	public void tryToBook() throws DatabaseException {
+	public void tryToBook() throws DatabaseException, OverbookingException {
 
 		// Setto l'ID alla risorsa sulla base del nome
 		r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
 
 		Booking ttb = new Booking(r, u, date, time, duration);
 
-		System.out.println(SingletonManager.getInstance().getLoggedUser().getId());
-		
+		checkAvailability(ttb);
+
 		boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
 
 		if (succesfulInsertion) {
@@ -174,6 +174,13 @@ public class Booking {
 				System.out.println("Prenotazione eliminata.");
 			}
 		}
+
+	}
+
+	public void checkAvailability(Booking b) throws OverbookingException {
+
+		if (!bDAO.chechAvilability(b))
+			throw new OverbookingException();
 
 	}
 

@@ -50,6 +50,8 @@ public class BookingController {
 					model.checkEmptyDate();
 					model.checkDuration();
 
+					//model.checkAvailability(model);
+					
 					model.tryToBook();
 
 				} catch (DatabaseException e) {
@@ -59,6 +61,9 @@ public class BookingController {
 					e.mostraPopup();
 					System.out.println(e.toString());
 				} catch (DurationException e) {
+					e.mostraPopup();
+					System.out.println(e.toString());
+				}catch(OverbookingException e) {
 					e.mostraPopup();
 					System.out.println(e.toString());
 				}
