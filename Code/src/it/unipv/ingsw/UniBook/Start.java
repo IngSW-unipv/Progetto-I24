@@ -15,9 +15,6 @@ public class Start {
 
 		HomeController controller = new HomeController(f);
 		
-
-		//prova commit
-
 	}
 
 }

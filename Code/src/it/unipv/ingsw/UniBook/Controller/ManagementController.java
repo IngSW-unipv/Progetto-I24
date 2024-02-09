@@ -33,14 +33,6 @@ public class ManagementController {
 			private void manageAction() {
 				
 				
-				
-			/*	if (checkBox1.isSelected() && checkBox2.isSelected()) {
-					
-                    String messaggio = "Seleziona solo uno tra Prenotabile e Affittabile";
-                    JOptionPane.showMessageDialog(interfaccia, messaggio, "Selezione Non Consentita", JOptionPane.WARNING_MESSAGE);
-           
-				}*/
-				
 				if (interfaccia.getTextField1Text().isEmpty() || interfaccia.getTextField2Text().isEmpty()) {
 					
                     String messaggio = "Riempi tutti i campi";
@@ -55,6 +47,33 @@ public class ManagementController {
 
 					r.setNome(nome);
 					r.setDescrizione(descrizione);
+					
+					boolean isPrenotabile = interfaccia.isCheckBox1Selected();
+				     boolean isAffittabile = interfaccia.isCheckBox2Selected();
+
+				     
+				     //controllo caselle
+				        if (!isPrenotabile && !isAffittabile) {
+				        	
+				            String messaggio = "Seleziona almeno una opzione tra Prenotabile e Affittabile";
+				            JOptionPane.showMessageDialog(interfaccia, messaggio, "Selezione Errata", JOptionPane.WARNING_MESSAGE);
+				            
+				        } else if (isPrenotabile && isAffittabile) {
+				        	
+				            String messaggio = "Non puoi selezionare contemporaneamente Prenotabile e Affittabile";
+				            JOptionPane.showMessageDialog(interfaccia, messaggio, "Selezione Errata", JOptionPane.WARNING_MESSAGE);
+				            
+				        } else {
+				        	
+				            if (isPrenotabile) {
+				            	
+				                r.setTipo("Prenotabile");
+				                
+				            } else if (isAffittabile) {
+				            	
+				                r.setTipo("Affittabile");
+				                
+				            }
 					
 					if(interfaccia.isCheckBox1Selected()) {
 						r.setTipo("Prenotabile");
@@ -74,6 +93,7 @@ public class ManagementController {
 					
 					interfaccia.dispose();
 
+				        }
 				} catch (NullPointerException e) {
 					
 					String messaggio = "Riempi i campi";
@@ -89,16 +109,5 @@ public class ManagementController {
 		interfaccia.getConfermaButton().addActionListener(al);
 
 	}
-	
-/*	private int check() {
-		
-		int x=0;
-		
-		if(checkBox1.isSelected() || x=1) {
-		
-			
-			
-		}else*/
-		
 		
 }
