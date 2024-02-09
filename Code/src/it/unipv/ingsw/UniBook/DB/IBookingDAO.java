@@ -18,4 +18,7 @@ public interface IBookingDAO {
 	
 	public ArrayList<Booking> selectBookingFromUser(User u);
 	
+	public boolean chechAvilability(Booking b);
+
+	
 }
