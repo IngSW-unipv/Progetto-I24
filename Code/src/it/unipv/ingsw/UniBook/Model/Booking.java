@@ -21,6 +21,7 @@ public class Booking {
 
 	public Booking() {
 		this.bDAO = SingletonManager.getInstance().getBookingDAO();
+		this.u = SingletonManager.getInstance().getLoggedUser();
 	}
 
 	public Booking(Resource r, User u, String date, String time, int duration) {
@@ -65,13 +66,12 @@ public class Booking {
 		;
 	}
 
-	public String getUserId() {
-		return u.getId();
+	public User getU() {
+		return u;
 	}
 
-	public void setUserId(String Id) {
-		u.setId(Id);
-		;
+	public void setU(User u) {
+		this.u = u;
 	}
 
 	public int getDuration() {
@@ -126,12 +126,14 @@ public class Booking {
 		return availableResources;
 	}
 
-	public void tryToBook() throws DatabaseException {
+	public void tryToBook() throws DatabaseException, OverbookingException {
 
 		// Setto l'ID alla risorsa sulla base del nome
 		r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
 
 		Booking ttb = new Booking(r, u, date, time, duration);
+
+		checkAvailability(ttb);
 
 		boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
 
@@ -143,11 +145,9 @@ public class Booking {
 		}
 	}
 
-	public void checkDuration() throws DurationException{
+	public void checkDuration() throws DurationException {
 		if (!validDuration()) {
 			throw new DurationException();
-			//PopupManager.mostraPopup("La durata selezionata non è valida per l'orario di prenotazione."
-				//	+ "Ti ricordiamo che l'università chiude alle 19:00.");
 		}
 	}
 
@@ -156,22 +156,32 @@ public class Booking {
 			throw new EmptyFieldException();
 	}
 
-	
 	public ArrayList<Booking> getUserBookings(User u) {
 		return bDAO.selectBookingFromUser(u);
 	}
-	
-	public void removeBooking(ArrayList<Booking> bookings,int index) {
-		System.out.println("ECCOLO "+ index);
-		//DA QUI DEVO RIMUOVERLO
-		
-        bookings.remove(index);
-       // bDAO.deleteSelectedBooking(u, index);
-    }
-	
 
-	//public void rimuoviPrenotazione(int index) {
-		//bookings.remove(index);
-	//}
+	public void removeBooking(ArrayList<Booking> bookings, int index) {
+
+		int choice;
+
+		if (index != -1) {
+			choice = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare questa prenotazione?",
+					"Conferma Eliminazione", JOptionPane.YES_NO_OPTION);
+
+			// Verifica la scelta dell'utente
+			if (choice == JOptionPane.YES_OPTION) {
+				bDAO.deleteSelectedBooking(bDAO.getBooking(u, index));
+				System.out.println("Prenotazione eliminata.");
+			}
+		}
+
+	}
+
+	public void checkAvailability(Booking b) throws OverbookingException {
+
+		if (!bDAO.chechAvilability(b))
+			throw new OverbookingException();
+
+	}
 
 }

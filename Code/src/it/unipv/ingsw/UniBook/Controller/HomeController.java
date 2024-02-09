@@ -110,9 +110,15 @@ public class HomeController {
 
 	private void goBack() {
 
-		hv.dispose(); 
-		bv.dispose();
-		mv.dispose();
+		if (hv != null)
+			hv.dispose();
+
+		if (bv != null)
+			bv.dispose();
+
+		if (mv != null)
+			mv.dispose();
+
 		RegistrationView v = new RegistrationView();
 		RegistrationController c = new RegistrationController(v);
 		v.setVisible(true);

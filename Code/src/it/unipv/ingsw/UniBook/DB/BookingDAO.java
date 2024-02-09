@@ -26,10 +26,10 @@ public class BookingDAO implements IBookingDAO {
 		super();
 		this.schema = "unibook";
 	}
+	
 
 	public ArrayList<Booking> selectBookingFromUser(User u) {
 		ArrayList<Booking> result = new ArrayList<>();
-
 		conn = DBConnection.startConnection(conn, schema);
 		Statement st1;
 		ResultSet rs1;
@@ -46,7 +46,7 @@ public class BookingDAO implements IBookingDAO {
 			while (rs1.next()) {
 				
 				String dateTimeString = rs1.getString(2);  
-				String[] r = parseDateTimetoString(dateTimeString);
+				String[] r = parseDateTimeToString(dateTimeString);
 	            
 				Resource r1= new Resource();
 				r1.setNome(rs1.getString(1));
@@ -63,7 +63,7 @@ public class BookingDAO implements IBookingDAO {
 		return result;
 	}
 
-	public boolean insertBooking(Booking p, User u) {
+	public boolean insertBooking(Booking b, User u) {
 
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
@@ -71,22 +71,30 @@ public class BookingDAO implements IBookingDAO {
 		boolean esito = true;
 
 		try {
+			//String dateTime = parseStringToDateTime(b.getDate(),b.getTime());
+
 			String query = "INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) "
 					+ " VALUES(?,?,?,?)";
 			st1 = conn.prepareStatement(query);
 
-			st1.setInt(1, p.getR().getId());
+			st1.setInt(1, b.getR().getId());
 			st1.setString(2, u.getId());
 
 			// Per adattare i formati
-			SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+			
+		st1.setString(3, itaParseStringToDateTime(b.getDate(),b.getTime()));
+			
+			/*SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String dataOraFormatted = p.getDate() + " " + p.getTime();
+			String dataOraFormatted = b.getDate() + " " + b.getTime();
 			java.util.Date parsedDate = inputDateFormat.parse(dataOraFormatted);
-			st1.setString(3, outputDateFormat.format(parsedDate));
+			st1.setString(3, outputDateFormat.format(parsedDate));*/
+			
 
-			st1.setInt(4, p.getDuration());
+			st1.setInt(4, b.getDuration());
 
+			
+			
 			st1.executeUpdate();
 
 		} catch (Exception e) {
@@ -125,30 +133,66 @@ public class BookingDAO implements IBookingDAO {
 		return result;
 	}
 	
-	/*public boolean deleteSelectedBooking(User u, int index) {
+	
+	public Booking getBooking(User u, int index) {
+		//Booking result = new Booking();
+		Booking result = null;
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
+
+		try {
+			
+			st1 = conn.createStatement();
+			String query = "SELECT ID_Risorsa, Matricola, DataOra, tempo FROM unibook.Prenotazione "
+							+ "Where Prenotazione.matricola = '"+u.getId()+"'"
+							+ "LIMIT 1 OFFSET " + (index);
+			rs1 = st1.executeQuery(query);
+
+			if (rs1.next()) {
+				
+				Resource r1= new Resource();
+				r1.setId(Integer.parseInt(rs1.getString(1)));
+				
+				String dateTimeString = rs1.getString(3);  
+				String[] r = parseDateTimeToString(dateTimeString);
+				
+				int tempo = Integer.parseInt(rs1.getString(4));
+				
+				result = new Booking(r1, u, r[0], r[1], tempo);
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DBConnection.closeConnection(conn);
+		return result;
+	}
+	
+	public boolean deleteSelectedBooking(Booking b) {
+
+		boolean esito = true;
 
 		conn = DBConnection.startConnection(conn, schema);
 		PreparedStatement st1;
 
-		boolean esito = true;
-
 		try {
-			String query = "INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) "
-					+ " VALUES(?,?,?,?)";
-			st1 = conn.prepareStatement(query);
+			System.out.println(b.getDate()+" e "+ b.getTime());
 
-			st1.setInt(1, p.getR().getId());
-			st1.setString(2, u.getId());
+			String dateTime = engParseStringToDateTime(b.getDate(),b.getTime());
+			
+			String query = "DELETE FROM unibook.prenotazione WHERE ID_Risorsa = ? AND Matricola = ? AND DataOra = ? AND tempo = ?";
+	        st1 = conn.prepareStatement(query);
 
-			// Per adattare i formati
-			SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String dataOraFormatted = p.getDate() + " " + p.getTime();
-			java.util.Date parsedDate = inputDateFormat.parse(dataOraFormatted);
-			st1.setString(3, outputDateFormat.format(parsedDate));
-
-			st1.setInt(4, p.getDuration());
-
+	        // Imposta i parametri nella query
+	        st1.setInt(1, b.getR().getId());
+	        st1.setString(2, b.getU().getId());
+	        st1.setString(3, dateTime);
+	        st1.setInt(4, b.getDuration());
+	        
+			
 			st1.executeUpdate();
 
 		} catch (Exception e) {
@@ -160,13 +204,51 @@ public class BookingDAO implements IBookingDAO {
 		return esito;
 
 	}
-	*/
 	
-	 public static String[] parseDateTimetoString(String dateTimeString) {
+	public boolean chechAvilability(Booking b) {
+		
+		boolean available=false;
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
+		
+		try {
+			
+			System.out.println(b.getDate()+" e "+ b.getTime());
+			
+			String dateTime = itaParseStringToDateTime(b.getDate(),b.getTime());
+			
+			st1 = conn.createStatement();
+						
+			String query = "SELECT count(*) "
+				    + "FROM unibook.prenotazione "
+				    + "WHERE ID_Risorsa = '" + b.getR().getId() + "' "
+				    + "AND ((DataOra >= '" + dateTime + "' AND DataOra < ADDTIME('" + dateTime + "', SEC_TO_TIME(" + b.getDuration() + " * 3600))) "
+				    + "OR (DataOra <= '" + dateTime + "' AND ADDTIME(DataOra, SEC_TO_TIME(tempo * 3600)) > '" + dateTime + "'))";			
+			rs1 = st1.executeQuery(query);
+
+			 if (rs1.next()) {
+	                if (rs1.getInt(1) == 0) 
+	                    available = true; // Nessuna sovrapposizione trovata, la prenotazione è valida
+	            }
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return available;
+		
+	}
+
+	
+	
+	
+	 private String[] parseDateTimeToString(String dateTimeString) {
 		 
 	        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+	        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
 	        try {
 	            Date dateTime = inputFormat.parse(dateTimeString);
@@ -178,6 +260,35 @@ public class BookingDAO implements IBookingDAO {
 	            return null; // Gestione dell'errore
 	        }
 	    }
-
+	  
+	 
+	 
+	private String engParseStringToDateTime(String date, String time) {
+		 
+		    SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		    String dataOraFormatted = date + " " + time;
+		    try {
+		        Date parsedDate = inputDateFormat.parse(dataOraFormatted);
+		        return inputDateFormat.format(parsedDate);
+		    } catch (ParseException e) {
+		        e.printStackTrace();
+		        return null; // 
+		    }
+		}
+	
+	private String itaParseStringToDateTime(String date, String time) {
+		
+	    SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String dataOraFormatted = date + " " + time;
+	    try {
+	        Date parsedDate = inputDateFormat.parse(dataOraFormatted);
+	        return outputDateFormat.format(parsedDate);
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+	 
 
 }

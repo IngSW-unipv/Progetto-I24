@@ -31,11 +31,6 @@ public class LoginController {
 
 				try {
 					
-					 
-
-					
-					//model.setMatricola(view.getMatricola());
-					//model.setPassword(String.valueOf(view.getPassword()));
 					SingletonManager.getInstance().setLoggedUser(new User( view.getMatricola(), null,
 							null, null, null, null, String.valueOf(view.getPassword())));
 					
