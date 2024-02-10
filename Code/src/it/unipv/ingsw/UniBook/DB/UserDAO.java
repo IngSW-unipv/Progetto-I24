@@ -49,67 +49,95 @@ public class UserDAO implements IUserDAO {
 		return esito;
 
 	}
-	
+
 	public String selectPassword(User u) {
-		
+
 		String matricola = u.getId();
-		
-	    String result = new String();
 
-	    conn = DBConnection.startConnection(conn, schema);
-	    Statement st1;
-	    ResultSet rs1;
+		String result = new String();
 
-	    try {
-	        st1 = conn.createStatement();
-	        String query = "SELECT Password FROM unibook.utente " +
-	                	   "WHERE Matricola= '"+matricola+"'";
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
 
-	        rs1 = st1.executeQuery(query);
+		try {
+			st1 = conn.createStatement();
+			String query = "SELECT Password FROM unibook.utente " + "WHERE Matricola= '" + matricola + "'";
 
+			rs1 = st1.executeQuery(query);
 
-	        if (rs1.next()) {
-	            result = rs1.getString("Password");
-	        }
-	            
-	  
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+			if (rs1.next()) {
+				result = rs1.getString("Password");
+			}
 
-	    DBConnection.closeConnection(conn);
-	    return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DBConnection.closeConnection(conn);
+		return result;
 	}
 
-public String selectMatricola(User u) {
-		
+	public String selectMatricola(User u) {
+
 		String matricola = u.getId();
-		
-	    String result = new String();
 
-	    conn = DBConnection.startConnection(conn, schema);
-	    Statement st1;
-	    ResultSet rs1;
+		String result = new String();
 
-	    try {
-	        st1 = conn.createStatement();
-	        String query = "SELECT Matricola FROM unibook.utente " +
-	                	   "WHERE Matricola= '"+matricola+"'";
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
 
-	        rs1 = st1.executeQuery(query);
+		try {
+			st1 = conn.createStatement();
+			String query = "SELECT Matricola FROM unibook.utente " + "WHERE Matricola= '" + matricola + "'";
 
+			rs1 = st1.executeQuery(query);
 
-	        if (rs1.next()) {
-	            result = rs1.getString("Matricola");
-	        }
-	            
-	  
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+			if (rs1.next()) {
+				result = rs1.getString("Matricola");
+			}
 
-	    DBConnection.closeConnection(conn);
-	    return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DBConnection.closeConnection(conn);
+		return result;
 	}
-	
+
+	public User selectUserByMatricola(User u) {
+
+		String matricola = u.getId();
+		User result = null;
+
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
+
+		try {
+			st1 = conn.createStatement();
+			String query = "SELECT * FROM unibook.utente WHERE matricola= '" + matricola + "'";
+
+			rs1 = st1.executeQuery(query);
+
+			if (rs1.next()) {
+
+				String nome = rs1.getString("nome");
+				String cognome = rs1.getString("cognome");
+				String tipo = rs1.getString("tipo");
+				String email = rs1.getString("email");
+				String corso = rs1.getString("corso");
+				String password = rs1.getString("password");
+				result = new User(matricola, nome, cognome, tipo, email, corso, password);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DBConnection.closeConnection(conn);
+		return result;
+	}
+
 }

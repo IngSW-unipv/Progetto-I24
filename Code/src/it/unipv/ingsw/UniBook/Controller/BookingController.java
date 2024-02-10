@@ -41,32 +41,12 @@ public class BookingController {
 
 			private void manageAction() {
 
-				try {
-					model.setDate(view.getData());
-					model.setTime(view.getOra());
-					model.setR(new Resource(0, view.getRisorsa(), null, null));
-					model.setDuration(view.getDurata());
+				model.setDate(view.getData());
+				model.setTime(view.getOra());
+				model.setR(new Resource(0, view.getRisorsa(), null, null));
+				model.setDuration(view.getDurata());
 
-					model.checkEmptyDate();
-					model.checkDuration();
-
-					//model.checkAvailability(model);
-					
-					model.tryToBook();
-
-				} catch (DatabaseException e) {
-					e.mostraPopup();
-					System.out.println(e.toString());
-				} catch (EmptyFieldException e) {
-					e.mostraPopup();
-					System.out.println(e.toString());
-				} catch (DurationException e) {
-					e.mostraPopup();
-					System.out.println(e.toString());
-				}catch(OverbookingException e) {
-					e.mostraPopup();
-					System.out.println(e.toString());
-				}
+				model.tryToBook();
 
 			}
 
@@ -82,7 +62,6 @@ public class BookingController {
 			}
 
 			private void manageAction() {
-
 				dview = new DeleteBookingView();
 				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
 				remove();
@@ -103,20 +82,16 @@ public class BookingController {
 			}
 
 			private void manageAction() {
-
 				// Rimuovo la prenotazione dal modello
 				model.removeBooking(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()),
 						dview.getSelectedRow());
-
 				// Aggiorno la vista
 				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
-
 			}
 
 		};
 
 		dview.getDeleteButton().addActionListener(deleteBooking);
-		//
 	}
 
 }

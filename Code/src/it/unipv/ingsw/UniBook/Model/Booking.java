@@ -84,25 +84,35 @@ public class Booking {
 
 	// Logica-------
 
+	// Metodo che ritorna quando finisce la prenotazione per mostrarlo nel PopUp di
+	// avvenuta prenotazione
 	public String getBookingEnd() {
 		String timeToInt = time.substring(0, 2);
 		int timeInt = Integer.parseInt(timeToInt) + duration;
 		return timeInt + ":00";
 	}
 
-	public boolean validDuration() {
+	// Metodo che controlla che un utente non prenoti quando l'università è chiusa
+	public void checkDuration() throws DurationException {
+
+		boolean valid;
 
 		int close = 19;
 
 		int startBooking = Integer.parseInt(time.substring(0, 2));
 
-		if (duration > (close - startBooking))
-			return false;
+		if (duration > (close - startBooking)) {
+			valid = false;
+		} else {
+			valid = true;
+		}
 
-		return true;
-
+		if (!valid) {
+			throw new DurationException();
+		}
 	}
 
+	//Metodo che ritorna gli orari di prenotazione per la view
 	public String[] timeChoice() {
 		// Creo un array di orari disponibili da 8 a 18
 		String[] availableTime = new String[11];
@@ -113,11 +123,13 @@ public class Booking {
 		return availableTime;
 	}
 
+	//Metodo che ritorna i valori della durata per la view
 	public Integer[] durationChoice() {
 		// Creo un array di durate disponibili da 1 a 4 ore
 		return new Integer[] { 1, 2, 3, 4 };
 	}
 
+	//Metodo che ritorna un arrayList di risorse per mostrarle nella view in maniera dinamica interrogando il DB
 	public ArrayList<String> updateJListResources() {
 
 		ResourceDAO resourceDAO = new ResourceDAO();
@@ -126,40 +138,26 @@ public class Booking {
 		return availableResources;
 	}
 
-	public void tryToBook() throws DatabaseException, OverbookingException {
+	//Metodo che controlla la disponibilità della risorsa scelta nella data e ora selezionate
+	public void checkAvailability(Booking b) throws OverbookingException {
 
-		// Setto l'ID alla risorsa sulla base del nome
-		r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
+		if (!bDAO.chechAvilability(b))
+			throw new OverbookingException();
 
-		Booking ttb = new Booking(r, u, date, time, duration);
-
-		checkAvailability(ttb);
-
-		boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
-
-		if (succesfulInsertion) {
-			PopupManager.mostraPopup("Prenotazione effettuata con successo! " + "\n Data: " + date + "\n Dalle: " + time
-					+ " alle: " + getBookingEnd() + "\n Risorsa: " + r.getName());
-		} else {
-			throw new DatabaseException();
-		}
 	}
 
-	public void checkDuration() throws DurationException {
-		if (!validDuration()) {
-			throw new DurationException();
-		}
-	}
-
+	//Metodo che verifica l'inserimento della data
 	public void checkEmptyDate() throws EmptyFieldException {
 		if (date == "")
 			throw new EmptyFieldException();
 	}
 
+	//Metodo che restituisce le prenotazioni di un determinato utente, utile nella cancellazione delle risorse
 	public ArrayList<Booking> getUserBookings(User u) {
 		return bDAO.selectBookingFromUser(u);
 	}
 
+	//Metodo che consente l'eliminazione di risorse previa conferma
 	public void removeBooking(ArrayList<Booking> bookings, int index) {
 
 		int choice;
@@ -176,11 +174,42 @@ public class Booking {
 		}
 
 	}
+	
+	public void tryToBook() {
 
-	public void checkAvailability(Booking b) throws OverbookingException {
+		// Setto l'ID alla risorsa sulla base del nome
+		r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
 
-		if (!bDAO.chechAvilability(b))
-			throw new OverbookingException();
+		Booking ttb = new Booking(r, u, date, time, duration);
+
+		try {
+			
+			checkEmptyDate();
+			checkDuration();
+			checkAvailability(ttb);
+			boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
+
+			if (succesfulInsertion) {
+				PopupManager.mostraPopup("Prenotazione effettuata con successo! " + "\n Data: " + date + "\n Dalle: " + time
+						+ " alle: " + getBookingEnd() + "\n Risorsa: " + r.getName());
+			} else {
+				throw new DatabaseException();
+			}
+			
+		} catch (EmptyFieldException e) {
+			e.mostraPopup();
+			System.out.println(e.toString());
+		} catch (DurationException e) {
+			e.mostraPopup();
+			System.out.println(e.toString());
+		}catch(OverbookingException e) {
+			e.mostraPopup();
+			System.out.println(e.toString());
+		}catch(DatabaseException e) {
+			e.mostraPopup();
+			System.out.println(e.toString());
+		}
+		
 
 	}
 

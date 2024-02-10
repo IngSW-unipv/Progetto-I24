@@ -28,31 +28,16 @@ public class LoginController {
 			}
 
 			private void manageAction() {
+				model.setId(view.getMatricola());
 
-				try {
-					
-					SingletonManager.getInstance().setLoggedUser(new User( view.getMatricola(), null,
-							null, null, null, null, String.valueOf(view.getPassword())));
-					
-					Login logger = new Login(model);
-					
-					logger.fieldCheck();
-					logger.passwordCheck();
-					logger.login();
-					
-					view.dispose(); 
-					
-				} catch (EmptyFieldException e) {
-					
-					e.mostraPopup();
-					System.out.println(e.toString());
+				// SingletonManager.getInstance().setLoggedUser(new User(view.getMatricola(),
+				// null, null, null, null, null,
+				// String.valueOf(view.getPassword())));
 
-				} catch (WrongFieldException e) {
+				Login logger = new Login(SingletonManager.getInstance().getUserDAO().selectUserByMatricola(model));
 
-					e.mostraPopup();
-					System.out.println(e.toString());
-
-				}
+				if (logger.login())
+					view.dispose();
 
 			}
 

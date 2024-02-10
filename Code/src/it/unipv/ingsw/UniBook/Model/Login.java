@@ -6,27 +6,47 @@ import it.unipv.ingsw.UniBook.DB.UserDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
-public class Login{
+public class Login extends Authentication {
 
-	private User u;
 	private UserDAO uDAO;
 
 	public Login(User u) {
-		//this.u = new User();
-		this.u = SingletonManager.getInstance().getLoggedUser();
-		//this.u.setMatricola(u.getMatricola());
-		//this.u.setPassword(u.getPassword());
+		super(u);
 		this.uDAO = SingletonManager.getInstance().getUserDAO();
-
 	}
 
-	public void login() {
+	public boolean login() {
 
-		HomeView f = new HomeView();
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
+		boolean success = false;
 
-		HomeController controller = new HomeController(f);
+		try {
+
+			fieldCheck();
+			passwordCheck();
+
+			setTypeOfUser();
+
+			success = true;
+
+			HomeView f = new HomeView();
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setVisible(true);
+
+			HomeController controller = new HomeController(f);
+
+		} catch (EmptyFieldException e) {
+
+			e.mostraPopup();
+			System.out.println(e.toString());
+
+		} catch (WrongFieldException e) {
+
+			e.mostraPopup();
+			System.out.println(e.toString());
+
+		}
+
+		return success;
 
 	}
 
@@ -43,6 +63,5 @@ public class Login{
 		}
 
 	}
-
 
 }

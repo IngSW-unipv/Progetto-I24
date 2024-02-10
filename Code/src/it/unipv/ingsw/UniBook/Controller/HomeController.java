@@ -1,5 +1,6 @@
 package it.unipv.ingsw.UniBook.Controller;
 
+import it.unipv.ingsw.UniBook.Inizio;
 import it.unipv.ingsw.UniBook.Model.*;
 
 import it.unipv.ingsw.UniBook.View.*;
@@ -13,7 +14,7 @@ public class HomeController {
 	private HomeView hv;
 	private ManagementView mv;
 	private BookingView bv;
-	private CondivisioneView sv;
+	//private CondivisioneView sv;
 
 	public HomeController(HomeView view) {
 		hv = view;
@@ -83,7 +84,7 @@ public class HomeController {
 
 				private void manageAction() {
 
-					openSharing();
+					//openSharing();
 
 				}
 			};	
@@ -119,17 +120,19 @@ public class HomeController {
 		if (mv != null)
 			mv.dispose();
 
-		RegistrationView v = new RegistrationView();
-		RegistrationController c = new RegistrationController(v);
-		v.setVisible(true);
-
+		Inizio.main(null);
+		
 	}
-	private void openSharing() {
+	/*
+	 private void openSharing() {
+	 
 
 		sv = new CondivisioneView();
 		CondivisioneModel r = new CondivisioneModel();
 		CondivisioneController c = new CondivisioneController(sv, r);
 		sv.setVisible(true);
 	}
+	
+	*/
 
 }
