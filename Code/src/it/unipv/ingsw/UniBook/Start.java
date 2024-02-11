@@ -14,7 +14,7 @@ public class Start {
 		f.setVisible(true);
 
 		HomeController controller = new HomeController(f);
-		
+		 
 	}
 
 }
