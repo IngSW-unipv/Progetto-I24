@@ -8,10 +8,10 @@ INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`,
 INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, `Password`) VALUES ('P509899', 'Luigi', 'Esposito', 'Professore', 'luigi.esposito01@universitadipavia.it', 'INF', '789');
 
 -- Laboratorio
-INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`) VALUES ('1', '30');
-INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`) VALUES ('2', '20');
-INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`) VALUES ('3', '15');
-INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`) VALUES ('4', '10');
+INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`, `Nome`) VALUES ('1', '30', 'Laboratorio A1');
+INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`, `Nome`) VALUES ('2', '20', 'Laboratorio A2');
+INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`, `Nome`) VALUES ('3', '15', 'Laboratorio B1');
+INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`, `Nome`) VALUES ('4', '10', 'Laboratorio B2');
 -- Risorsa
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('5', 'Postazione A11', 'Postazione laboratorio informatica', 'INF', 'P', '1', null);
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('6', 'Postazione A12', 'Postazione laboratorio informatica', 'INF', 'P', '1', null);
