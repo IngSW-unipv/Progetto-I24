@@ -1,6 +1,5 @@
 package it.unipv.ingsw.UniBook.Controller;
 
-import it.unipv.ingsw.UniBook.Inizio;
 import it.unipv.ingsw.UniBook.Model.*;
 
 import it.unipv.ingsw.UniBook.View.*;
@@ -14,7 +13,7 @@ public class HomeController {
 	private HomeView hv;
 	private ManagementView mv;
 	private BookingView bv;
-	//private CondivisioneView sv;
+	private CondivisioneView sv;
 
 	public HomeController(HomeView view) {
 		hv = view;
@@ -70,13 +69,10 @@ public class HomeController {
 		};
 
 		hv.getExitButton().addActionListener(EX);
-
-	//}
 	
 	  //aggiungo listener bottone condivisione file
-	//		hv.getButtonF().addActionListener(F);
-
-			ActionListener F = new ActionListener() {
+			
+			ActionListener CF = new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					manageAction();
@@ -84,12 +80,12 @@ public class HomeController {
 
 				private void manageAction() {
 
-					//openSharing();
+					openSharing(); 
 
 				}
-			};	
-			hv.getButtonF().addActionListener(F); //richiamo action listener
-
+			};
+			// Aggiungo il listener al bottone
+			hv.getButtonF().addActionListener(CF);
 }
 	
 
@@ -120,19 +116,18 @@ public class HomeController {
 		if (mv != null)
 			mv.dispose();
 
-		Inizio.main(null);
-		
-	}
-	/*
-	 private void openSharing() {
-	 
+		RegistrationView v = new RegistrationView();
+		RegistrationController c = new RegistrationController(v);
+		v.setVisible(true);
 
+	}
+	private void openSharing() {
+		System.out.println("ciaooo");
 		sv = new CondivisioneView();
 		CondivisioneModel r = new CondivisioneModel();
 		CondivisioneController c = new CondivisioneController(sv, r);
 		sv.setVisible(true);
 	}
-	
-	*/
 
 }
+
