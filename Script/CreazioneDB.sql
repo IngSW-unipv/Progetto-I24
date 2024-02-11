@@ -1,3 +1,4 @@
+drop database if exists Unibook;
 Create schema if not exists Unibook;
 use Unibook;
 
@@ -8,6 +9,7 @@ Cognome		varchar(20) not null,
 Tipo		varchar(15) not null,
 Email		varchar(50) not null,
 Corso		varchar(10),
+Password	varchar(32) not null,
 primary key (Matricola)
 );
 
@@ -24,8 +26,10 @@ Descrizione	TINYTEXT,
 Indirizzo	varchar(10) not null,
 Tipo	varchar(10) not null,
 ID_Lab int,
+Matricola_inserimento varchar(7),
 primary key (ID),
-foreign key (ID_Lab) references Laboratorio(ID)
+foreign key (ID_Lab) references Laboratorio(ID),
+foreign key (Matricola_inserimento) references Utente (Matricola)
 );
 
 create table if not exists Prenotazione(
@@ -48,6 +52,3 @@ primary key (ID_Risorsa, Matricola),
 foreign key (ID_Risorsa) references Risorsa (ID),
 foreign key (Matricola) references Utente(Matricola)
 );
-
-ALTER TABLE `unibook`.`utente` 
-ADD COLUMN `Password` VARCHAR(15) NOT NULL AFTER `Corso`;
