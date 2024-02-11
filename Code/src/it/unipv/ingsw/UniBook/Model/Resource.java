@@ -100,8 +100,8 @@ public class Resource {
 	//metodo controllo caselle check Prenotabile e Affittabile
 	public void checkCaselle() {
 		
-		boolean isPrenotabile = inter.isCheckBox1Selected();
-		boolean isAffittabile = inter.isCheckBox2Selected();
+		boolean isPrenotabile = inter.CheckBoxPrenotabileSelected();
+		boolean isAffittabile = inter.CheckBoxAffittabileSelected();
 
 			//controllo caselle
 			if (!isPrenotabile && !isAffittabile) {
@@ -126,13 +126,13 @@ public class Resource {
 	                
 	            }
 		
-	            if(inter.isCheckBox1Selected()) {
+	            if(inter.CheckBoxPrenotabileSelected()) {
 	            	
 	            	r.setTipo("Prenotabile");
 	            	
 	            }
 		
-	            if(inter.isCheckBox2Selected()) {
+	            if(inter.CheckBoxAffittabileSelected()) {
 	            	
 	            	r.setTipo("Affittabile");
 	            	
@@ -159,8 +159,8 @@ public class Resource {
 			
 			// Mostra le informazioni in una finestra
 			String messaggio = "Nome : " + nome + "\n" + "Descrizione : " + descrizione + "\n"
-					+ (inter.isCheckBox1Selected() ? nome + " é ora prenotabile" : "")
-					+ (inter.isCheckBox2Selected() ? nome + " é ora affitabile" : "");
+					+ (inter.CheckBoxPrenotabileSelected() ? nome + " é ora prenotabile" : "")
+					+ (inter.CheckBoxAffittabileSelected() ? nome + " é ora affitabile" : "");
 
 			JOptionPane.showMessageDialog(inter, messaggio, "Dati Inseriti",
 					JOptionPane.INFORMATION_MESSAGE);

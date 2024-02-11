@@ -109,11 +109,11 @@ public class ManagementView extends JFrame {
 		return text.getText();
 	}
 
-	public boolean isCheckBox1Selected() {
+	public boolean CheckBoxPrenotabileSelected() {
 		return reservationCheck.isSelected();
 	}
 
-	public boolean isCheckBox2Selected() {
+	public boolean CheckBoxAffittabileSelected() {
 		return rentableCheck.isSelected();
 	}
 
