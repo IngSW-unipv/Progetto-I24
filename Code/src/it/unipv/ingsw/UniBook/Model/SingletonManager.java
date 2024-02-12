@@ -15,6 +15,9 @@ public class SingletonManager {
 	private UserDAO userDAO;
 	private User loggedUser;
 	private Resource r;
+	private Professor professor;
+	private Researcher researcher;
+	private Student student;
 	// private BookingController controller;
 	// private BookingView view;
 
@@ -24,7 +27,10 @@ public class SingletonManager {
 		this.bookingDAO = new BookingDAO();
 		this.resourceDAO = new ResourceDAO();
 		this.userDAO = new UserDAO();
-		this.loggedUser=null;
+		this.loggedUser = null;
+		this.student = null;
+		this.professor = null;
+		this.researcher = null;
 		// this.controller = new BookingController();
 		// this.view = new BookingView();
 	}
@@ -45,23 +51,36 @@ public class SingletonManager {
 	public ResourceDAO getResourceDAO() {
 		return resourceDAO;
 	}
-	
+
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
-	
-	public void setLoggedUser(User u) {
-		this.loggedUser=u;
-	}
-	
+
+	// public void setLoggedUser(User u) {
+	// this.loggedUser = u;
+	// }
+
 	public User getLoggedUser() {
 		return loggedUser;
 	}
 
-	/*
-	 * public BookingController getController() { return controller; }
-	 * 
-	 * public BookingView getView() { return view; }
-	 */
+	public void setLoggedUser(User u) {
+		try {
+			this.student = (Student) u;
+			this.loggedUser = u;
+		} catch (ClassCastException e1) {
+			try {
+				this.professor = (Professor) u;
+				this.loggedUser = u;
+			} catch (ClassCastException e2) {
+				try {
+					this.researcher = (Researcher) u;
+					this.loggedUser = u;
+				} catch (ClassCastException e3) {
+					System.err.println("Impossibile impostare l'utente loggato: tipo utente non riconosciuto.");
+				}
+			}
+		}
+	}
 
 }

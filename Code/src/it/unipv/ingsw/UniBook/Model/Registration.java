@@ -7,37 +7,66 @@ import it.unipv.ingsw.UniBook.DB.UserDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
-public class Registration {
+public class Registration extends Authentication{
 
-	private User u;
+	//private User u;
 	private UserDAO uDAO;
 
 	public Registration(User u) {
-		this.u = new User();
-
-		this.u.setId(u.getId());
-		this.u.setNome(u.getNome());
-		this.u.setCognome(u.getCognome());
-		this.u.setTipo(u.getTipo());
-		this.u.setCorso(u.getCorso());
-		this.u.setEmail(u.getEmail());
-		this.u.setPassword(String.valueOf(u.getPassword()));
+		//this.u = new User();
+		super(u);
 
 		this.uDAO = SingletonManager.getInstance().getUserDAO();
 
 	}
 
-	public void register() {
+	public void register(String ConfirmPassword) {
 
-		HomeView f = new HomeView();
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
+		try{
+			
+			matricolaCompatibileCheck();
+			accountCheck();
+			fieldCheck(ConfirmPassword);
+			passwordCheck(ConfirmPassword);
+			succesfulOperationCheck();
+			
+			setTypeOfUser();
+			
+			
+			/*SingletonManager.getInstance().setLoggedUser(new User(u.getId(), null, null, null, null, null,
+					String.valueOf(u.getPassword())));*/
+			
+			HomeView f = new HomeView();
+			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			f.setVisible(true);
 
-		HomeController controller = new HomeController(f);
+			HomeController controller = new HomeController(f);
 
+			
+		}	catch (EmptyFieldException e) {
+			
+			e.mostraPopup();
+			System.out.println(e.toString());
+
+		} catch (WrongFieldException e) {
+			
+			e.mostraPopup();
+			System.out.println(e.toString());
+
+		} catch (DatabaseException e) {
+			e.mostraPopup();
+			System.out.println(e.toString());
+		}
+		
+		catch (AccountAlreadyExistsException e) {
+			e.mostraPopup();
+			System.out.println(e.toString());
+		}
+		
+		
 	}
 
-	public void fieldCheck(String password) throws EmptyFieldException {
+	private void fieldCheck(String password) throws EmptyFieldException {
 		if (this.u.getId().isEmpty() || this.u.getNome().isEmpty() || this.u.getCognome().isEmpty()
 				|| this.u.getEmail().isEmpty() || this.u.getCorso().isEmpty()
 				|| String.valueOf(this.u.getPassword()).equals("") || password.equals("")) {

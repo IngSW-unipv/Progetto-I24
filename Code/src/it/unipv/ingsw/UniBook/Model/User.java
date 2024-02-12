@@ -24,6 +24,11 @@ public class User {
 		this.corso = corso;
 		this.password = password;
 	}
+	
+	public User(String matricola, String password) {
+		this.matricola = matricola;
+		this.password = password;
+	}
 
 	public String getId() {
 		return matricola;

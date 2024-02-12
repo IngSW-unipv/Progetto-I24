@@ -3,7 +3,6 @@ package it.unipv.ingsw.UniBook.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import it.unipv.ingsw.UniBook.View.RegistrationView;
 import it.unipv.ingsw.UniBook.Model.User;
 import it.unipv.ingsw.UniBook.Exception.*;
@@ -15,9 +14,9 @@ public class RegistrationController {
 	private User model;
 
 	public RegistrationController(RegistrationView view) {
-		this.view=view;
+		this.view = view;
 	}
-	
+
 	public RegistrationController(RegistrationView view, User model) {
 		this.view = view;
 		this.model = model;
@@ -34,75 +33,49 @@ public class RegistrationController {
 
 			private void manageAction() {
 
-				try {
-					//model =new User();
-					
-					model.setId(view.getMatricola());
-					model.setNome(view.getNome());
-					model.setCognome(view.getCognome());
-					model.setTipo(view.getTipo());
-					model.setCorso(view.getCorso());
-					model.setEmail(view.getEmail());
-					model.setPassword(String.valueOf(view.getPassword()));
+				// model =new User();
 
-					Registration reg = new Registration(model);
-					
-					reg.matricolaCompatibileCheck();
-					reg.accountCheck();
-					reg.fieldCheck(String.valueOf(view.getConfermaPassword()));
-					reg.passwordCheck(String.valueOf(view.getConfermaPassword()));
-					reg.succesfulOperationCheck();
-					reg.register();
-					
-				} catch (EmptyFieldException e) {
-					
-					e.mostraPopup();
-					System.out.println(e.toString());
+				model.setId(view.getMatricola());
+				model.setNome(view.getNome());
+				model.setCognome(view.getCognome());
+				model.setTipo(view.getTipo());
+				model.setCorso(view.getCorso());
+				model.setEmail(view.getEmail());
+				model.setPassword(String.valueOf(view.getPassword()));
 
-				} catch (WrongFieldException e) {
-					
-					e.mostraPopup();
-					System.out.println(e.toString());
+				Registration reg = new Registration(model);
 
-				} catch (DatabaseException e) {
-					e.mostraPopup();
-					System.out.println(e.toString());
-				}
-				
-				catch (AccountAlreadyExistsException e) {
-					e.mostraPopup();
-					System.out.println(e.toString());
-				}
+				reg.register(String.valueOf(view.getConfermaPassword()));
 
 			}
 
 		};
-		
+
 		view.getRegisterButton().addActionListener(confirm);
-		
+
 		ActionListener switchToLogin = new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				manageAction();
 			}
 
 			private void manageAction() {
-				
+
 				LoginView loginView = new LoginView();
-				LoginController loginController = new LoginController(loginView,model);
-				
+				LoginController loginController = new LoginController(loginView, model);
+
 				loginView.setVisible(true);
-				
-		        // Chiudo la finestra corrente
-		        view.dispose(); 
-				
+
+				// Chiudo la finestra corrente
+				view.dispose();
+
 			}
-			
+
 		};
 
 		view.getLoginButton().addActionListener(switchToLogin);
-	
+
 	}
 
 }
