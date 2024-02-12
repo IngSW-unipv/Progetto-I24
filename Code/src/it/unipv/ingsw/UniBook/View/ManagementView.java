@@ -5,12 +5,14 @@ import java.awt.*;
 
 public class ManagementView extends JFrame {
 
-	private JTextField textField1;
-	private JTextField textField2;
-	private JTextField textField3;
-	private JCheckBox checkBox1;
-	private JCheckBox checkBox2;
-	private JButton button;
+	private JTextField nameR;
+	private JTextField descriptionR;
+	private JTextField text;
+	private JCheckBox reservationCheck;
+	private JCheckBox rentableCheck;
+	private JButton confermButton;
+	private JButton removeRButton;
+
 
 	public ManagementView() {
 
@@ -29,50 +31,55 @@ public class ManagementView extends JFrame {
 		JLabel descrizione = new JLabel("DESCRIZIONE");
 		JLabel possibilità = new JLabel("QUESTA RISORSA PUÓ ESSERE :");
 
-		textField1 = new JTextField();
-		textField2 = new JTextField();
+		nameR = new JTextField();
+		descriptionR = new JTextField();
 
 		panel1.add(nome);
-		panel1.add(textField1);
+		panel1.add(nameR);
 		panel1.add(descrizione);
-		panel1.add(textField2);
+		panel1.add(descriptionR);
 		panel1.setBackground(new Color(214, 255, 255));
 
 		// Pannello interno con un titolo e due spunte
 		JPanel panel2 = new JPanel(new GridLayout(3, 1));
-		textField3 = new JTextField();
-		checkBox1 = new JCheckBox("PRENOTABILE");
-		checkBox2 = new JCheckBox("AFFITTABILE");
-		checkBox1.setBackground(new Color(214, 255, 255));
-		checkBox2.setBackground(new Color(214, 255, 255));
+		text = new JTextField();
+		reservationCheck = new JCheckBox("PRENOTABILE");
+		rentableCheck = new JCheckBox("AFFITTABILE");
+		reservationCheck.setBackground(new Color(214, 255, 255));
+		rentableCheck.setBackground(new Color(214, 255, 255));
 		panel2.setBackground(new Color(214, 255, 255));
 		panel2.add(possibilità);
-		panel2.add(checkBox1);
-		panel2.add(checkBox2);
+		panel2.add(reservationCheck);
+		panel2.add(rentableCheck);
 
-		// Pannello interno con un bottone al centro in basso
+		// Pannello interno con bottone "CONFERMA" al centro in basso e pulsante "RIMUOVI RISORSA"
 		JPanel panel3 = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-		button = new JButton("CONFERMA");
+		confermButton = new JButton("CONFERMA");
 		panel3.setBackground(new Color(214, 255, 255));
-		button.setPreferredSize(new Dimension(1250, 100));
-		panel3.add(button);
+		confermButton.setPreferredSize(new Dimension(1250, 100));
+		panel3.add(confermButton);
+		
+		removeRButton = new JButton("RIMUOVI RISORSA");
+		removeRButton.setPreferredSize(new Dimension(1000, 100));
+		panel3.add(removeRButton);
+		
+		// Aggiunta del pannello principale al frame
+		add(mainPanel);
 
 		// Aggiunta dei pannelli interni al pannello principale
 		mainPanel.add(panel1);
 		mainPanel.add(panel2);
 		mainPanel.add(panel3);
 
-		// Aggiunta del pannello principale al frame
-		add(mainPanel);
-
 		// FONT
 		Font font = new Font("Arial", Font.PLAIN, 25);
-		textField1.setFont(font);
-		textField2.setFont(font);
-		textField3.setFont(font);
-		checkBox1.setFont(font);
-		checkBox2.setFont(font);
-		button.setFont(font);
+		nameR.setFont(font);
+		descriptionR.setFont(font);
+		text.setFont(font);
+		reservationCheck.setFont(font);
+		rentableCheck.setFont(font);
+		confermButton.setFont(font);
+		removeRButton.setFont(font);
 		nome.setFont(font);
 		descrizione.setFont(font);
 		possibilità.setFont(font);
@@ -87,27 +94,27 @@ public class ManagementView extends JFrame {
 	}
 
 	public JButton getConfermaButton() {
-		return button;
+		return confermButton;
 	}
 
 	public String getTextField1Text() {
-		return textField1.getText();
+		return nameR.getText();
 	}
-
+ 
 	public String getTextField2Text() {
-		return textField2.getText();
+		return descriptionR.getText();
 	}
 
 	public String getTextField3Text() {
-		return textField3.getText();
+		return text.getText();
 	}
 
-	public boolean isCheckBox1Selected() {
-		return checkBox1.isSelected();
+	public boolean CheckBoxPrenotabileSelected() {
+		return reservationCheck.isSelected();
 	}
 
-	public boolean isCheckBox2Selected() {
-		return checkBox2.isSelected();
+	public boolean CheckBoxAffittabileSelected() {
+		return rentableCheck.isSelected();
 	}
 
 }

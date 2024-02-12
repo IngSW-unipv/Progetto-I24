@@ -86,7 +86,7 @@ public class RegistrationView extends JFrame {
 	}
 	
 	public String getCognome() {
-		return nomeField.getText();
+		return cognomeField.getText();
 	}
 
 	public String getMatricola() {
