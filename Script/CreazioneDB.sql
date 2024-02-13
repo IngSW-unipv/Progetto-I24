@@ -1,8 +1,8 @@
-drop database if exists Unibook;
-Create schema if not exists Unibook;
-use Unibook;
+drop database if exists unibook;
+Create schema if not exists unibook;
+use unibook;
 
-Create table if not exists Utente(
+Create table if not exists utente(
 Matricola 	varchar(7) not null,
 Nome		varchar(20) not null,
 Cognome		varchar(20) not null,
@@ -13,14 +13,14 @@ Password	varchar(32) not null,
 primary key (Matricola)
 );
 
-create table if not exists Laboratorio(
+create table if not exists laboratorio(
 ID int not null,
 N_posti int not null,
 Nome varchar(15) not null,
 primary key (ID)
 );
 
-create table if not exists Risorsa(
+create table if not exists risorsa(
 ID		int not null,
 Nome 	varchar(15) not null,
 Descrizione	TINYTEXT,
@@ -29,27 +29,27 @@ Tipo	varchar(10) not null,
 ID_Lab int,
 Matricola_inserimento varchar(7),
 primary key (ID),
-foreign key (ID_Lab) references Laboratorio(ID),
-foreign key (Matricola_inserimento) references Utente (Matricola)
+foreign key (ID_Lab) references laboratorio(ID),
+foreign key (Matricola_inserimento) references utente (Matricola)
 );
 
-create table if not exists Prenotazione(
+create table if not exists prenotazione(
 ID_Risorsa int not null,
 Matricola varchar(7) not null,
 DataOra datetime not null,
 tempo smallint,
 primary key (ID_Risorsa, Matricola, DataOra),
-foreign key (ID_Risorsa) references Risorsa (ID),
-foreign key (Matricola) references Utente(Matricola)
+foreign key (ID_Risorsa) references risorsa (ID),
+foreign key (Matricola) references utente(Matricola)
 );
 
-create table if not exists Affitto(
+create table if not exists affitto(
 ID_Risorsa int not null,
 Matricola varchar(7) not null,
 DataInizio date not null,
 Durata int not null,
 Costo double not null,
 primary key (ID_Risorsa, Matricola),
-foreign key (ID_Risorsa) references Risorsa (ID),
-foreign key (Matricola) references Utente(Matricola)
+foreign key (ID_Risorsa) references risorsa (ID),
+foreign key (Matricola) references utente(Matricola)
 );

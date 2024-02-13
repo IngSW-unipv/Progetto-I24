@@ -24,8 +24,8 @@ INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `Matricola_inserimento`) VALUES ('13', 'Arduino', 'Arduino', 'INF', 'P', 'P501934');
 
 -- Prenotazioni
-INSERT INTO `unibook`.`Prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('5', 'S500816', '2024-05-06', '2');
-INSERT INTO `unibook`.`Prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('6', 'S506567', '2024-05-07', '1');
+INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('5', 'S500816', '2024-05-06', '2');
+INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('6', 'S506567', '2024-05-07', '1');
 -- Affitto
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('11', 'S500816', '2024-05-08', '1', '20');
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('12', 'R509822', '2024-04-09', '1', '30');
