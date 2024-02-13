@@ -109,6 +109,7 @@ public class UserDAO implements IUserDAO {
 	public User selectUserByMatricola(User u) {
 
 		String matricola = u.getId();
+		String pw = u.getPassword();
 		User result = null;
 
 		conn = DBConnection.startConnection(conn, schema);
@@ -117,7 +118,8 @@ public class UserDAO implements IUserDAO {
 
 		try {
 			st1 = conn.createStatement();
-			String query = "SELECT * FROM unibook.utente WHERE matricola= '" + matricola + "'";
+			String query = "SELECT * FROM unibook.utente WHERE matricola= '" + matricola + "'"
+					+ "and utente.Password='"+pw+"'";
 
 			rs1 = st1.executeQuery(query);
 
@@ -130,6 +132,8 @@ public class UserDAO implements IUserDAO {
 				String corso = rs1.getString("corso");
 				String password = rs1.getString("password");
 				result = new User(matricola, nome, cognome, tipo, email, corso, password);
+			}else {
+				return u;
 			}
 
 		} catch (Exception e) {

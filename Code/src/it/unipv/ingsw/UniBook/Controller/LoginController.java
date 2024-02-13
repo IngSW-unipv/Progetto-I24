@@ -29,13 +29,12 @@ public class LoginController {
 
 			private void manageAction() {
 				model.setId(view.getMatricola());
-
+				model.setPassword(String.valueOf(view.getPassword()));
 				// SingletonManager.getInstance().setLoggedUser(new User(view.getMatricola(),
 				// null, null, null, null, null,
 				// String.valueOf(view.getPassword())));
-
+				
 				Login logger = new Login(SingletonManager.getInstance().getUserDAO().selectUserByMatricola(model));
-
 				if (logger.login())
 					view.dispose();
 

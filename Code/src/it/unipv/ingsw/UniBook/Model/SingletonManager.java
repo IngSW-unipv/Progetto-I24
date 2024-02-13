@@ -17,7 +17,8 @@ public class SingletonManager {
 	private Resource r;
 	private Professor professor;
 	private Researcher researcher;
-	private Student student;
+	private User user;
+	//private Student student;
 	// private BookingController controller;
 	// private BookingView view;
 
@@ -28,11 +29,11 @@ public class SingletonManager {
 		this.resourceDAO = new ResourceDAO();
 		this.userDAO = new UserDAO();
 		this.loggedUser = null;
-		this.student = null;
+		//this.student = null;
 		this.professor = null;
 		this.researcher = null;
-		// this.controller = new BookingController();
-		// this.view = new BookingView();
+		this.user=null;
+		
 	}
 
 	// Metodo pubblico per ottenere l'istanza Singleton
@@ -65,7 +66,7 @@ public class SingletonManager {
 	}
 
 	public void setLoggedUser(User u) {
-		try {
+		/*try {
 			this.student = (Student) u;
 			this.loggedUser = u;
 		} catch (ClassCastException e1) {
@@ -82,5 +83,24 @@ public class SingletonManager {
 			}
 		}
 	}
+	*/
+		
+		try {
+			this.professor = (Professor) u;
+			this.loggedUser = u;
+		} catch (ClassCastException e1) {
+			try {
+				this.researcher = (Researcher) u;
+				this.loggedUser = u;
+			} catch (ClassCastException e2) {
+				try {
+					this.user = (User) u;
+					this.loggedUser = u;
+				} catch (ClassCastException e3) {
+					System.err.println("Impossibile impostare l'utente loggato: tipo utente non riconosciuto.");
+				}
+			}
+		}
+	}	
 
 }

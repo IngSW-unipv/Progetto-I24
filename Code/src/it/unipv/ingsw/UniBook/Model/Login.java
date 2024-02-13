@@ -20,8 +20,9 @@ public class Login extends Authentication {
 		boolean success = false;
 
 		try {
-
+			
 			fieldCheck();
+						
 			passwordCheck();
 
 			setTypeOfUser();

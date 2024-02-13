@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.DB.BookingDAO;
+import it.unipv.ingsw.UniBook.DB.LaboratoryDAO;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 
 public class Booking {
@@ -58,7 +59,7 @@ public class Booking {
 	}
 
 	public String getResourceName() {
-		return r.getName();
+		return r.getNome();
 	}
 
 	public void setResourceName(String name) {
@@ -133,8 +134,12 @@ public class Booking {
 	public ArrayList<String> updateJListResources() {
 
 		ResourceDAO resourceDAO = new ResourceDAO();
+		LaboratoryDAO laboratoryDAO = new LaboratoryDAO();
+		
 		ArrayList<String> availableResources = resourceDAO.selectAll();
-
+		availableResources.addAll(laboratoryDAO.selectAllLaboratory());
+	
+		
 		return availableResources;
 	}
 
@@ -178,8 +183,19 @@ public class Booking {
 	public void tryToBook() {
 
 		// Setto l'ID alla risorsa sulla base del nome
-		r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
-
+		
+		/*
+		 * try { Professor professor = (Professor) u; //Se la conversiona va a buon fine
+		 * permetto la prenotazione delle risorse
+		 * 
+		 * } catch (ClassCastException e) { //Lancio un eccezione del tipo non hai i
+		 * permessi) }
+		 */
+	
+		
+		r.setId(Integer.parseInt(bDAO.getIDbyName(r))); 
+		
+		
 		Booking ttb = new Booking(r, u, date, time, duration);
 
 		try {
@@ -191,7 +207,7 @@ public class Booking {
 
 			if (succesfulInsertion) {
 				PopupManager.mostraPopup("Prenotazione effettuata con successo! " + "\n Data: " + date + "\n Dalle: " + time
-						+ " alle: " + getBookingEnd() + "\n Risorsa: " + r.getName());
+						+ " alle: " + getBookingEnd() + "\n Risorsa: " + r.getNome());
 			} else {
 				throw new DatabaseException();
 			}

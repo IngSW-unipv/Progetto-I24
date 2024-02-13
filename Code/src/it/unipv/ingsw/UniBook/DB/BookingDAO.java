@@ -109,7 +109,7 @@ public class BookingDAO implements IBookingDAO {
 
 	public String getIDbyName(Resource r) {
 
-		String nome = r.getName();
+		String nome = r.getNome();
 
 		String result = new String();
 
