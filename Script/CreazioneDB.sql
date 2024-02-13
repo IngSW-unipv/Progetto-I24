@@ -16,6 +16,7 @@ primary key (Matricola)
 create table if not exists Laboratorio(
 ID int not null,
 N_posti int not null,
+Nome varchar(15) not null,
 primary key (ID)
 );
 
