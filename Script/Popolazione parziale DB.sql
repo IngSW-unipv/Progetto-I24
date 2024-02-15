@@ -40,10 +40,10 @@ INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo
 
 
 -- Prenotazioni
-INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('16', 'S500816', '2024-05-06', '2');
-INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('6', 'S506567', '2024-05-07', '1');
-INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('17', 'S500816', '2024-05-06', '2');
-INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('18', 'S500816', '2024-05-06', '2');
+INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('16', 'S500816', '2024-05-06 08:00', '2');
+INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('6', 'S506567', '2024-05-07 08:00' , '1');
+INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('17', 'S500816', '2024-05-06 08:00', '2');
+INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('18', 'S500816', '2024-05-06 08:00', '2');
 
 -- Affitto
 INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('11', 'S500816', '2024-05-08', '1', '20');
