@@ -10,6 +10,7 @@ public class User {
 	private String corso;
 	private String password;
 
+	//Costruttore per istanziare un user vuoto che verrà riempito poi in fase di autenticazione
 	public User() {
 		
 	}

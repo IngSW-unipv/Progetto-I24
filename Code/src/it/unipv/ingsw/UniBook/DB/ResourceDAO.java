@@ -1,5 +1,6 @@
 package it.unipv.ingsw.UniBook.DB;
 
+import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.Resource;
 import it.unipv.ingsw.UniBook.Model.User;
 
@@ -70,6 +71,41 @@ public class ResourceDAO implements IResourceDAO {
 		DBConnection.closeConnection(conn);
 		return esito;
 
+	}
+	
+	//Metodo con cui ottengo tutte le postazioni di un determinato laboratorio
+	public ArrayList<Resource> getResourceByLab(Resource r) {
+		ArrayList<Resource> result = new ArrayList<>();
+
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
+
+		try {
+			st1 = conn.createStatement();
+
+            String query = "SELECT * FROM risorsa WHERE ID_Lab = '" + r.getId() + "'";
+
+			rs1 = st1.executeQuery(query);
+
+			while (rs1.next()) {
+				int idRisorsa = Integer.parseInt(rs1.getString(1));
+				String nomeRisorsa = rs1.getString(2);
+				String descrizione = rs1.getString(3);
+				String indirizzo = rs1.getString(4);
+				String tipo = rs1.getString(5);
+				int idLab = Integer.parseInt(rs1.getString(6));			
+				String matricola_inserimento = rs1.getString(7);
+				
+				result.add(new Resource(idRisorsa, nomeRisorsa, descrizione, indirizzo, tipo, idLab, matricola_inserimento));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DBConnection.closeConnection(conn);
+		return result;
 	}
 
 

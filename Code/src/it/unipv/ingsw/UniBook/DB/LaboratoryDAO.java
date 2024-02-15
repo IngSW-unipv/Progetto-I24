@@ -68,10 +68,37 @@ import it.unipv.ingsw.UniBook.Model.Resource;
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}		
 
 		DBConnection.closeConnection(conn);
 		return result;
 	}
+	
+	public int getCapacity(Resource r) {
+
+		int result = 0;
+
+		conn = DBConnection.startConnection(conn, schema);
+		Statement st1;
+		ResultSet rs1;
+
+		try {
+			st1 = conn.createStatement();
+			String query = "SELECT N_posti FROM unibook.laboratorio " + "WHERE ID = '" + r.getId() + "'";
+			rs1 = st1.executeQuery(query);
+			if (rs1.next()) {
+				result = Integer.parseInt(rs1.getString(1));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		DBConnection.closeConnection(conn);
+		return result;
+		
+	}
+	
+	
 	
 }

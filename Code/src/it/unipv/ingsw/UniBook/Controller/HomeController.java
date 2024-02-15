@@ -116,9 +116,13 @@ public class HomeController {
 		if (mv != null)
 			mv.dispose();
 
-		RegistrationView v = new RegistrationView();
-		RegistrationController c = new RegistrationController(v);
-		v.setVisible(true);
+		User model = SingletonManager.getInstance().getLoggedUser();
+		RegistrationView view = new RegistrationView();
+		RegistrationController c = new RegistrationController(view, model);
+		
+		//RegistrationView v = new RegistrationView();
+		//RegistrationController c = new RegistrationController(v);
+		view.setVisible(true);
 
 	}
 	private void openSharing() {

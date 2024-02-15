@@ -8,6 +8,9 @@ import it.unipv.ingsw.UniBook.Model.Booking;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import com.toedter.calendar.JDateChooser;
+import java.util.Calendar;
+
+
 
 public class BookingView extends JFrame {
 
@@ -24,13 +27,12 @@ public class BookingView extends JFrame {
 
 	private JButton confermaButton;
 
-	private JButton storicoButton; // Nuovo pulsante
+	//private JButton storicoButton; // Nuovo pulsante
 	private JButton removeButton;
 
 	public BookingView() {
-		// controller = new BookingController();
+
 		b = new Booking();
-		// this.controller = SingletonManager.getInstance().getBookingController();
 
 		// Impostazioni del frame
 		setTitle("Prenotazione Risorse");
@@ -43,6 +45,9 @@ public class BookingView extends JFrame {
 		dateChooser = new JDateChooser();
 		dateChooser.setDateFormatString("dd/MM/yyyy");
 
+		Calendar minDate = Calendar.getInstance();
+        dateChooser.setMinSelectableDate(minDate.getTime());
+		
 		JLabel oraLabel = new JLabel("Ora:");
 		oraComboBox = new JComboBox<>(b.timeChoice());
 		oraComboBox.setSelectedIndex(0); // Imposto l'ora predefinita a 8
@@ -59,8 +64,6 @@ public class BookingView extends JFrame {
 		 */
 
 		confermaButton = new JButton("Conferma Prenotazione");
-
-		storicoButton = new JButton("Storico Prenotazioni");
 		removeButton = new JButton("Cancella Prenotazione");
 
 		Font font = new Font("Arial", Font.PLAIN, 22);
@@ -70,7 +73,6 @@ public class BookingView extends JFrame {
 		durataLabel.setFont(font);
 		risorsaLabel.setFont(font);
 		confermaButton.setFont(font);
-		storicoButton.setFont(font);
 		removeButton.setFont(font);
 
 		oraComboBox.setFont(font);
@@ -78,11 +80,8 @@ public class BookingView extends JFrame {
 		risorsaComboBox.setFont(font);
 		dateChooser.setFont(font);
 
-		// Layout del frame
-		setLayout(new GridLayout(6, 2));
-		add(storicoButton);
-
-		add(removeButton);
+		setLayout(new GridLayout(5, 2));
+		
 		add(dataLabel);
 		add(dateChooser);
 		add(oraLabel);
@@ -91,7 +90,7 @@ public class BookingView extends JFrame {
 		add(durataComboBox);
 		add(risorsaLabel);
 		add(risorsaComboBox);
-		add(new JLabel()); // spazio vuoto per avere il bottone a destra
+		add(removeButton);
 		add(confermaButton);
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -103,10 +102,6 @@ public class BookingView extends JFrame {
 
 	public JButton getConfermaButton() {
 		return confermaButton;
-	}
-
-	public JButton getStoricoButton() {
-		return storicoButton;
 	}
 
 	public JButton getRemoveButton() {

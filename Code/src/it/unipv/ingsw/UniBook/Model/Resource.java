@@ -15,7 +15,10 @@ public class Resource {
 	private int id;
 	private String nome;
 	private String descrizione;
+	private String indirizzo;
 	private String tipo;
+	private int idLab;
+	private String matricola_inserimento;
 	private ManagementView inter;
 	private Resource r;
 	
@@ -23,6 +26,19 @@ public class Resource {
 
 	}
 
+	//Costruttore giusto che mi serviva per la prenotazione 
+	public Resource(int id, String nome, String descrizione, String indirizzo, String tipo, int idLab, String matricola_inserimento) {
+		
+		this.id=id;
+		this.nome=nome;
+		this.descrizione=descrizione;
+		this.tipo=tipo;
+		this.indirizzo=indirizzo;
+		this.idLab=idLab;
+		this.matricola_inserimento=matricola_inserimento;
+
+	}
+	
 	public Resource(int id, String nome, String descrizione, String tipo, ManagementView inter, Resource r) {
 		
 		this.id=id;
