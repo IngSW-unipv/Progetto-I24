@@ -31,9 +31,9 @@ INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('14', 'Postazione B12', 'Postazione laboratorio B1 elettronica', 'ELE', 'P', '3', null);
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('10', 'Postazione B21', 'Postazione laboratorio B2 elettronica', 'ELE', 'P', '4', null);
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('15', 'Postazione B22', 'Postazione laboratorio B2 elettronica', 'ELE', 'P', '4', null);
-INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('16', 'Postazione C1', 'Postazione laboratorio B2 elettronica', 'ELE', 'P', '4', null);
-INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('17', 'Postazione C2', 'Postazione laboratorio B2 elettronica', 'ELE', 'P', '4', null);
-INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('18', 'Postazione C3', 'Postazione laboratorio B2 elettronica', 'ELE', 'P', '4', null);
+INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('16', 'Postazione C1', 'Postazione laboratorio C elettronica', 'ELE', 'P', '4', null);
+INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('17', 'Postazione C2', 'Postazione laboratorio C elettronica', 'ELE', 'P', '4', null);
+INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `ID_Lab`, `Matricola_inserimento`) VALUES ('18', 'Postazione C3', 'Postazione laboratorio C elettronica', 'ELE', 'P', '4', null);
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `Matricola_inserimento`) VALUES ('11', 'ROM', 'ROM da 8GB', 'INF', 'A', 'R509822');
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `Matricola_inserimento`) VALUES ('12', 'FPGA', 'FPGA a disposizione degli studenti', 'INF', 'A', 'P501934');
 INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `Matricola_inserimento`) VALUES ('13', 'Arduino', 'Arduino', 'INF', 'P', 'P501934');
