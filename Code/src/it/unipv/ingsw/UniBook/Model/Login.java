@@ -51,10 +51,16 @@ public class Login extends Authentication {
 
 	}
 
-	public void fieldCheck() throws EmptyFieldException {
+	public void fieldCheck() throws EmptyFieldException, WrongFieldException {
+		
 		if (this.u.getId().isEmpty() == true || this.u.getPassword().isEmpty() == true) {
 			throw new EmptyFieldException();
 		}
+		
+		if (!Character.isUpperCase(this.u.getId().charAt(0))) {
+	        throw new WrongFieldException();
+	    }
+		
 	}
 
 	public void passwordCheck() throws WrongFieldException {

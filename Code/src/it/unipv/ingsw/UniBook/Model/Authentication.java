@@ -15,6 +15,7 @@ public class Authentication {
 		String tipo = u.getTipo();
 		switch (tipo) {
 		case "Studente":
+			System.out.println("TIPO: "+tipo);
 			SingletonManager.getInstance().setLoggedUser(new User(u.getId(), u.getNome(), u.getCognome(), u.getTipo(),
 					u.getEmail(), u.getCorso(), String.valueOf(u.getPassword())));
 			break;

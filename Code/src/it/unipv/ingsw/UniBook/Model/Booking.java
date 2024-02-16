@@ -251,7 +251,6 @@ public class Booking {
 				// Ciclo con cui vado a prenotare tutte le risorse di quel laboratorio
 				for (Resource resource : SingletonManager.getInstance().getResourceDAO()
 						.getResourceByLab((ttb.getR()))) {
-					System.out.println("ID RISORSA NEL BOOKIN 249: " + resource.getId());
 					bDAO.insertBooking(new Booking(resource, u, date, time, duration));
 				}
 

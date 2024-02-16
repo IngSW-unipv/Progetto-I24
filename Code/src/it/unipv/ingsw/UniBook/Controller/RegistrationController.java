@@ -45,7 +45,9 @@ public class RegistrationController {
 
 				Registration reg = new Registration(model);
 
-				reg.register(String.valueOf(view.getConfermaPassword()));
+				if(reg.register(String.valueOf(view.getConfermaPassword())))
+					view.dispose();
+					
 
 			}
 

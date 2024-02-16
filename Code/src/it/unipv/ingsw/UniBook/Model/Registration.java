@@ -20,8 +20,10 @@ public class Registration extends Authentication{
 
 	}
 
-	public void register(String ConfirmPassword) {
+	public boolean register(String ConfirmPassword) {
 
+		boolean success = false;
+		
 		try{
 			
 			matricolaCompatibileCheck();
@@ -35,6 +37,8 @@ public class Registration extends Authentication{
 			
 			/*SingletonManager.getInstance().setLoggedUser(new User(u.getId(), null, null, null, null, null,
 					String.valueOf(u.getPassword())));*/
+			
+			success = true;
 			
 			HomeView f = new HomeView();
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +67,7 @@ public class Registration extends Authentication{
 			System.out.println(e.toString());
 		}
 		
-		
+		return success;
 	}
 
 	private void fieldCheck(String password) throws EmptyFieldException {

@@ -143,5 +143,32 @@ public class UserDAO implements IUserDAO {
 		DBConnection.closeConnection(conn);
 		return result;
 	}
+	
+	//Metodo utile nel test della registrazione
+	public boolean deleteUser(User u) {
+
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+
+		boolean esito = true;
+
+		try {
+			
+			
+			String query = "DELETE FROM `unibook`.`utente` WHERE (`Matricola` = '"+u.getId()+"')";
+					
+			st1 = conn.prepareStatement(query);
+
+			st1.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			esito = false;
+		}
+
+		DBConnection.closeConnection(conn);
+		return esito;
+
+	}
 
 }
