@@ -3,11 +3,7 @@ package it.unipv.ingsw.UniBook.Model;
 import javax.swing.JOptionPane;
 
 import it.unipv.ingsw.UniBook.DB.BookingDAO;
-import it.unipv.ingsw.UniBook.Exception.DatabaseException;
-import it.unipv.ingsw.UniBook.Exception.DurationException;
-import it.unipv.ingsw.UniBook.Exception.EmptyFieldException;
-import it.unipv.ingsw.UniBook.Exception.OverbookingException;
-import it.unipv.ingsw.UniBook.Exception.PopupManager;
+import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.ManagementView;
 
 public class Resource {
@@ -19,8 +15,6 @@ public class Resource {
 	private String tipo;
 	private int idLab;
 	private String matricola_inserimento;
-	private ManagementView inter;
-	private Resource r;
 	
 	public Resource() {
 
@@ -29,25 +23,14 @@ public class Resource {
 	//Costruttore giusto che mi serviva per la prenotazione 
 	public Resource(int id, String nome, String descrizione, String indirizzo, String tipo, int idLab, String matricola_inserimento) {
 		
-		this.id=id;
-		this.nome=nome;
-		this.descrizione=descrizione;
-		this.tipo=tipo;
-		this.indirizzo=indirizzo;
-		this.idLab=idLab;
-		this.matricola_inserimento=matricola_inserimento;
+		this.id = id;
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.tipo = tipo;
+		this.indirizzo = indirizzo;
+		this.idLab = idLab;
+		this.matricola_inserimento = matricola_inserimento;
 
-	}
-	
-	public Resource(int id, String nome, String descrizione, String tipo, ManagementView inter, Resource r) {
-		
-		this.id=id;
-		this.nome=nome;
-		this.descrizione=descrizione;
-		this.tipo=tipo;
-		this.inter=inter;
-		this.r=r;
-		
 	}
 	
 	public int getId() {
@@ -81,116 +64,74 @@ public class Resource {
 	public void setTipo(String Tipo) {
 		this.tipo = Tipo;
 	}
-
-	public ManagementView getInter() {
-		return inter;
+	
+	public String getIndirizzo() {
+		return indirizzo;
 	}
 
-	public void setInter(ManagementView inter) {
-		this.inter = inter;
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
 	}
 
-	public Resource getR() {
-		return r;
+	public int getIdLab() {
+		return idLab;
 	}
 
-	public void setR(Resource r) {
-		this.r = r;
+	public void setIdLab(int idLab) {
+		this.idLab = idLab;
 	}
 
+	public String getMatricola_inserimento() {
+		return matricola_inserimento;
+	}
+
+	public void setMatricola_inserimento(String matricola_inserimento) {
+		this.matricola_inserimento = matricola_inserimento;
+	}
+
+	
 	
 //CONTROLLI
-
-	//metodo che controlla che l'utente compila nome e descrizione 
-	public void checkText () {
-	
-		if (inter.getTextField1Text().isEmpty() || inter.getTextField2Text().isEmpty()) {
 		
-			String messaggio = "Riempi tutti i campi";
-			JOptionPane.showMessageDialog(inter, messaggio, "Dati Mancanti", JOptionPane.WARNING_MESSAGE);
-        
-		}
-	
-	}
-
-	//metodo controllo caselle check Prenotabile e Affittabile
-	public void checkCaselle() {
-		
-		boolean isPrenotabile = inter.CheckBoxPrenotabileSelected();
-		boolean isAffittabile = inter.CheckBoxAffittabileSelected();
-
-			//controllo caselle
-			if (!isPrenotabile && !isAffittabile) {
-    	
-				String messaggio = "Seleziona almeno una opzione tra Prenotabile e Affittabile";
-				JOptionPane.showMessageDialog(inter, messaggio, "Selezione Errata", JOptionPane.WARNING_MESSAGE);
-        	
-			} else if (isPrenotabile && isAffittabile) {
-    	
-				String messaggio = "Non puoi selezionare contemporaneamente Prenotabile e Affittabile";
-				JOptionPane.showMessageDialog(inter, messaggio, "Selezione Errata", JOptionPane.WARNING_MESSAGE);
-        
-			}else {
+		 // Metodo per controllare lo stato delle caselle di controllo
+	    public void checkCheckBoxes(boolean isPrenotabile, boolean isAffittabile) throws EmptyFieldException{
+	    	
+	        if (!isPrenotabile && !isAffittabile) {
 	        	
-	            if (isPrenotabile) {
-	            	
-	            	r.setTipo("Prenotabile");
-	                
-	            } else if (isAffittabile) {
-	            	
-	            	r.setTipo("Affittabile");
-	                
+	        	PopupManager.mostraPopup("Selezionare almeno una casella.");
+	            
+	        } else if (isPrenotabile && isAffittabile) {
+	        	
+	        	PopupManager.mostraPopup("Non è possibile selezionare entrambe le caselle.");
+	            
+	        }
+	    }
+
+	public void tryToUpload (String nome, String descrizione, boolean isPrenotabile, boolean isAffittabile){
+
+			try {
+				
+	            checkCheckBoxes(isPrenotabile, isAffittabile);
+	            
+	            if (nome.isEmpty() || descrizione.isEmpty()) {
+	                throw new EmptyFieldException();
 	            }
-		
-	            if(inter.CheckBoxPrenotabileSelected()) {
+	            
+	            if ((isPrenotabile && !isAffittabile) || (!isPrenotabile && isAffittabile)) {
 	            	
-	            	r.setTipo("Prenotabile");
+	            	if(isPrenotabile == true) {
+	            		
+	            		tipo = "prenotabile";
+	            		
+	            	} else tipo = "affittabile";
 	            	
-	            }
-		
-	            if(inter.CheckBoxAffittabileSelected()) {
+	            	PopupManager.mostraPopup("Risorsa inserita con successo! " + "\n Nome: " + nome + "\n Descrizione: " + descrizione + "\n La risorsa é ora "+ tipo);
 	            	
-	            	r.setTipo("Affittabile");
-	            	
-	            }
-    
-			}
+	            }} catch (EmptyFieldException e) {
+					
+				e.mostraPopup();
+				System.out.println(e.toString());
+				
+				}
 	}
-	
-	
-	public void tryToUpload() {
-
-		Resource ttb = new Resource (id, nome, descrizione, tipo, inter, r);
-
-		try {
-			
-			checkText();
-			checkCaselle();
-
-			nome = inter.getTextField1Text();
-			descrizione = inter.getTextField2Text();
-
-			r.setNome(nome);
-			r.setDescrizione(descrizione);
-			
-			// Mostra le informazioni in una finestra
-			String messaggio = "Nome : " + nome + "\n" + "Descrizione : " + descrizione + "\n"
-					+ (inter.CheckBoxPrenotabileSelected() ? nome + " é ora prenotabile" : "")
-					+ (inter.CheckBoxAffittabileSelected() ? nome + " é ora affitabile" : "");
-
-			JOptionPane.showMessageDialog(inter, messaggio, "Dati Inseriti",
-					JOptionPane.INFORMATION_MESSAGE);
-			
-			inter.dispose();
-
-		 } catch (NullPointerException e) {
-			
-			String messaggio = "Riempi i campi";
-			
-			JOptionPane.showMessageDialog(inter, messaggio, "Dati Inseriti", JOptionPane.INFORMATION_MESSAGE);				
-			}
-		
-	}
-		
-
-	}
+}

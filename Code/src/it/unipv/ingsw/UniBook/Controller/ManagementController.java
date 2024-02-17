@@ -33,8 +33,14 @@ public class ManagementController {
 			}
 
 			private void manageAction() {
-					
-				r.tryToUpload(); //controllo completo errori
+				
+				 String nome = interfaccia.getTextNome();
+				 String descrizione = interfaccia.getTextDescrizione();
+				 boolean prenotabile = interfaccia.CheckBoxPrenotabileSelected();
+				 boolean affittabile = interfaccia.CheckBoxAffittabileSelected();
+				    
+				// Chiama il metodo tryToUpload()
+				r.tryToUpload(nome, descrizione, prenotabile, affittabile);
 
 			}
 		};
@@ -45,5 +51,4 @@ public class ManagementController {
 	}
 		
 }
-
 

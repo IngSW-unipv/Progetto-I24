@@ -13,7 +13,6 @@ public class ManagementView extends JFrame {
 	private JButton confermButton;
 	private JButton removeRButton;
 
-
 	public ManagementView() {
 
 		// Impostazioni del frame
@@ -97,15 +96,15 @@ public class ManagementView extends JFrame {
 		return confermButton;
 	}
 
-	public String getTextField1Text() {
+	public String getTextNome() {
 		return nameR.getText();
 	}
  
-	public String getTextField2Text() {
+	public String getTextDescrizione() {
 		return descriptionR.getText();
 	}
 
-	public String getTextField3Text() {
+	public String getTipo() {
 		return text.getText();
 	}
 

@@ -43,7 +43,7 @@ public class BookingController {
 
 				model.setDate(view.getData());
 				model.setTime(view.getOra());
-				model.setR(new Resource(0, view.getRisorsa(), null, null, null, null));
+				model.setR(new Resource(0, view.getRisorsa(), null, null, null, 0 , null));
 				model.setDuration(view.getDurata());
 
 				model.tryToBook();

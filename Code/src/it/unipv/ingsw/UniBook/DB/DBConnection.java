@@ -26,7 +26,7 @@ public class DBConnection {
 		try {
 			
 			username="root";
-			password= "0000";
+			password= "root";
 			dbDriver = "com.mysql.cj.jdbc.Driver";
 			dbURL = "jdbc:mysql://127.0.0.1:3306/";
 			
@@ -52,7 +52,7 @@ public class DBConnection {
 			System.out.println(dbURL);
 			Class.forName(dbDriver);
 			
-			conn = DriverManager.getConnection(dbURL+schema+"?user=root?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "0000");// Apertura connessione
+			conn = DriverManager.getConnection(dbURL+schema+"?user=root?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", password);// Apertura connessione
 
 		}
 		catch (Exception e) 
