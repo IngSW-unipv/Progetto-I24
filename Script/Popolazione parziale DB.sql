@@ -9,7 +9,7 @@ INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`,
 INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, `Password`) VALUES ('P503454', 'Andrea', 'Bruni', 'Professore', 'andrea.bruni01@universitadipavia.it', 'ELE', '567');
 INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, `Password`) VALUES ('S506567', 'Michele', 'Lombardi', 'Studente', 'michele.lombardi01@universitadipavia.it', 'INF', '678');
 INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, `Password`) VALUES ('P509899', 'Luigi', 'Esposito', 'Professore', 'luigi.esposito01@universitadipavia.it', 'INF', '789');
-INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, `Password`) VALUES ('P500999', 'Mario', 'Rossi', 'Ricercatore', 'mario.rossi01@universitadipavia.it', 'ELE', '000');
+INSERT INTO `unibook`.`utente` (`Matricola`, `Nome`, `Cognome`, `Tipo`, `Email`, `Corso`, `Password`) VALUES ('R500999', 'Mario', 'Rossi', 'Ricercatore', 'mario.rossi01@universitadipavia.it', 'ELE', '000');
 
 -- Laboratorio
 INSERT INTO `unibook`.`laboratorio` (`ID`, `N_posti`, `Nome`) VALUES ('1', '30', 'Laboratorio A1');
