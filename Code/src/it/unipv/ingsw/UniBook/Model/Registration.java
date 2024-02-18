@@ -9,11 +9,9 @@ import it.unipv.ingsw.UniBook.View.HomeView;
 
 public class Registration extends Authentication{
 
-	//private User u;
 	private UserDAO uDAO;
 
 	public Registration(User u) {
-		//this.u = new User();
 		super(u);
 
 		this.uDAO = SingletonManager.getInstance().getUserDAO();
@@ -33,10 +31,6 @@ public class Registration extends Authentication{
 			succesfulOperationCheck();
 			
 			setTypeOfUser();
-			
-			
-			/*SingletonManager.getInstance().setLoggedUser(new User(u.getId(), null, null, null, null, null,
-					String.valueOf(u.getPassword())));*/
 			
 			success = true;
 			

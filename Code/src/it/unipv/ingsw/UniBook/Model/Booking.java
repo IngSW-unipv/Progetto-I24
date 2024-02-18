@@ -58,15 +58,6 @@ public class Booking {
 		this.time = time;
 	}
 
-	public String getResourceName() {
-		return r.getNome();
-	}
-
-	public void setResourceName(String name) {
-		r.setNome(name);
-		;
-	}
-
 	public User getU() {
 		return u;
 	}
@@ -165,7 +156,7 @@ public class Booking {
 	}
 
 	// Metodo che consente l'eliminazione di risorse previa conferma
-	public void removeBooking(ArrayList<Booking> bookings, int index) {
+	public boolean removeBooking(ArrayList<Booking> bookings, int index) {
 
 		int choice;
 
@@ -176,12 +167,23 @@ public class Booking {
 			// Verifica la scelta dell'utente
 			if (choice == JOptionPane.YES_OPTION) {
 				bDAO.deleteSelectedBooking(bDAO.getBooking(u, index));
+				return true;
 			}
 		}
+		
+		return false;
 
 	}
 
-	public void tryToBook() {
+	public boolean delete(int index) {
+		if (removeBooking(getUserBookings(SingletonManager.getInstance().getLoggedUser()), index))
+			return true;
+		
+			return false;
+
+	}
+
+	public boolean tryToBook() {
 
 		Booking ttb = null;
 		Boolean result = false;
@@ -215,14 +217,16 @@ public class Booking {
 			System.out.println(e.toString());
 		}
 
+		return result;
+
 	}
 
 	public boolean resourceManagement(Booking ttb) throws EmptyFieldException, OverbookingException, DurationException {
 		checkEmptyDate();
 		checkDuration();
 		checkAvailability(ttb);
-		//boolean succesfulInsertion = bDAO.insertBooking(ttb, SingletonManager.getInstance().getLoggedUser());
-		
+
+
 		boolean succesfulInsertion = bDAO.insertBooking(ttb);
 		return succesfulInsertion;
 	}

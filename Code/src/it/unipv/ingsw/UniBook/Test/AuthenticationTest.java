@@ -36,7 +36,6 @@ public class AuthenticationTest {
 			l = new Login(SingletonManager.getInstance().getUserDAO().selectUserByMatricola(user));
 			assertTrue(l.login());
 		}
-
 	}
 
 	@Test
@@ -52,7 +51,6 @@ public class AuthenticationTest {
 			l = new Login(SingletonManager.getInstance().getUserDAO().selectUserByMatricola(user));
 			assertFalse(l.login());
 		}
-
 	}
 
 	@Test
@@ -85,16 +83,12 @@ public class AuthenticationTest {
 			r = new Registration(user);
 			assertFalse(r.register(user.getPassword()));
 			}
-		
-		
 
 	}
 	
-	//Rimuovo gli utenti inseriti nel testOk
+	
 	public void clean() {
 		for (User user : u) {
-			//Per rimuovere dal DB gli user appena inseriti
-			System.out.println(user.getId());
 			SingletonManager.getInstance().getUserDAO().deleteUser(user); 
 		}
 	}

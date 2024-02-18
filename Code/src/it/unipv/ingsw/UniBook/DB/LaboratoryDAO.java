@@ -1,7 +1,6 @@
 package it.unipv.ingsw.UniBook.DB;
 
 
-	import it.unipv.ingsw.UniBook.Model.Laboratory;
 import it.unipv.ingsw.UniBook.Model.Resource;
 	import it.unipv.ingsw.UniBook.Model.User;
 

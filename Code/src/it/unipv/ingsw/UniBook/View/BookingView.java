@@ -27,7 +27,6 @@ public class BookingView extends JFrame {
 
 	private JButton confermaButton;
 
-	//private JButton storicoButton; // Nuovo pulsante
 	private JButton removeButton;
 
 	public BookingView() {

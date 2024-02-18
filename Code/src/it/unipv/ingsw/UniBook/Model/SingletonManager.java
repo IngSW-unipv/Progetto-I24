@@ -19,9 +19,7 @@ public class SingletonManager {
 	private Professor professor;
 	private Researcher researcher;
 	private User user;
-	//private Student student;
-	// private BookingController controller;
-	// private BookingView view;
+
 
 	// Costruttore privato
 	private SingletonManager() {
@@ -62,10 +60,6 @@ public class SingletonManager {
 	public LaboratoryDAO getLaboratoryDAO() {
 		return laboratoryDAO;
 	}
-
-	// public void setLoggedUser(User u) {
-	// this.loggedUser = u;
-	// }
 
 	public User getLoggedUser() {
 		return loggedUser;

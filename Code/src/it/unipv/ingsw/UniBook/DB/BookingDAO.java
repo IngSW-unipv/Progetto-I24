@@ -70,7 +70,6 @@ public class BookingDAO implements IBookingDAO {
 		boolean esito = true;
 
 		try {
-			// String dateTime = parseStringToDateTime(b.getDate(),b.getTime());
 
 			String query = "INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) "
 					+ " VALUES(?,?,?,?)";
@@ -79,18 +78,7 @@ public class BookingDAO implements IBookingDAO {
 			st1.setInt(1, b.getR().getId());
 			st1.setString(2, b.getU().getId());
 
-			// Per adattare i formati
-
 			st1.setString(3, itaParseStringToDateTime(b.getDate(), b.getTime()));
-
-			/*
-			 * SimpleDateFormat inputDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			 * SimpleDateFormat outputDateFormat = new
-			 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String dataOraFormatted =
-			 * b.getDate() + " " + b.getTime(); java.util.Date parsedDate =
-			 * inputDateFormat.parse(dataOraFormatted); st1.setString(3,
-			 * outputDateFormat.format(parsedDate));
-			 */
 
 			st1.setInt(4, b.getDuration());
 
@@ -106,7 +94,7 @@ public class BookingDAO implements IBookingDAO {
 
 	}
 
-	//Ottengo L'ID della risorsa sulla base del nome
+	// Ottengo L'ID della risorsa sulla base del nome
 	public String getIDbyName(Resource r) {
 
 		String nome = r.getNome();
@@ -176,9 +164,8 @@ public class BookingDAO implements IBookingDAO {
 		PreparedStatement st1;
 
 		try {
-
+			
 			String dateTime = engParseStringToDateTime(b.getDate(), b.getTime());
-
 			String query = "DELETE FROM unibook.prenotazione WHERE ID_Risorsa = ? AND Matricola = ? AND DataOra = ? AND tempo = ?";
 			st1 = conn.prepareStatement(query);
 
@@ -245,22 +232,15 @@ public class BookingDAO implements IBookingDAO {
 			String dateTime = itaParseStringToDateTime(b.getDate(), b.getTime());
 
 			st1 = conn.createStatement();
-			/*
-			 		VERSIONE CHE NON IMPEDIVA SOVRAPPOSIZIONE DI PRENOTAZIONI IN ORE DIVERSE CON DURATE DIVERSE
-			 		String query = "SELECT ID_Risorsa, Matricola, DataOra, tempo "
-			 
-					+ "FROM unibook.prenotazione join risorsa on prenotazione.ID_Risorsa = risorsa.ID "
-					+ "where dataOra = '" + dateTime + "' " + "and ID_LAB = '" + b.getR().getId() + "' ";
-			*/
-			
+
 			String query = "SELECT ID_Risorsa, Matricola, DataOra, tempo "
-					 
+
 					+ "FROM unibook.prenotazione join risorsa on prenotazione.ID_Risorsa = risorsa.ID "
-					+ "where ID_LAB = '"+ b.getR().getId() +"'"
-					+ "AND ((DataOra >= '"+dateTime+"' AND DataOra <= ADDTIME('"+dateTime+"', SEC_TO_TIME("+b.getDuration()+" * 3600)))"
-					+ "	OR (DataOra <= '"+dateTime+"' AND ADDTIME(DataOra, SEC_TO_TIME(tempo * 3600)) > '"+dateTime+"'))";
-											
-			
+					+ "where ID_LAB = '" + b.getR().getId() + "'" + "AND ((DataOra >= '" + dateTime
+					+ "' AND DataOra <= ADDTIME('" + dateTime + "', SEC_TO_TIME(" + b.getDuration() + " * 3600)))"
+					+ "	OR (DataOra <= '" + dateTime + "' AND ADDTIME(DataOra, SEC_TO_TIME(tempo * 3600)) > '"
+					+ dateTime + "'))";
+
 			rs1 = st1.executeQuery(query);
 
 			while (rs1.next()) {
@@ -278,15 +258,6 @@ public class BookingDAO implements IBookingDAO {
 				result.add(new Booking(r1, u, r[0], r[1], Integer.parseInt(rs1.getString(4))));
 
 			}
-
-			/*for (Booking booking : result) {
-				System.out.println("Risorsa: " + booking.getR().getId());
-				System.out.println("Matricola: " + booking.getU().getId());
-				System.out.println("Data: " + booking.getDate());
-				System.out.println("Tempo: " + booking.getTime());
-				System.out.println("Durata: " + booking.getDuration());
-				System.out.println("------------------------------------");
-			}*/
 
 		} catch (Exception e) {
 			e.printStackTrace();

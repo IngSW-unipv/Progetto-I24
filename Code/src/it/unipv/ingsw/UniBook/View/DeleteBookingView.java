@@ -51,7 +51,7 @@ public class DeleteBookingView extends JFrame{
 	public void updateTable(ArrayList<Booking> booking) {
 		model.setRowCount(0); // Pulisce la tabella prima di aggiungere nuove righe
 		for (Booking b : booking) {
-			model.addRow(new Object[] { b.getResourceName(), b.getDate(), b.getTime(),
+			model.addRow(new Object[] { b.getR().getNome(), b.getDate(), b.getTime(),
 					b.getDuration() });
 		}
 	}

@@ -82,9 +82,8 @@ public class BookingController {
 			}
 
 			private void manageAction() {
-				// Rimuovo la prenotazione dal modello
-				model.removeBooking(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()),
-						dview.getSelectedRow());
+		
+				model.delete(dview.getSelectedRow());
 				// Aggiorno la vista
 				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));
 			}

@@ -120,8 +120,6 @@ public class HomeController {
 		RegistrationView view = new RegistrationView();
 		RegistrationController c = new RegistrationController(view, model);
 		
-		//RegistrationView v = new RegistrationView();
-		//RegistrationController c = new RegistrationController(v);
 		view.setVisible(true);
 
 	}

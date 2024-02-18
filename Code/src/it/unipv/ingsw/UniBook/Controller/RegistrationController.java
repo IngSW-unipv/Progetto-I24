@@ -33,8 +33,6 @@ public class RegistrationController {
 
 			private void manageAction() {
 
-				// model =new User();
-
 				model.setId(view.getMatricola());
 				model.setNome(view.getNome());
 				model.setCognome(view.getCognome());
