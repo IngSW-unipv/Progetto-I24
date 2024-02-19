@@ -1,5 +1,7 @@
 package it.unipv.ingsw.UniBook.Controller;
 
+import it.unipv.ingsw.UniBook.Exception.AuthorizationDeniedException;
+import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.*;
 
 import it.unipv.ingsw.UniBook.View.*;
@@ -14,6 +16,7 @@ public class HomeController {
 	private ManagementView mv;
 	private BookingView bv;
 	private CondivisioneView sv;
+	private User u;
 
 	public HomeController(HomeView view) {
 		hv = view;
@@ -88,13 +91,27 @@ public class HomeController {
 			hv.getButtonF().addActionListener(CF);
 }
 	
-
+	// Controllo se l'utente è un professore o un ricercatore
 	private void openResourceManagementFrame() {
-
-		mv = new ManagementView();
-		Resource r = new Resource();
-		ManagementController c = new ManagementController(mv, r);
-		mv.setVisible(true);
+	    User user = SingletonManager.getInstance().getLoggedUser();
+	    
+	    if (user != null && (user.getTipo().equals("Professore") || user.getTipo().equals("Ricercatore"))) {
+	    	
+	        mv = new ManagementView();
+	        ManagementController c = new ManagementController(mv, user);
+	        mv.setVisible(true);
+	        
+	    } else {
+	        try {
+	        	
+	            throw new AuthorizationDeniedException();
+	            
+	        } catch (AuthorizationDeniedException e) {
+	        	
+	            e.mostraPopup();
+	            
+	        }
+	    }
 	}
 
 	private void openResourceBooking() {
@@ -120,6 +137,8 @@ public class HomeController {
 		RegistrationView view = new RegistrationView();
 		RegistrationController c = new RegistrationController(view, model);
 		
+		//RegistrationView v = new RegistrationView();
+		//RegistrationController c = new RegistrationController(v);
 		view.setVisible(true);
 
 	}

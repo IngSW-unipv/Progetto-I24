@@ -48,29 +48,41 @@ public class ResourceDAO implements IResourceDAO {
 	}
 
 	public boolean insertRisorsa(Resource r) {
+	    conn = DBConnection.startConnection(conn, schema);
+	    PreparedStatement st1;
+	    boolean esito = true;
 
-		conn = DBConnection.startConnection(conn, schema);
-		PreparedStatement st1;
+	    try {
+	        // Prendo ID max del DB
+	        String getMaxIdQuery = "SELECT MAX(ID) FROM risorsa";
+	        Statement getMaxIdStmt = conn.createStatement();
+	        ResultSet maxIdRs = getMaxIdStmt.executeQuery(getMaxIdQuery);
 
-		boolean esito = true;
+	        int maxId = 0;
+	        if (maxIdRs.next()) {
+	            maxId = maxIdRs.getInt(1);
+	        }
 
-		try {
-			String query = "INSERT INTO RISORSA (NOME,DESCRIZIONE,TIPO) VALUES(?,?,?)";
-			st1 = conn.prepareStatement(query);
-			st1.setString(1, r.getNome());
-			st1.setString(2, r.getDescrizione());
-			st1.setString(3, r.getTipo());
+	        // Incrementa l'ID max per inserirlo nella nuova risorsa
+	        int newId = maxId + 1;
 
-			st1.executeUpdate();
+	        String query = "INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`) VALUES (?, ?, ?, ?, ?);";
+	        st1 = conn.prepareStatement(query);
+	        st1.setInt(1, newId); // Nuovo ID 
+	        st1.setString(2, r.getNome());
+	        st1.setString(3, r.getDescrizione());
+	        st1.setString(4, r.getIndirizzo());
+	        st1.setString(5, r.getTipo());
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			esito = false;
-		}
+	        st1.executeUpdate();
 
-		DBConnection.closeConnection(conn);
-		return esito;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        esito = false;
+	    }
 
+	    DBConnection.closeConnection(conn);
+	    return esito;
 	}
 	
 	//Metodo con cui ottengo tutte le postazioni di un determinato laboratorio
@@ -107,6 +119,4 @@ public class ResourceDAO implements IResourceDAO {
 		DBConnection.closeConnection(conn);
 		return result;
 	}
-
-
 }

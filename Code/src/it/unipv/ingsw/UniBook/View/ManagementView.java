@@ -95,6 +95,10 @@ public class ManagementView extends JFrame {
 	public JButton getConfermaButton() {
 		return confermButton;
 	}
+	
+	public JButton getRimuoviButton() {
+	    return removeRButton;
+	}
 
 	public String getTextNome() {
 		return nameR.getText();

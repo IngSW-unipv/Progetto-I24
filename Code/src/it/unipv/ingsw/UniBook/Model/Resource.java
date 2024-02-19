@@ -3,6 +3,7 @@ package it.unipv.ingsw.UniBook.Model;
 import javax.swing.JOptionPane;
 
 import it.unipv.ingsw.UniBook.DB.BookingDAO;
+import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.ManagementView;
 
@@ -15,6 +16,8 @@ public class Resource {
 	private String tipo;
 	private int idLab;
 	private String matricola_inserimento;
+	
+	private User user;
 	
 	public Resource() {
 
@@ -92,46 +95,75 @@ public class Resource {
 	
 	
 //CONTROLLI
+	
+	
+	    
+	public void tryToUpload(String nome, String descrizione, boolean isPrenotabile, boolean isAffittabile, User user) {
 		
-		 // Metodo per controllare lo stato delle caselle di controllo
-	    public void checkCheckBoxes(boolean isPrenotabile, boolean isAffittabile) throws EmptyFieldException{
+	    try {
 	    	
-	        if (!isPrenotabile && !isAffittabile) {
+	        // Controllo se nessuna delle caselle è selezionata e se nome e descrizione sono vuoti
+	        if ((!isPrenotabile && !isAffittabile) || nome.isEmpty() || descrizione.isEmpty()) {
+	            throw new Exception("Riempi tutti i campi!");
+	        }
+	        
+	        // Controllo se entrambe le caselle sono selezionate
+	        if (isPrenotabile && isAffittabile) {
+	            throw new Exception("Non è possibile selezionare entrambe le caselle.");
+	        }
+
+	        // Controllo se i campi nome e descrizione sono vuoti
+	        if (nome.isEmpty() || descrizione.isEmpty()) {
 	        	
-	        	PopupManager.mostraPopup("Selezionare almeno una casella.");
-	            
-	        } else if (isPrenotabile && isAffittabile) {
-	        	
-	        	PopupManager.mostraPopup("Non è possibile selezionare entrambe le caselle.");
+	            throw new EmptyFieldException();
 	            
 	        }
-	    }
 
-	public void tryToUpload (String nome, String descrizione, boolean isPrenotabile, boolean isAffittabile){
+	        String tipo;
+	        String tipoDescrizione;
 
-			try {
-				
-	            checkCheckBoxes(isPrenotabile, isAffittabile);
+	        if (isPrenotabile) {
+	        	
+	            tipo = "P";
+	            tipoDescrizione = "Prenotabile";
 	            
-	            if (nome.isEmpty() || descrizione.isEmpty()) {
-	                throw new EmptyFieldException();
-	            }
+	        } else {
+	        	
+	            tipo = "A";
+	            tipoDescrizione = "Affittabile";
 	            
-	            if ((isPrenotabile && !isAffittabile) || (!isPrenotabile && isAffittabile)) {
-	            	
-	            	if(isPrenotabile == true) {
-	            		
-	            		tipo = "prenotabile";
-	            		
-	            	} else tipo = "affittabile";
-	            	
-	            	PopupManager.mostraPopup("Risorsa inserita con successo! " + "\n Nome: " + nome + "\n Descrizione: " + descrizione + "\n La risorsa é ora "+ tipo);
-	            	
-	            }} catch (EmptyFieldException e) {
-					
-				e.mostraPopup();
-				System.out.println(e.toString());
-				
-				}
+	        }
+
+	        // Creazione di una nuova risorsa con i valori forniti
+	        Resource nuovaRisorsa = new Resource();
+	        nuovaRisorsa.setNome(nome);
+	        nuovaRisorsa.setDescrizione(descrizione);
+	        nuovaRisorsa.setTipo(tipo);
+	        nuovaRisorsa.setIndirizzo(user.getCorso());
+	        
+	        // Inserimento della risorsa nel database utilizzando ResourceDAO
+	        ResourceDAO resourceDAO = new ResourceDAO();
+	        boolean inserimento = resourceDAO.insertRisorsa(nuovaRisorsa);
+
+	        if (inserimento) {
+	        	
+	            PopupManager.mostraPopup("Risorsa inserita con successo! \nNome: " + nome + "\nDescrizione: " + descrizione + "\nLa risorsa è ora " + tipoDescrizione);
+	        } else {
+	        	
+	            PopupManager.mostraPopup("Si è verificato un errore durante l'inserimento della risorsa.");
+	            
+	        }
+	    		} catch (EmptyFieldException e) {
+	    	
+	    			e.mostraPopup();
+	    			System.out.println(e.toString());
+	        
+	    		} catch (Exception e) {
+	    	
+	    			PopupManager.mostraPopup("Si è verificato un errore: " + e.getMessage());
+	    			System.out.println(e.toString());
+	        
+	    		}
 	}
+
 }
