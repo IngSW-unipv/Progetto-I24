@@ -15,35 +15,37 @@ public class LoginView extends JFrame {
 	public LoginView() {
 
 		setTitle("Login");
-		setSize(400, 150);
-		
+        setSize(400, 150);
 
-		loginPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-		loginPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		loginPanel.setBackground(new Color(214, 255, 255));
-		add(loginPanel);
-		
-		loginPanel.add(new JLabel("Matricola:"));
-		matricolaField = new JTextField();
-		loginPanel.add(matricolaField);
+        loginPanel = new JPanel(new BorderLayout());
+        loginPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        loginPanel.setBackground(new Color(214, 255, 255));
+        add(loginPanel);
 
-		loginPanel.add(new JLabel("Password:"));
-		passwordField = new JPasswordField();
-		loginPanel.add(passwordField);
+        JPanel fieldsPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        fieldsPanel.setBackground(new Color(214, 255, 255));
+        loginPanel.add(fieldsPanel, BorderLayout.CENTER);
 
-		confirmButton = new JButton("Accedi");
+        fieldsPanel.add(new JLabel("Matricola:"));
+        matricolaField = new JTextField();
+        fieldsPanel.add(matricolaField);
 
-		loginPanel.add(confirmButton);
+        fieldsPanel.add(new JLabel("Password:"));
+        passwordField = new JPasswordField();
+        fieldsPanel.add(passwordField);
 
-		// Centra la finestra
-		setLocationRelativeTo(null);
+        confirmButton = new JButton("Accedi");
 
-		// Imposta la chiusura dell'applicazione quando si chiude la finestra
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginPanel.add(confirmButton, BorderLayout.SOUTH);
 
-		setVisible(true);
-		
-	}
+        // Centra la finestra
+        setLocationRelativeTo(null);
+
+        // Imposta la chiusura dell'applicazione quando si chiude la finestra
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setVisible(true);
+    }
 
 	public JPanel getRegistrationPanel() {
 		return loginPanel;

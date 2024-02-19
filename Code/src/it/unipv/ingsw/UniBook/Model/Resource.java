@@ -17,8 +17,6 @@ public class Resource {
 	private int idLab;
 	private String matricola_inserimento;
 	
-	private User user;
-	
 	public Resource() {
 
 	}
@@ -140,6 +138,7 @@ public class Resource {
 	        nuovaRisorsa.setDescrizione(descrizione);
 	        nuovaRisorsa.setTipo(tipo);
 	        nuovaRisorsa.setIndirizzo(user.getCorso());
+	        nuovaRisorsa.setMatricola_inserimento(user.getId());
 	        
 	        // Inserimento della risorsa nel database utilizzando ResourceDAO
 	        ResourceDAO resourceDAO = new ResourceDAO();
@@ -165,5 +164,4 @@ public class Resource {
 	        
 	    		}
 	}
-
 }

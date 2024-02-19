@@ -43,7 +43,7 @@ public class ManagementController {
     
     private void removeRisorsa() {
     	
-    	DeleteResourceView DeleteFrame = new DeleteResourceView();
+    	DeleteResourceView DeleteFrame = new DeleteResourceView(user.getId());
     	DeleteFrame.setVisible(true);
         
     }

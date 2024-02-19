@@ -6,6 +6,7 @@ public interface IResourceDAO {
 		
 		public ArrayList<String> selectAll();
 		public boolean insertRisorsa(Resource f);
-		//public boolean removeRisorsa(Resource f);
+		public boolean removeRisorsa(Resource f);
+		public int getMaxID(); 
 
 }
