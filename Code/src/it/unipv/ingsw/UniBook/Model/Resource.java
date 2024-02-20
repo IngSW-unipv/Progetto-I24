@@ -1,6 +1,9 @@
 package it.unipv.ingsw.UniBook.Model;
 
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import it.unipv.ingsw.UniBook.DB.BookingDAO;
 import it.unipv.ingsw.UniBook.DB.ResourceDAO;
@@ -114,7 +117,7 @@ public class Resource {
 	}
 	
 
-//CONTROLLI
+//LOGICA
 
 	public void tryToUpload(String nome, String descrizione, boolean isPrenotabile, boolean isAffittabile, User user, double prezzo) {
 	    try {
@@ -195,6 +198,29 @@ public class Resource {
 	        System.out.println(e.toString());
 	    }
 	}
+	
+	// Metodo per rimuovere una risorsa
+    public static void removeResource(ArrayList<Resource> resources, int selectedRow, DefaultTableModel model) {
+        if (selectedRow != -1) {
+            int option = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare questa risorsa?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                // Ottieni l'ID dalla riga selezionata
+                int id = resources.get(selectedRow).getId();
+                ResourceDAO resourceDAO = new ResourceDAO();
+                Resource resourceToRemove = new Resource();
+                resourceToRemove.setId(id);
+                boolean removed = resourceDAO.removeRisorsa(resourceToRemove);
+                if (removed) {
+                    JOptionPane.showMessageDialog(null, "Risorsa rimossa con successo.");
+                    model.removeRow(selectedRow);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Si è verificato un errore durante la rimozione della risorsa.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleziona una risorsa da eliminare.");
+        }
+    }
 
 	/*
 	 * PROVA PER COMBOBOX

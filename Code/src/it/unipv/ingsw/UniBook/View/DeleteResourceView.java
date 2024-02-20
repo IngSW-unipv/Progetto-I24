@@ -52,35 +52,7 @@ public class DeleteResourceView extends JFrame {
         removeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
-                int selectedRow = getSelectedRow();
-                if (selectedRow != -1) {
-                	
-                    int option = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare questa risorsa?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
-                    if (option == JOptionPane.YES_OPTION) {
-                    	
-                        // Ottieni l'ID dalla riga selezionata
-                        int id = resources.get(selectedRow).getId();
-                        ResourceDAO resourceDAO = new ResourceDAO();
-                        Resource resourceToRemove = new Resource();
-                        resourceToRemove.setId(id);
-                        boolean removed = resourceDAO.removeRisorsa(resourceToRemove);
-                        if (removed) {
-                        	
-                            JOptionPane.showMessageDialog(null, "Risorsa rimossa con successo.");
-                            model.removeRow(selectedRow);
-                            
-                        } else {
-                        	
-                            JOptionPane.showMessageDialog(null, "Si è verificato un errore durante la rimozione della risorsa.");
-                            
-                        }
-                    }
-                } else {
-                	
-                    JOptionPane.showMessageDialog(null, "Seleziona una risorsa da eliminare.");
-                    
-                }
+                Resource.removeResource(resources, getSelectedRow(), model);
             }
         });
 
