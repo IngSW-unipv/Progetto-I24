@@ -230,12 +230,12 @@ public class ResourceDAO implements IResourceDAO {
 				String descrizione = rs1.getString(3);
 				String indirizzo = rs1.getString(4);
 				String tipo = rs1.getString(5);
-				int idLab;
+				int idLab = -1;
 				if(rs1.getString(6) != null)
 					idLab = Integer.parseInt(rs1.getString(6));			
 				String matricola_inserimento = rs1.getString(7);
 				double price = rs1.getDouble(8);
-				//resources.add(new Resource(idRisorsa, nomeRisorsa, descrizione, indirizzo, tipo, idLab, matricola_inserimento,price));
+				resources.add(new Resource(idRisorsa, nomeRisorsa, descrizione,price ,indirizzo, tipo, idLab, matricola_inserimento));
 	            
 	        }
 	    } catch (Exception e) {
