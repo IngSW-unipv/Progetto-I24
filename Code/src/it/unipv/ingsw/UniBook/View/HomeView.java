@@ -7,7 +7,7 @@ import javax.swing.*;
 public class HomeView extends JFrame {
 	
 	private JButton buttonPR;
-	private JButton buttonAF;
+	private JButton buttonRT;
 	private JButton buttonGR;
 	private JButton buttonC;
 	private JButton buttonF;
@@ -65,13 +65,13 @@ public class HomeView extends JFrame {
 		leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		buttonPR = new JButton("PRENOTA");
-		buttonAF = new JButton("AFFITTA");
+		buttonRT = new JButton("AFFITTA");
 		buttonGR = new JButton("GESTIONE RISORSE");
 		buttonC = new JButton("CHAT");
 		buttonF = new JButton("CONDIVISIONE FILE");
 
 		leftPanel.add(buttonPR);
-		leftPanel.add(buttonAF);
+		leftPanel.add(buttonRT);
 		leftPanel.add(buttonGR);
 		leftPanel.add(buttonC);
 		leftPanel.add(buttonF);
@@ -97,8 +97,8 @@ public class HomeView extends JFrame {
 		return buttonPR;
 	}
 
-	public JButton getButtonAF() {
-		return buttonAF;
+	public JButton getButtonRT() {
+		return buttonRT;
 	}
 
 	public JButton getButtonGR() {

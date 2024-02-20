@@ -6,7 +6,6 @@ import it.unipv.ingsw.UniBook.Model.*;
 
 import it.unipv.ingsw.UniBook.View.*;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,6 +14,7 @@ public class HomeController {
 	private HomeView hv;
 	private ManagementView mv;
 	private BookingView bv;
+	private RentingView rv;
 	private CondivisioneView sv;
 	private User u;
 
@@ -33,7 +33,7 @@ public class HomeController {
 
 			private void manageAction() {
 
-				openResourceManagementFrame(); //controller non frame 
+				openResourceManagementFrame(); // controller non frame
 
 			}
 		};
@@ -57,6 +57,21 @@ public class HomeController {
 		// Aggiungo il listener al bottone
 		hv.getButtonPR().addActionListener(PR);
 
+		// Creazione listener per l'affitto di risorse
+		ActionListener RT = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+				
+				openResourceRenting();
+			}
+		};
+		// Associazione listener-button
+		hv.getButtonRT().addActionListener(RT);
+
 		ActionListener EX = new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -72,46 +87,46 @@ public class HomeController {
 		};
 
 		hv.getExitButton().addActionListener(EX);
-	
-	  //aggiungo listener bottone condivisione file
-			
-			ActionListener CF = new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					manageAction();
-				}
 
-				private void manageAction() {
+		// aggiungo listener bottone condivisione file
 
-					openSharing(); 
+		ActionListener CF = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
 
-				}
-			};
-			// Aggiungo il listener al bottone
-			hv.getButtonF().addActionListener(CF);
-}
-	
+			private void manageAction() {
+
+				openSharing();
+
+			}
+		};
+		// Aggiungo il listener al bottone
+		hv.getButtonF().addActionListener(CF);
+	}
+
 	// Controllo se l'utente è un professore o un ricercatore
 	private void openResourceManagementFrame() {
-	    User user = SingletonManager.getInstance().getLoggedUser();
-	    
-	    if (user != null && (user.getTipo().equals("Professore") || user.getTipo().equals("Ricercatore"))) {
-	    	
-	        mv = new ManagementView();
-	        ManagementController c = new ManagementController(mv, user);
-	        mv.setVisible(true);
-	        
-	    } else {
-	        try {
-	        	
-	            throw new AuthorizationDeniedException();
-	            
-	        } catch (AuthorizationDeniedException e) {
-	        	
-	            e.mostraPopup();
-	            
-	        }
-	    }
+		User user = SingletonManager.getInstance().getLoggedUser();
+
+		if (user != null && (user.getTipo().equals("Professore") || user.getTipo().equals("Ricercatore"))) {
+
+			mv = new ManagementView();
+			ManagementController c = new ManagementController(mv, user);
+			mv.setVisible(true);
+
+		} else {
+			try {
+
+				throw new AuthorizationDeniedException();
+
+			} catch (AuthorizationDeniedException e) {
+
+				e.mostraPopup();
+
+			}
+		}
 	}
 
 	private void openResourceBooking() {
@@ -136,12 +151,17 @@ public class HomeController {
 		User model = SingletonManager.getInstance().getLoggedUser();
 		RegistrationView view = new RegistrationView();
 		RegistrationController c = new RegistrationController(view, model);
-		
-		//RegistrationView v = new RegistrationView();
-		//RegistrationController c = new RegistrationController(v);
+
+		// RegistrationView v = new RegistrationView();
+		// RegistrationController c = new RegistrationController(v);
 		view.setVisible(true);
 
 	}
+
+	private void openResourceRenting() {
+		rv = new RentingView();
+	}
+
 	private void openSharing() {
 		System.out.println("ciaooo");
 		sv = new CondivisioneView();
@@ -151,4 +171,3 @@ public class HomeController {
 	}
 
 }
-

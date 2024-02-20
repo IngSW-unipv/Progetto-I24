@@ -158,6 +158,12 @@ public class Resource {
 	        nuovaRisorsa.setNome(nome);
 	        nuovaRisorsa.setDescrizione(descrizione);
 	        nuovaRisorsa.setTipo(tipo);
+	        /*
+	         * if(tipo == 'A')
+	         * nuovaRisorsa.setPrezzo(prezzo);
+	         * else
+	         * nuovaRisorsa.setPrezzo(null);
+	         * */
 	        nuovaRisorsa.setIndirizzo(user.getCorso());
 	        nuovaRisorsa.setMatricola_inserimento(user.getId());
 
@@ -188,4 +194,16 @@ public class Resource {
 	        System.out.println(e.toString());
 	    }
 	}
+
+	/*
+	 * PROVA PER COMBOBOX
+	 * */
+	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
+	
+	
+	
 }

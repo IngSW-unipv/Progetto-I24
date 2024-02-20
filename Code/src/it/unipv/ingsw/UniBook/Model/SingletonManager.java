@@ -11,6 +11,7 @@ public class SingletonManager {
 
 	// Oggetti che voglio istanziare una sola volta
 	private BookingDAO bookingDAO;
+	private RentingDAO rentingDAO;
 	private ResourceDAO resourceDAO;
 	private UserDAO userDAO;
 	private LaboratoryDAO laboratoryDAO;
@@ -25,10 +26,10 @@ public class SingletonManager {
 	private SingletonManager() {
 		// Inizializzazione oggetti
 		this.bookingDAO = new BookingDAO();
+		this.rentingDAO = new RentingDAO();
 		this.resourceDAO = new ResourceDAO();
 		this.userDAO = new UserDAO();
 		this.laboratoryDAO = new LaboratoryDAO();
-		this.loggedUser = null;
 		//this.student = null;
 		this.professor = null;
 		this.researcher = null;
@@ -49,6 +50,11 @@ public class SingletonManager {
 		return bookingDAO;
 	}
 
+	public RentingDAO getRentingDAO() {
+		return rentingDAO;
+	}
+
+	
 	public ResourceDAO getResourceDAO() {
 		return resourceDAO;
 	}

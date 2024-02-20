@@ -210,7 +210,7 @@ public class ResourceDAO implements IResourceDAO {
 	    return success;
 	}
 	
-	public ArrayList<Resource> getAllResources() {
+	public ArrayList<Resource> getAllRentableResources() {
 		
 	    ArrayList<Resource> resources = new ArrayList<>();
 
@@ -220,17 +220,22 @@ public class ResourceDAO implements IResourceDAO {
 
 	    try {
 	        st1 = conn.createStatement();
-	        String query = "SELECT * FROM risorsa";
+	        String query = "SELECT * FROM risorsa where Tipo = 'A'";
 
 	        rs1 = st1.executeQuery(query);
 
 	        while (rs1.next()) {
-	        	
-	            String nomeRisorsa = rs1.getString("Nome");
-	            String descrizione = rs1.getString("Descrizione");
-	            String tipo = rs1.getString("Tipo");
-
-	            resources.add(new Resource(0,nomeRisorsa, descrizione,null,tipo, 0, null));
+	        	int idRisorsa = Integer.parseInt(rs1.getString(1));
+				String nomeRisorsa = rs1.getString(2);
+				String descrizione = rs1.getString(3);
+				String indirizzo = rs1.getString(4);
+				String tipo = rs1.getString(5);
+				int idLab;
+				if(rs1.getString(6) != null)
+					idLab = Integer.parseInt(rs1.getString(6));			
+				String matricola_inserimento = rs1.getString(7);
+				double price = rs1.getDouble(8);
+				//resources.add(new Resource(idRisorsa, nomeRisorsa, descrizione, indirizzo, tipo, idLab, matricola_inserimento,price));
 	            
 	        }
 	    } catch (Exception e) {
