@@ -50,7 +50,7 @@ Matricola varchar(7) not null,
 DataInizio date not null,
 Durata int not null,
 Costo double not null,
-primary key (ID_Risorsa, Matricola),
+primary key (ID_Risorsa, Matricola,DataInizio),
 foreign key (ID_Risorsa) references risorsa (ID),
 foreign key (Matricola) references utente(Matricola)
 );
