@@ -41,6 +41,7 @@ public class Resource {
 			this.id = id;
 			this.nome = nome;
 			this.descrizione = descrizione;
+			this.prezzo = prezzo;
 			this.tipo = tipo;
 			this.indirizzo = indirizzo;
 			this.idLab = idLab;
