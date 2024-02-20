@@ -27,7 +27,6 @@ public class DeleteResourceView extends JFrame {
 
         // Creazione del modello della tabella
         model = new DefaultTableModel();
-        model.addColumn("ID");
         model.addColumn("Nome");
         model.addColumn("Descrizione");
         model.addColumn("Tipo");
@@ -55,22 +54,20 @@ public class DeleteResourceView extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	
                 int selectedRow = getSelectedRow();
-                if (selectedRow != -1) { // Controlla se una riga è stata selezionata
+                if (selectedRow != -1) {
                 	
                     int option = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare questa risorsa?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
-                    
                     if (option == JOptionPane.YES_OPTION) {
                     	
-                    	int id = (int) table.getValueAt(selectedRow, 0); // Ottieni l'ID dalla riga selezionata
+                        // Ottieni l'ID dalla riga selezionata
+                        int id = resources.get(selectedRow).getId();
                         ResourceDAO resourceDAO = new ResourceDAO();
                         Resource resourceToRemove = new Resource();
                         resourceToRemove.setId(id);
-                        boolean removed = resourceDAO.removeRisorsa(resourceToRemove); // Rimuovi la risorsa dal database
-                        
+                        boolean removed = resourceDAO.removeRisorsa(resourceToRemove);
                         if (removed) {
                         	
                             JOptionPane.showMessageDialog(null, "Risorsa rimossa con successo.");
-                            // Rimuovi la riga dalla tabella
                             model.removeRow(selectedRow);
                             
                         } else {
@@ -96,13 +93,13 @@ public class DeleteResourceView extends JFrame {
     }
 
     public void updateTable(ArrayList<Resource> resources) {
-
+    	
         model.setRowCount(0); // Pulisce la tabella prima di aggiungere nuove righe
+        
         for (Resource r : resources) {
-
-            model.addRow(new Object[]{r.getId(), r.getNome(), r.getDescrizione(), r.getTipo()});
-
+        	
+            model.addRow(new Object[]{r.getNome(), r.getDescrizione(), r.getTipo()});
+            
         }
     }
-
 }

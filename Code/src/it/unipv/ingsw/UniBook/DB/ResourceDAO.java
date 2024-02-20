@@ -87,7 +87,7 @@ public class ResourceDAO implements IResourceDAO {
 	}
 	
 	//Metodo per inserire le risorse nel database
-	public boolean insertRisorsa(Resource r) {
+	public boolean insertRisorsaPrenotabile(Resource r) {
 	    conn = DBConnection.startConnection(conn, schema);
 	    PreparedStatement st1;
 	    boolean esito = true;
@@ -113,6 +113,38 @@ public class ResourceDAO implements IResourceDAO {
 	    }
 
 	    DBConnection.closeConnection(conn);
+	    return esito;
+	}
+	
+	/// Metodo per inserire le risorse affittabili nel database
+	public boolean insertRisorsaAffittabile(Resource r) {
+	    conn = DBConnection.startConnection(conn, schema);
+	    PreparedStatement st1;
+	    boolean esito = true;
+
+	    try {
+	        // Ottieni il nuovo ID
+	        int newId = getMaxID();
+	        
+	        String query = "INSERT INTO `unibook`.`risorsa` (`ID`, `Nome`, `Descrizione`, `Indirizzo`, `Tipo`, `Matricola_Inserimento`, `Prezzo`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	        st1 = conn.prepareStatement(query);
+	        st1.setInt(1, newId); // Nuovo ID creato
+	        st1.setString(2, r.getNome());
+	        st1.setString(3, r.getDescrizione());
+	        st1.setString(4, r.getIndirizzo());
+	        st1.setString(5, r.getTipo());
+	        st1.setString(6, r.getMatricola_inserimento());
+	        st1.setDouble(7, r.getPrezzo()); 
+
+	        st1.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        esito = false;
+	    } finally {
+	        DBConnection.closeConnection(conn); // Chiudi la connessione nel blocco finally
+	    }
+
 	    return esito;
 	}
 	
@@ -244,5 +276,4 @@ public class ResourceDAO implements IResourceDAO {
 	    DBConnection.closeConnection(conn);
 	    return result;
 	}
-	
 }
