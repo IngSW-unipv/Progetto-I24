@@ -28,6 +28,7 @@ Indirizzo	varchar(10) not null,
 Tipo	varchar(10) not null,
 ID_Lab int,
 Matricola_inserimento varchar(7),
+Prezzo double,
 primary key (ID),
 foreign key (ID_Lab) references laboratorio(ID),
 foreign key (Matricola_inserimento) references utente (Matricola)
