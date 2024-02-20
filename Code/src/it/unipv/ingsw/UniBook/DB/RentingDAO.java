@@ -2,6 +2,12 @@ package it.unipv.ingsw.UniBook.DB;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 import com.toedter.calendar.JDateChooser;
 
 import java.sql.PreparedStatement;
@@ -57,8 +63,33 @@ public class RentingDAO implements IRentingDAO {
 
 	@Override
 	public boolean InsertRenting(Renting r) {
-		// TODO Auto-generated method stub
-		return false;
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+
+		boolean esito = true;
+
+		try {
+
+			String query = "INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataInizio`, `durata`, `costo`) "
+					+ " VALUES(?,?,?,?,?)";
+			st1 = conn.prepareStatement(query);
+			st1.setInt(1, r.getResource().getId());
+			st1.setString(2,r.getU().getId());
+			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
+			LocalDate date1 = LocalDate.parse(r.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		    LocalDate date2 = LocalDate.parse(r.getEndDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		    int daysBetween = (int) Duration.between(date1, date2).toDays();
+		    st1.setInt(4, daysBetween);
+		    st1.setDouble(5, daysBetween*r.getResource().getPrezzo());
+			st1.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			esito = false;
+		}
+
+		DBConnection.closeConnection(conn);
+		return esito;
 	}
 
 	@Override
@@ -79,4 +110,27 @@ public class RentingDAO implements IRentingDAO {
 		return null;
 	}
 
+	public String convertDateToMysqlDate(String date) {
+		SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date parsedDate = inputFormat.parse(date);
+			return outputFormat.format(parsedDate);
+		}catch(ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public String convertMysqlDatetoDate(String date) {
+		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date parsedDate = inputFormat.parse(date);
+			return outputFormat.format(parsedDate);
+		}catch(ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

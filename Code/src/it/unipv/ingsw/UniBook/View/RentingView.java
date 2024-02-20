@@ -18,7 +18,7 @@ public class RentingView extends JFrame {
 	//private RentingController controller;
 	private Renting r;
 	private JDateChooser startDate;
-	private JDateChooser finishDate;
+	private JDateChooser endDate;
 	private JComboBox <Resource> resources;
 	private JButton confirmButton;
 	private JButton cancelButton;
@@ -39,9 +39,9 @@ public class RentingView extends JFrame {
 		startDate.setMinSelectableDate(minDate.getTime());
 		
 		JLabel dataFinishLabel = new JLabel("Data fine affitto:");
-		finishDate = new JDateChooser();
-		finishDate.setDateFormatString("dd/MM/yyyy");
-		finishDate.setMinSelectableDate(minDate.getTime());
+		endDate = new JDateChooser();
+		endDate.setDateFormatString("dd/MM/yyyy");
+		endDate.setMinSelectableDate(minDate.getTime());
 		
 		JLabel resourceLabel = new JLabel("Risorsa");
 		resources = new JComboBox<Resource>(r.updateJlistResource().toArray(new Resource[0]));
@@ -55,7 +55,7 @@ public class RentingView extends JFrame {
 		resourceLabel.setFont(font);
 		resources.setFont(font);
 		startDate.setFont(font);
-		finishDate.setFont(font);
+		endDate.setFont(font);
 		confirmButton.setFont(font);
 		cancelButton.setFont(font);
 
@@ -64,7 +64,7 @@ public class RentingView extends JFrame {
 		add(dataStartLabel);
 		add(startDate);
 		add(dataFinishLabel);
-		add(finishDate);
+		add(endDate);
 		add(resourceLabel);
 		add(resources);
 		add(cancelButton);
@@ -76,5 +76,43 @@ public class RentingView extends JFrame {
 
 		setVisible(true);
 	}
+	
+	public String getStartDate() {
+		Date selectedDate = startDate.getDate();
+		
+		if(selectedDate == null)
+			return "";
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(selectedDate);
+	}
+	
+	public String getEndDate() {
+		Date selectedDate = endDate.getDate();
+		
+		if(selectedDate == null)
+			return "";
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(selectedDate);
+	}
+	
+	public Resource getSelectedResource() {
+		try {
+		return (Resource)resources.getSelectedItem();
+		}
+		catch(Exception e) {							//TODO Controllare Eccezione cast
+			throw e;
+		}
+	}
+
+	public JButton getConfirmButton() {
+		return confirmButton;
+	}
+
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	
 }
 

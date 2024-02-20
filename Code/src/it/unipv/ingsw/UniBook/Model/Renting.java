@@ -12,7 +12,7 @@ public class Renting {
 	private Resource r;
 	private User u;
 	private String startDate;
-	private String finishDate;
+	private String endDate;
 	private RentingDAO rDAO;
 	
 	public Renting() {
@@ -25,7 +25,7 @@ public class Renting {
 		this.r = r;
 		this.u = u;
 		this.startDate = startDate;
-		this.finishDate = finishDate;
+		this.endDate = finishDate;
 	}
 
 	public ArrayList<Resource> updateJlistResource(){
@@ -40,11 +40,11 @@ public class Renting {
 		return rDAO.selectRentingFromUser(u);
 	}
 	
-	public Resource getR() {
+	public Resource getResource() {
 		return r;
 	}
 
-	public void setR(Resource r) {
+	public void setResource(Resource r) {
 		this.r = r;
 	}
 
@@ -64,12 +64,12 @@ public class Renting {
 		this.startDate = startDate;
 	}
 
-	public String getFinishDate() {
-		return finishDate;
+	public String getEndDate() {
+		return endDate;
 	}
 
-	public void setFinishDate(String finishDate) {
-		this.finishDate = finishDate;
+	public void setEndDate(String finishDate) {
+		this.endDate = finishDate;
 	}
 
 }
