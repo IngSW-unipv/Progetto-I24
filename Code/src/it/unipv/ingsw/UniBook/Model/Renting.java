@@ -16,24 +16,20 @@ public class Renting {
 	private User u;
 	private String startDate;
 	private String endDate;
-	private RentingDAO rDAO;
 	
 	public Renting() {
-		this.rDAO = SingletonManager.getInstance().getRentingDAO();
 		this.u = SingletonManager.getInstance().getLoggedUser();
 	}
 	
 	public Renting(Resource r, User u, String startDate, String finishDate) {
-		this.rDAO = SingletonManager.getInstance().getRentingDAO();
 		this.r = r;
 		this.u = u;
 		this.startDate = startDate;
 		this.endDate = finishDate;
 	}
 
-	public ArrayList<Resource> updateJlistResource(){
-		ResourceDAO resDAO = SingletonManager.getInstance().getResourceDAO();
-		ArrayList<Resource> RentableResources = resDAO.getAllRentableResources();
+	public ArrayList<Resource> updateJlistResource(){;
+		ArrayList<Resource> RentableResources = SingletonManager.getInstance().getResourceDAO().getAllRentableResources();
 		
 		return RentableResources;
 	}
@@ -45,7 +41,7 @@ public class Renting {
 		try {
 			if(check()) {
 				rent = new Renting(r,u,startDate,endDate);
-				result = rDAO.InsertRenting(rent);
+				result = SingletonManager.getInstance().getRentingDAO().InsertRenting(rent);
 			}
 				
 		}catch(EmptyFieldException e) {
@@ -66,7 +62,7 @@ public class Renting {
 	}
 	
 	public ArrayList<Renting> getUserRenting(User u){
-		return rDAO.selectRentingFromUser(u);
+		return SingletonManager.getInstance().getRentingDAO().selectRentingFromUser(u);
 	}
 	
 	public Resource getResource() {
