@@ -9,18 +9,10 @@ import it.unipv.ingsw.UniBook.Model.Resource;
 public interface IBookingDAO {
 
 	public ArrayList<Booking> selectBookingFromUser(User u);
-	
 	public boolean insertBooking(Booking b);
-	
-	public String getIDbyName(Resource r);
-	
 	public Booking getBooking(User u, int index);
-	
 	public boolean deleteSelectedBooking(Booking b);
-	
-	public boolean chechAvilability(Booking b);
-
+	public boolean checkAvilability(Booking b);
 	public ArrayList<Booking> getAlreadyPresentBooking(Booking b);
-	
-	
+
 }

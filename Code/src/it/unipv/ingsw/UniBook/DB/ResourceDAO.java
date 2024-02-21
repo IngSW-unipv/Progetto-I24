@@ -23,8 +23,8 @@ public class ResourceDAO implements IResourceDAO {
 	}
 
 	@Override
-	public ArrayList<String> selectAll() {
-		ArrayList<String> result = new ArrayList<>();
+	public ArrayList<Resource> getAllBookableResources() {
+		ArrayList<Resource> result = new ArrayList<>();
 
 		conn = DBConnection.startConnection(conn, schema);
 		Statement st1;
@@ -32,14 +32,26 @@ public class ResourceDAO implements IResourceDAO {
 
 		try {
 			st1 = conn.createStatement();
-			String query = "SELECT Nome FROM unibook.risorsa " + "WHERE Tipo='P'";
+			String query = "SELECT * FROM unibook.risorsa " + "WHERE Tipo='P'";
 
 			rs1 = st1.executeQuery(query);
 
 			while (rs1.next()) {
-				String nomeRisorsa = rs1.getString("NOME");
-				result.add(nomeRisorsa);
-			}
+				
+				int idRisorsa = Integer.parseInt(rs1.getString(1));
+				String nomeRisorsa = rs1.getString(2);
+				String descrizione = rs1.getString(3);
+				String indirizzo = rs1.getString(4);
+				String tipo = rs1.getString(5);
+				int idLab = -1;
+				if(rs1.getString(6) != null)
+					idLab = Integer.parseInt(rs1.getString(6));			
+				String matricola_inserimento = rs1.getString(7);
+				double price = rs1.getDouble(8);
+				result.add(new Resource(idRisorsa, nomeRisorsa, descrizione,price ,indirizzo, tipo, idLab, matricola_inserimento));
+	            
+	        }
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

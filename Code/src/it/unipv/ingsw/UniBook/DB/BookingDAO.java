@@ -94,33 +94,6 @@ public class BookingDAO implements IBookingDAO {
 
 	}
 
-	// Ottengo L'ID della risorsa sulla base del nome
-	public String getIDbyName(Resource r) {
-
-		String nome = r.getNome();
-
-		String result = new String();
-
-		conn = DBConnection.startConnection(conn, schema);
-		Statement st1;
-		ResultSet rs1;
-
-		try {
-			st1 = conn.createStatement();
-			String query = "SELECT ID FROM unibook.risorsa " + "WHERE Nome = '" + nome + "'";
-			rs1 = st1.executeQuery(query);
-			if (rs1.next()) {
-				result = rs1.getString("ID");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		DBConnection.closeConnection(conn);
-		return result;
-	}
-
 	public Booking getBooking(User u, int index) {
 		Booking result = null;
 		conn = DBConnection.startConnection(conn, schema);
@@ -187,7 +160,7 @@ public class BookingDAO implements IBookingDAO {
 
 	}
 
-	public boolean chechAvilability(Booking b) {
+	public boolean checkAvilability(Booking b) {
 
 		boolean available = false;
 		conn = DBConnection.startConnection(conn, schema);
@@ -228,7 +201,6 @@ public class BookingDAO implements IBookingDAO {
 		ResultSet rs1;
 
 		try {
-			System.out.println("DATA E ORA " + b.getDate() + b.getTime());
 			String dateTime = itaParseStringToDateTime(b.getDate(), b.getTime());
 
 			st1 = conn.createStatement();
@@ -251,7 +223,6 @@ public class BookingDAO implements IBookingDAO {
 				User u = new User();
 				u.setId(rs1.getString(2));
 
-				System.out.println("OOOOOO");
 				String dateTimeString = rs1.getString(3);
 				String[] r = parseDateTimeToString(dateTimeString);
 
@@ -292,7 +263,7 @@ public class BookingDAO implements IBookingDAO {
 			return inputDateFormat.format(parsedDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return null; //
+			return null; 
 		}
 	}
 

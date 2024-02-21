@@ -1,5 +1,6 @@
 package it.unipv.ingsw.UniBook.Model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,14 +122,12 @@ public class Booking {
 		return new Integer[] { 1, 2, 3, 4 };
 	}
 
-	// Metodo che ritorna un arrayList di risorse per mostrarle nella view in
-	// maniera dinamica interrogando il DB
-	public ArrayList<String> updateJListResources() {
+	public ArrayList<Resource> updateJListResources() {
 
-		ResourceDAO resourceDAO = new ResourceDAO();
-		LaboratoryDAO laboratoryDAO = new LaboratoryDAO();
+		ResourceDAO resourceDAO = SingletonManager.getInstance().getResourceDAO();
+		LaboratoryDAO laboratoryDAO = SingletonManager.getInstance().getLaboratoryDAO();
 
-		ArrayList<String> availableResources = resourceDAO.selectAll();
+		ArrayList<Resource> availableResources = resourceDAO.getAllBookableResources();
 		availableResources.addAll(laboratoryDAO.selectAllLaboratory());
 
 		return availableResources;
@@ -138,7 +137,7 @@ public class Booking {
 	// selezionate
 	public void checkAvailability(Booking b) throws OverbookingException {
 
-		if (!bDAO.chechAvilability(b))
+		if (!bDAO.checkAvilability(b))
 			throw new OverbookingException();
 
 	}
@@ -170,7 +169,7 @@ public class Booking {
 				return true;
 			}
 		}
-		
+
 		return false;
 
 	}
@@ -178,8 +177,8 @@ public class Booking {
 	public boolean delete(int index) {
 		if (removeBooking(getUserBookings(SingletonManager.getInstance().getLoggedUser()), index))
 			return true;
-		
-			return false;
+
+		return false;
 
 	}
 
@@ -190,14 +189,12 @@ public class Booking {
 
 		try {
 
+			ttb = new Booking(r, u, date, time, duration);
+
 			if (r.getNome().toLowerCase().contains("laboratorio")) {
-				r.setId(Integer.parseInt(SingletonManager.getInstance().getLaboratoryDAO().getIDbyName(r)));
-				ttb = new Booking(r, u, date, time, duration);
 				result = laboratoryManagement(ttb);
 			} else {
 				// Se non è un laboratorio
-				ttb = new Booking(r, u, date, time, duration);
-				r.setId(Integer.parseInt(bDAO.getIDbyName(r)));
 				result = resourceManagement(ttb);
 			}
 
@@ -226,14 +223,12 @@ public class Booking {
 		checkDuration();
 		checkAvailability(ttb);
 
-
 		boolean succesfulInsertion = bDAO.insertBooking(ttb);
 		return succesfulInsertion;
 	}
 
 	public boolean laboratoryManagement(Booking ttb)
 			throws EmptyFieldException, DurationException, OverbookingException {
-		// Setto l'ID alla risorsa sulla base del nome
 
 		try {
 

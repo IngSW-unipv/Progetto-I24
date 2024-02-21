@@ -5,6 +5,8 @@ import java.awt.*;
 import it.unipv.ingsw.UniBook.Controller.BookingController;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Model.Booking;
+import it.unipv.ingsw.UniBook.Model.Resource;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import com.toedter.calendar.JDateChooser;
@@ -21,7 +23,7 @@ public class BookingView extends JFrame {
 
 	private JComboBox<String> oraComboBox;
 
-	private JComboBox<String> risorsaComboBox;
+	private JComboBox<Resource> risorsaComboBox;
 
 	private JComboBox<Integer> durataComboBox;
 
@@ -55,11 +57,10 @@ public class BookingView extends JFrame {
 		durataComboBox = new JComboBox<>(b.durationChoice());
 
 		JLabel risorsaLabel = new JLabel("Risorsa:");
-		risorsaComboBox = new JComboBox<String>(b.updateJListResources().toArray(new String[0]));
+		risorsaComboBox = new JComboBox<Resource>(b.updateJListResources().toArray(new Resource[0]));
 		/*
 		 * toArray(new String[0]) è utilizzata per convertire la lista restituita dal
-		 * metodo in un array di Stringhe, che è il tipo di dati accettato dal
-		 * costruttore di JComboBox.
+		 * metodo in un array di Stringhe
 		 */
 
 		confermaButton = new JButton("Conferma Prenotazione");
@@ -129,11 +130,11 @@ public class BookingView extends JFrame {
 		return (Integer) durataComboBox.getSelectedItem();
 	}
 
-	public String getRisorsa() {
-		return (String) risorsaComboBox.getSelectedItem();
+	public Resource getRisorsa() {
+		return (Resource)risorsaComboBox.getSelectedItem();
 	}
 
-	public JComboBox<String> getRisorsaComboBox() {
+	public JComboBox<Resource> getRisorsaComboBox() {
 		return risorsaComboBox;
 	}
 
