@@ -130,8 +130,8 @@ public class BookingDAO implements IBookingDAO {
 		try {
 
 			st1 = conn.createStatement();
-			String query = "SELECT ID_Risorsa, Matricola, DataOra, tempo FROM unibook.Prenotazione "
-					+ "Where Prenotazione.matricola = '" + u.getId() + "'" + "LIMIT 1 OFFSET " + (index);
+			String query = "SELECT ID_Risorsa, Matricola, DataOra, tempo FROM unibook.prenotazione "
+					+ "Where prenotazione.matricola = '" + u.getId() + "'" + "LIMIT 1 OFFSET " + (index);
 			rs1 = st1.executeQuery(query);
 
 			if (rs1.next()) {

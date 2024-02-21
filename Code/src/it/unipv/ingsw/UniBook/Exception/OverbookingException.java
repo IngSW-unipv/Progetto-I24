@@ -13,5 +13,8 @@ public class OverbookingException extends Exception {
 	public void mostraPopup() {
 		PopupManager.mostraPopup(errorMessage);
 	}
-
+	
+	public void mostraPopup(String msg) {
+		PopupManager.mostraPopup(msg);
+	}
 }

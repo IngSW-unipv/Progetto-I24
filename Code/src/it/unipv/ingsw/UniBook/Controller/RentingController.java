@@ -29,6 +29,7 @@ public class RentingController {
 				model.setStartDate(view.getStartDate());
 				model.setEndDate(view.getEndDate());
 				model.setResource(view.getSelectedResource());
+				model.tryToRent();
 				/*
 				 * TODO methods for proceeding
 				model.check();

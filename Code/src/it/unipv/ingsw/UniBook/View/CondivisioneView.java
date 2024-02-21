@@ -1,69 +1,50 @@
 package it.unipv.ingsw.UniBook.View;
 
-import javax.swing.JOptionPane;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class CondivisioneView extends JFrame {
- 
-    private JTextField userField;
-    private JTextField fileField;
-    private JButton addButton;
+    private JButton uploadButton;
     private JButton downloadButton;
 
     public CondivisioneView() {
-        setTitle("UniBook - Condivisione File");
-        setSize(400, 200);
+        setTitle("Condivisione File");
+        setSize(800, 600); // Imposta le dimensioni della finestra
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        userField = new JTextField();
-        fileField = new JTextField();
-        addButton = new JButton("Aggiungi File");
+        // Crea un pannello per contenere i bottoni
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(100, 200, 100, 200));
+        
+        // Crea i bottoni
+        uploadButton = new JButton("Upload File");
         downloadButton = new JButton("Download File");
 
-        // Aggiungi i pulsanti alla vista
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        panel.add(addButton);
-        panel.add(downloadButton);
+        // Aggiungi i bottoni al pannello
+        buttonPanel.add(uploadButton);
+        buttonPanel.add(downloadButton);
 
-        // Aggiungi i campi di testo alla vista
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(2, 2));
-        inputPanel.add(new JLabel("File da scaricare: "));
-        inputPanel.add(fileField);
-        inputPanel.add(new JLabel("Specificare chi può scaricare il file:"));
-        inputPanel.add(userField);
-
-        // Aggiungi i pannelli alla vista
-        setLayout(new BorderLayout());
-        add(panel, BorderLayout.SOUTH);
-        add(inputPanel, BorderLayout.CENTER);
+        // Aggiungi il pannello dei bottoni al contenitore principale
+        getContentPane().add(buttonPanel, BorderLayout.CENTER);
+        
+        // Centra la finestra
+        setLocationRelativeTo(null);
 
         pack();
         setVisible(true);
     }
 
-    public String getUserInput() {
-        return userField.getText();
-    }
-
-    public String getFileInput() {
-        return fileField.getText();
-    }
-
-    public void addAddButtonListener(ActionListener listener) {
-        addButton.addActionListener(listener);
+    public void addUploadButtonListener(ActionListener listener) {
+        uploadButton.addActionListener(listener);
     }
 
     public void addDownloadButtonListener(ActionListener listener) {
         downloadButton.addActionListener(listener);
     }
 
-    public void showMessage(String message) {
-        JOptionPane.showMessageDialog(this, message);
+    // Metodo per mostrare un popup con un messaggio personalizzato
+    public void showMessage(String message, String title) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
-}
+} 

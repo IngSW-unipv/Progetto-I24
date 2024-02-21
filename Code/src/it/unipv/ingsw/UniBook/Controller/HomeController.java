@@ -160,6 +160,9 @@ public class HomeController {
 
 	private void openResourceRenting() {
 		rv = new RentingView();
+		Renting r = new Renting();
+		RentingController c = new RentingController(r, rv);
+		rv.setVisible(true);
 	}
 
 	private void openSharing() {

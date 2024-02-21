@@ -222,10 +222,7 @@ public class Resource {
         }
     }
 
-	/*
-	 * PROVA PER COMBOBOX
-	 * */
-	
+    
 	@Override
 	public String toString() {
 		return this.nome;

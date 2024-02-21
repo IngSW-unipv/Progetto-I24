@@ -70,7 +70,7 @@ public class RentingDAO implements IRentingDAO {
 
 		try {
 
-			String query = "INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataInizio`, `durata`, `costo`) "
+			String query = "INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `DataFine`, `costo`) "
 					+ " VALUES(?,?,?,?,?)";
 			st1 = conn.prepareStatement(query);
 			st1.setInt(1, r.getResource().getId());
@@ -78,8 +78,9 @@ public class RentingDAO implements IRentingDAO {
 			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
 			LocalDate date1 = LocalDate.parse(r.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		    LocalDate date2 = LocalDate.parse(r.getEndDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		    int daysBetween = (int) Duration.between(date1, date2).toDays();
-		    st1.setInt(4, daysBetween);
+		    System.out.println("Ciao");
+		    int daysBetween = (int)ChronoUnit.DAYS.between(date1, date2);
+		    st1.setString(4, convertDateToMysqlDate(r.getEndDate()));
 		    st1.setDouble(5, daysBetween*r.getResource().getPrezzo());
 			st1.executeUpdate();
 

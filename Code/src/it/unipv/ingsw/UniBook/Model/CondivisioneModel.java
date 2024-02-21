@@ -1,29 +1,22 @@
 package it.unipv.ingsw.UniBook.Model;
 
-import java.util.Random;
-
 public class CondivisioneModel {
 
-    public boolean verificaDimensioniFile(String file) {
-        // Simulazione: dimensione massima consentita
-        int maxSize = 100; // Dimensione massima consentita in MB
-        // Simulazione: dimensione casuale del file
-        int fileSize = new Random().nextInt(150); // Dimensione del file in MB
-        return fileSize <= maxSize;
+    public boolean verificaEstensione(String fileName) {
+        // Estrai l'estensione del file
+        String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+        
+        // Verifica se l'estensione è consentita
+        return extension.equals("txt") || extension.equals("pdf") || extension.equals("docx");
     }
 
-    public boolean verificaPermessiUtente(String utente) {
-        // Simulazione: verifica se l'utente ha i permessi
-        return utente.equals("admin");
-    }
-
-    public boolean verificaConnessione() {
-        // Simulazione: verifica se la connessione è disponibile
-        return new Random().nextBoolean();
+    public boolean verificaDimensione(long fileSize) {
+        // Verifica se la dimensione del file è minore o uguale a 100 MB
+        return fileSize <= 100 * 1024 * 1024; // 100 MB in byte
     }
 
     public void simulaDownload() throws InterruptedException {
-        // Simulazione: download che dura per qualche secondo
-        Thread.sleep(3000);
+        // Simula il download del file
+        Thread.sleep(2000); // Simula un ritardo di 2 secondi
     }
 }

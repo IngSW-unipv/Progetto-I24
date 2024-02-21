@@ -7,6 +7,9 @@ import java.util.Date;
 
 import it.unipv.ingsw.UniBook.DB.RentingDAO;
 import it.unipv.ingsw.UniBook.DB.ResourceDAO;
+import it.unipv.ingsw.UniBook.Exception.EmptyFieldException;
+import it.unipv.ingsw.UniBook.Exception.OverbookingException;
+import it.unipv.ingsw.UniBook.Exception.PopupManager;
 
 public class Renting {
 	private Resource r;
@@ -35,6 +38,32 @@ public class Renting {
 		return RentableResources;
 	}
 	
+	
+	public boolean tryToRent() {
+		Renting rent;
+		Boolean result = false;
+		try {
+			if(check()) {
+				rent = new Renting(r,u,startDate,endDate);
+				result = rDAO.InsertRenting(rent);
+			}
+				
+		}catch(EmptyFieldException e) {
+			e.mostraPopup();
+		} catch (OverbookingException e) {
+			e.mostraPopup();
+		}
+		
+		if(result) {
+			PopupManager.mostraPopup("Affitto effettuato con successo");
+		}
+		return result;
+		
+	}
+	
+	public boolean check() throws EmptyFieldException,OverbookingException {
+		return true;
+	}
 	
 	public ArrayList<Renting> getUserRenting(User u){
 		return rDAO.selectRentingFromUser(u);

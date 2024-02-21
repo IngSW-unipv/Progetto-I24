@@ -46,5 +46,5 @@ INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tem
 INSERT INTO `unibook`.`prenotazione` (`ID_Risorsa`, `Matricola`, `DataOra`, `tempo`) VALUES ('18', 'S500816', '2024-05-06 08:00', '2');
 
 -- Affitto
-INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('11', 'S500816', '2024-05-08', '1', '20');
-INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `Durata`, `Costo`) VALUES ('12', 'R509822', '2024-04-09', '1', '30');
+INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `DataFine`, `Costo`) VALUES ('11', 'S500816', '2024-05-08', '2024-06-08', '20');
+INSERT INTO `unibook`.`affitto` (`ID_Risorsa`, `Matricola`, `DataInizio`, `DataFine`, `Costo`) VALUES ('12', 'R509822', '2024-04-09', '2024-05-08', '30');

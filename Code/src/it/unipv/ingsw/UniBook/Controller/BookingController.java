@@ -82,7 +82,6 @@ public class BookingController {
 			}
 
 			private void manageAction() {
-		
 				model.delete(dview.getSelectedRow());
 				// Aggiorno la vista
 				dview.updateTable(model.getUserBookings(SingletonManager.getInstance().getLoggedUser()));

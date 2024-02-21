@@ -1,10 +1,12 @@
 package it.unipv.ingsw.UniBook.Controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import it.unipv.ingsw.UniBook.Model.CondivisioneModel;
 import it.unipv.ingsw.UniBook.View.CondivisioneView;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 public class CondivisioneController {
 
@@ -15,17 +17,44 @@ public class CondivisioneController {
         this.view = view;
         this.model = model;
 
-        // Aggiungi listener per i pulsanti
-        view.addAddButtonListener(new AddButtonListener());
+        // Aggiungi listener per il pulsante di upload
+        view.addUploadButtonListener(new UploadButtonListener());
+        // Aggiungi listener per il pulsante di download
         view.addDownloadButtonListener(new DownloadButtonListener());
     }
 
-    // Listener per il pulsante di caricamento
-    private class AddButtonListener implements ActionListener {
+    // Listener per il pulsante di upload
+    private class UploadButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Logica di caricamento del file
-            view.showMessage("Caricamento del file: " + view.getFileInput());
+            // Crea un file chooser
+            JFileChooser fileChooser = new JFileChooser();
+            // Imposta la modalità di selezione su file
+            fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            // Mostra il file chooser e ottieni il risultato
+            int result = fileChooser.showOpenDialog(view);
+
+            // Se l'utente ha selezionato un file
+            if (result == JFileChooser.APPROVE_OPTION) {
+                // Ottieni il file selezionato
+                File selectedFile = fileChooser.getSelectedFile();
+                // Ottieni il nome del file
+                String fileName = selectedFile.getName();
+
+                // Verifica l'estensione del file
+                if (model.verificaEstensione(fileName)) {
+                    // Verifica la dimensione del file
+                    long fileSize = selectedFile.length();
+                    if (model.verificaDimensione(fileSize)) {
+                        // Simula l'upload del file
+                        view.showMessage("Upload completato con successo!", "Upload completato");
+                    } else {
+                        view.showMessage("Dimensione del file troppo grande.", "Errore");
+                    }
+                } else {
+                    view.showMessage("Tipo di file non supportato.", "Errore");
+                }
+            }
         }
     }
 
@@ -33,28 +62,13 @@ public class CondivisioneController {
     private class DownloadButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Logica di download del file
-            String selectedFile = view.getFileInput();
-            String selectedUser = view.getUserInput();
-
-            // Chiama il metodo per la gestione del download del file
-            handleFileDownload(selectedFile, selectedUser);
-        }
-    }
-
-    private void handleFileDownload(String file, String user) {
-        // Implementa la logica di download con i casi alternativi come nell'esempio precedente
-        try {
-            if (model.verificaPermessiUtente(user) && model.verificaConnessione() && model.verificaDimensioniFile(file)) {
-                view.showMessage("Download del file: " + file + " - Permesso per: " + user);
+            // Logica di gestione del download
+            try {
                 model.simulaDownload();
-            } else {
-                // Se il file non è trovato, mostra un messaggio di errore
-                view.showMessage("Il sistema non trova il file indicato. Si prega di riprovare.");
+                view.showMessage("File scaricato con successo!", "Download completato");
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
         }
     }
-} //funx
-
+} 
