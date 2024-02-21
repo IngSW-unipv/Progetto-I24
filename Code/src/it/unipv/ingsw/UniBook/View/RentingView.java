@@ -115,4 +115,3 @@ public class RentingView extends JFrame {
 
 	
 }
-
