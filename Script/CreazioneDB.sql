@@ -54,3 +54,14 @@ primary key (ID_Risorsa, Matricola,DataInizio),
 foreign key (ID_Risorsa) references risorsa (ID),
 foreign key (Matricola) references utente(Matricola)
 );
+
+CREATE TABLE IF NOT EXISTS messaggio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mittente VARCHAR(7) NOT NULL,
+    destinatario VARCHAR(7) NOT NULL,
+    testo TEXT NOT NULL,
+    dataOra TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    letto BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (mittente) REFERENCES utente(Matricola),
+    FOREIGN KEY (destinatario) REFERENCES utente(Matricola)
+);
