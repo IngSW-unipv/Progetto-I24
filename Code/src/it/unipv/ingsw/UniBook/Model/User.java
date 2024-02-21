@@ -15,8 +15,7 @@ public class User {
 		
 	}
 	
-	public User(String matricola, String nome, String cognome, String tipo, String email, String corso,
-			String password) {
+	public User(String matricola, String nome, String cognome, String tipo, String email, String corso, String password) {
 		this.matricola = matricola;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -26,9 +25,19 @@ public class User {
 		this.password = password;
 	}
 	
+	public User(String matricola,String nome, String cognome) {
+		
+		this.matricola = matricola;
+		this.nome = nome;
+		this.cognome = cognome;
+		
+	}
+	
 	public User(String matricola, String password) {
+		
 		this.matricola = matricola;
 		this.password = password;
+		
 	}
 
 	public String getId() {
@@ -87,4 +96,8 @@ public class User {
 		this.password = password;
 	}
 
+	@Override
+    public String toString() {
+        return matricola + " - " + nome + " " + cognome;
+    }
 }
