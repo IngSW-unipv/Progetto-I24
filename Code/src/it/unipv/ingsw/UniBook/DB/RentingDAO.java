@@ -2,10 +2,6 @@ package it.unipv.ingsw.UniBook.DB;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,11 +66,9 @@ public class RentingDAO implements IRentingDAO {
 			st1.setInt(1, r.getResource().getId());
 			st1.setString(2,r.getU().getId());
 			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
-			LocalDate date1 = LocalDate.parse(r.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		    LocalDate date2 = LocalDate.parse(r.getEndDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		    int daysBetween = (int)ChronoUnit.DAYS.between(date1, date2);
 		    st1.setString(4, convertDateToMysqlDate(r.getEndDate()));
-		    st1.setDouble(5, daysBetween*r.getResource().getPrezzo());
+		    System.out.println(r.getPrice()+"/t"+r.getTotalPrice());
+		    st1.setDouble(5, r.getTotalPrice());
 			st1.executeUpdate();
 
 		} catch (Exception e) {
@@ -92,17 +86,7 @@ public class RentingDAO implements IRentingDAO {
 		return null;
 	}
 
-	@Override
-	public boolean deleteSelectedRenting(Renting r) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public ArrayList<Renting> getAlreadyPresentRenting(Renting r) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public String convertDateToMysqlDate(String date) {
 		SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -138,10 +122,12 @@ public class RentingDAO implements IRentingDAO {
 			
 			st1 = conn.prepareStatement(query);
 			st1.setInt(1,r.getResource().getId());
-			st1.setString(2, convertDateToMysqlDate(r.getStartDate()));
-			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
-			st1.setString(4,convertDateToMysqlDate(r.getEndDate()));
-			st1.setString(5,convertDateToMysqlDate(r.getEndDate()));
+			String date =convertDateToMysqlDate(r.getStartDate());
+			st1.setString(2, date);
+			st1.setString(3,date);
+			date = convertDateToMysqlDate(r.getEndDate());
+			st1.setString(4,date);
+			st1.setString(5,date);
 			rs1 = st1.executeQuery();
 			
 			if(!rs1.next()) {

@@ -1,16 +1,21 @@
 package it.unipv.ingsw.UniBook.Model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import it.unipv.ingsw.UniBook.Exception.DatabaseException;
-import it.unipv.ingsw.UniBook.Exception.EmptyFieldException;
-import it.unipv.ingsw.UniBook.Exception.PopupManager;
-import it.unipv.ingsw.UniBook.Exception.ResourceAlreadyRentedException;
+
+import it.unipv.ingsw.UniBook.Exception.*;
+import it.unipv.ingsw.UniBook.Strategy.IDiscountStrategy;
+import it.unipv.ingsw.UniBook.Strategy.DiscountFactory;
 
 public class Renting {
 	private Resource r;
 	private User u;
 	private String startDate;
 	private String endDate;
+	private double price;
+	private IDiscountStrategy s;
 	
 	
 	public Renting() {
@@ -19,9 +24,15 @@ public class Renting {
 	
 	public Renting(Resource r, User u, String startDate, String finishDate) {
 		this.r = r;
-		this.u = u;
+		this.u = SingletonManager.getInstance().getLoggedUser();
 		this.startDate = startDate;
 		this.endDate = finishDate;
+		LocalDate date1 = LocalDate.parse(this.startDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	    LocalDate date2 = LocalDate.parse(this.endDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	    int daysBetween = (int)ChronoUnit.DAYS.between(date1, date2);
+	    this.price = r.getPrezzo()*daysBetween;
+		DiscountFactory f=new DiscountFactory();
+		s=f.getDiscountStrategy();
 	}
 
 	public ArrayList<Resource> updateJlistResource(){;
@@ -112,5 +123,14 @@ public class Renting {
 	public void setEndDate(String finishDate) {
 		this.endDate = finishDate;
 	}
+	
+	public double getPrice() {
+		return this.price;
+	}
+	
+	public double getTotalPrice() {
+		return s.getFinal(this);
+	}
+	
 
 }
