@@ -30,10 +30,6 @@ public class RentingController {
 				model.setEndDate(view.getEndDate());
 				model.setResource(view.getSelectedResource());
 				model.tryToRent();
-				/*
-				 * TODO methods for proceeding
-				model.check();
-				model.proceedPayment();*/
 			}
 		};
 		view.getConfirmButton().addActionListener(confirm);
