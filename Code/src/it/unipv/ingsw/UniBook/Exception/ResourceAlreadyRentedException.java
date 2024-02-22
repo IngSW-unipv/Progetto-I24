@@ -11,7 +11,7 @@ public class ResourceAlreadyRentedException extends Exception {
 	}
 	
 	public void showPopup() {
-		PopupManager.mostraPopup(errorMessage);
+		PopupManager.showPopup(errorMessage);
 	}
 	
 }

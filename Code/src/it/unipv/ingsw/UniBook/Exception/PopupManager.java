@@ -4,8 +4,8 @@ import javax.swing.JOptionPane;
 
 public class PopupManager {
 
-	public static void mostraPopup(String messaggio) {
-        JOptionPane.showMessageDialog(null, messaggio, "Sistema", JOptionPane.INFORMATION_MESSAGE);
+	public static void showPopup(String message) {
+        JOptionPane.showMessageDialog(null, message, "Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
 	
 }

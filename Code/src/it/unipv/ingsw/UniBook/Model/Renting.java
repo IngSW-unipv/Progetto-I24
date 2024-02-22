@@ -53,17 +53,17 @@ public class Renting {
 			}
 				
 		}catch(EmptyFieldException e) {
-			e.mostraPopup();
+			e.showPopup();
 		}
 		catch(ResourceAlreadyRentedException e) {
 			e.showPopup();
 		}
 		catch(DatabaseException e) {
-			e.mostraPopup();
+			e.showPopup();
 		}
 		
 		if(result) {
-			PopupManager.mostraPopup("Affitto effettuato con successo");
+			PopupManager.showPopup("Affitto effettuato con successo");
 		}
 		return result;
 		

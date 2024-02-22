@@ -15,6 +15,7 @@ public class SingletonManager {
 	private ResourceDAO resourceDAO;
 	private UserDAO userDAO;
 	private LaboratoryDAO laboratoryDAO;
+	private MessaggioDAO messaggioDAO;
 	private User loggedUser;
 	private Resource r;
 	private Professor professor;
@@ -30,6 +31,7 @@ public class SingletonManager {
 		this.resourceDAO = new ResourceDAO();
 		this.userDAO = new UserDAO();
 		this.laboratoryDAO = new LaboratoryDAO();
+		this.messaggioDAO = new MessaggioDAO();
 		//this.student = null;
 		this.professor = null;
 		this.researcher = null;
@@ -66,11 +68,15 @@ public class SingletonManager {
 	public LaboratoryDAO getLaboratoryDAO() {
 		return laboratoryDAO;
 	}
+	
+	public MessaggioDAO getMessaggioDAO() {
+		return messaggioDAO;
+	}
 
 	public User getLoggedUser() {
 		return loggedUser;
 	}
-
+	
 	public void setLoggedUser(User u) {
 		
 		try {

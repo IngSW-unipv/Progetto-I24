@@ -43,21 +43,21 @@ public class Registration extends Authentication{
 			
 		}	catch (EmptyFieldException e) {
 			
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 
 		} catch (WrongFieldException e) {
 			
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 
 		} catch (DatabaseException e) {
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 		}
 		
 		catch (AccountAlreadyExistsException e) {
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 		}
 		

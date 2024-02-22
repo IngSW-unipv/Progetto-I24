@@ -16,7 +16,6 @@ import java.util.Calendar;
 
 public class BookingView extends JFrame {
 
-	private BookingController controller;
 	private Booking b;
 
 	private JDateChooser dateChooser;

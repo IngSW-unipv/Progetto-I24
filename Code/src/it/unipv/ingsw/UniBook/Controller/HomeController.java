@@ -1,6 +1,5 @@
 package it.unipv.ingsw.UniBook.Controller;
 
-import it.unipv.ingsw.UniBook.DB.UserDAO;
 import it.unipv.ingsw.UniBook.Exception.AuthorizationDeniedException;
 import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.CondivisioneModel;
@@ -77,7 +76,7 @@ public class HomeController {
 			}
 
 			private void manageAction() {
-				
+
 				openResourceRenting();
 			}
 		};
@@ -97,18 +96,18 @@ public class HomeController {
 			}
 
 		};
-		
-		ActionListener CH = new ActionListener() {
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        manageAction();
-		    }
 
-		    private void manageAction() {
-		        openChat();
-		    }
+		ActionListener CH = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+				openChat();
+			}
 		};
-		
+
 		hv.getButtonC().addActionListener(CH);
 
 		hv.getExitButton().addActionListener(EX);
@@ -148,7 +147,7 @@ public class HomeController {
 
 			} catch (AuthorizationDeniedException e) {
 
-				e.mostraPopup();
+				e.showPopup();
 
 			}
 		}
@@ -197,36 +196,26 @@ public class HomeController {
 		CondivisioneController c = new CondivisioneController(sv, r);
 		sv.setVisible(true);
 	}
-	
+
 	private void openChat() {
-        User userLoggato = SingletonManager.getInstance().getLoggedUser();
-        if (userLoggato == null) {
-            JOptionPane.showMessageDialog(null, "Effettua il login prima di accedere alla chat.", "Errore", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
 
-        UserDAO userDAO = new UserDAO();
-        List<User> listaUtenti = userDAO.getUsersFromDatabase();
+		User userLoggato = SingletonManager.getInstance().getLoggedUser();
 
-        if (listaUtenti.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nessun utente disponibile per la chat.", "Errore", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+		List<User> listaUtenti = SingletonManager.getInstance().getUserDAO().getUsersFromDatabase();
+		listaUtenti.removeIf(u -> u.getId().equals(userLoggato.getId()));
 
-        listaUtenti.removeIf(u -> u.getId().equals(userLoggato.getId()));
+		JComboBox<User> destinatarioComboBox = new JComboBox<>(listaUtenti.toArray(new User[0]));
+		int result = JOptionPane.showConfirmDialog(null, destinatarioComboBox, "Seleziona il destinatario",
+				JOptionPane.OK_CANCEL_OPTION);
 
-        JComboBox<User> destinatarioComboBox = new JComboBox<>(listaUtenti.toArray(new User[0]));
-        int result = JOptionPane.showConfirmDialog(null, destinatarioComboBox, "Seleziona il destinatario", JOptionPane.OK_CANCEL_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-            User destinatario = (User) destinatarioComboBox.getSelectedItem();
-            if (destinatario != null) {
-                ChatView cv = new ChatView(userLoggato, destinatario);
-                ChatController controller = new ChatController(cv, userLoggato, destinatario);
-                cv.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Destinatario non valido.", "Errore", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
+		if (result == JOptionPane.OK_OPTION) {
+			User destinatario = (User) destinatarioComboBox.getSelectedItem();
+
+			ChatView cv = new ChatView(userLoggato, destinatario);
+			ChatController controller = new ChatController(cv, userLoggato, destinatario);
+			cv.setVisible(true);
+
+		}
+	}
 
 }

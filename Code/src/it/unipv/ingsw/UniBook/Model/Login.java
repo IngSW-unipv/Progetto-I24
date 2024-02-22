@@ -37,12 +37,12 @@ public class Login extends Authentication {
 
 		} catch (EmptyFieldException e) {
 
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 
 		} catch (WrongFieldException e) {
 
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 
 		}

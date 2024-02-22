@@ -199,18 +199,18 @@ public class Booking {
 			}
 
 			if (result) {
-				PopupManager.mostraPopup("Prenotazione effettuata con successo! " + "\n Data: " + date + "\n Dalle: "
+				PopupManager.showPopup("Prenotazione effettuata con successo! " + "\n Data: " + date + "\n Dalle: "
 						+ time + " alle: " + getBookingEnd() + "\n Risorsa: " + r.getNome());
 			}
 
 		} catch (EmptyFieldException e) {
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 		} catch (DurationException e) {
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 		} catch (OverbookingException e) {
-			e.mostraPopup();
+			e.showPopup();
 			System.out.println(e.toString());
 		}
 
@@ -261,7 +261,7 @@ public class Booking {
 
 		} catch (ClassCastException e) {
 			AuthorizationDeniedException ecc = new AuthorizationDeniedException();
-			ecc.mostraPopup();
+			ecc.showPopup();
 			System.out.println(ecc.toString());
 			return false;
 		}

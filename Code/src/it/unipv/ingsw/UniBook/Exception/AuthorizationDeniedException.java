@@ -12,8 +12,8 @@ public class AuthorizationDeniedException extends Exception {
 
 	}
 
-	public void mostraPopup() {
-		PopupManager.mostraPopup(errorMessage);
+	public void showPopup() {
+		PopupManager.showPopup(errorMessage);
 	}
 
 }

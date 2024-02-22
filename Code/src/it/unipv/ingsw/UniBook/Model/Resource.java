@@ -186,15 +186,15 @@ public class Resource {
 	        }
 
 	        if (inserimento) {
-	            PopupManager.mostraPopup("Risorsa inserita con successo! \nNome: " + nome + "\nDescrizione: " + descrizione + "\nLa risorsa è ora " + tipoDescrizione);
+	            PopupManager.showPopup("Risorsa inserita con successo! \nNome: " + nome + "\nDescrizione: " + descrizione + "\nLa risorsa è ora " + tipoDescrizione);
 	        } else {
-	            PopupManager.mostraPopup("Si è verificato un errore durante l'inserimento della risorsa.");
+	            PopupManager.showPopup("Si è verificato un errore durante l'inserimento della risorsa.");
 	        }
 	    } catch (EmptyFieldException e) {
-	        e.mostraPopup();
+	        e.showPopup();
 	        System.out.println(e.toString());
 	    } catch (Exception e) {
-	        PopupManager.mostraPopup("Si è verificato un errore: " + e.getMessage());
+	        PopupManager.showPopup("Si è verificato un errore: " + e.getMessage());
 	        System.out.println(e.toString());
 	    }
 	}

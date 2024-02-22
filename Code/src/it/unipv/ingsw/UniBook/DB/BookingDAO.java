@@ -189,6 +189,7 @@ public class BookingDAO implements IBookingDAO {
 			return false;
 		}
 
+		DBConnection.closeConnection(conn);
 		return available;
 
 	}

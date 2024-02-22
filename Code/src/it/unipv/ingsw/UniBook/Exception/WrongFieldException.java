@@ -10,8 +10,8 @@ public class WrongFieldException extends Exception{
 		super(errorMessage);
 	}
 
-	public void mostraPopup() {
-		PopupManager.mostraPopup(errorMessage);
+	public void showPopup() {
+		PopupManager.showPopup(errorMessage);
 	}
 	
 }
