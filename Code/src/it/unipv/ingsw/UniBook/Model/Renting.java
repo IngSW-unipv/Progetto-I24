@@ -1,21 +1,17 @@
 package it.unipv.ingsw.UniBook.Model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-import it.unipv.ingsw.UniBook.DB.RentingDAO;
-import it.unipv.ingsw.UniBook.DB.ResourceDAO;
+import it.unipv.ingsw.UniBook.Exception.DatabaseException;
 import it.unipv.ingsw.UniBook.Exception.EmptyFieldException;
-import it.unipv.ingsw.UniBook.Exception.OverbookingException;
 import it.unipv.ingsw.UniBook.Exception.PopupManager;
+import it.unipv.ingsw.UniBook.Exception.ResourceAlreadyRentedException;
 
 public class Renting {
 	private Resource r;
 	private User u;
 	private String startDate;
 	private String endDate;
+	
 	
 	public Renting() {
 		this.u = SingletonManager.getInstance().getLoggedUser();
@@ -39,14 +35,19 @@ public class Renting {
 		Renting rent;
 		Boolean result = false;
 		try {
-			if(check()) {
-				rent = new Renting(r,u,startDate,endDate);
+			rent = new Renting(r,u,startDate,endDate);
+			boolean c = check(rent);
+			if(c == true) {
 				result = SingletonManager.getInstance().getRentingDAO().InsertRenting(rent);
 			}
 				
 		}catch(EmptyFieldException e) {
 			e.mostraPopup();
-		} catch (OverbookingException e) {
+		}
+		catch(ResourceAlreadyRentedException e) {
+			e.showPopup();
+		}
+		catch(DatabaseException e) {
 			e.mostraPopup();
 		}
 		
@@ -57,8 +58,23 @@ public class Renting {
 		
 	}
 	
-	public boolean check() throws EmptyFieldException,OverbookingException {
-		return true;
+	public boolean check(Renting r) throws EmptyFieldException,ResourceAlreadyRentedException,DatabaseException {
+		Boolean c = true;
+		try {
+		if((r.getStartDate() == "")||(r.getEndDate() == ""))
+		{
+			c = false;
+			throw new EmptyFieldException();
+		}
+		c = SingletonManager.getInstance().getRentingDAO().checkAvailability(r);
+		}
+		catch(ResourceAlreadyRentedException e){
+			throw e;
+		}
+		catch(DatabaseException e) {
+			throw e;
+		}
+		return c;
 	}
 	
 	public ArrayList<Renting> getUserRenting(User u){

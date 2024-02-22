@@ -2,28 +2,22 @@ package it.unipv.ingsw.UniBook.DB;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import com.toedter.calendar.JDateChooser;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 
-import it.unipv.ingsw.UniBook.Model.Booking;
+import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.Model.Renting;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import it.unipv.ingsw.UniBook.Model.User;
-import it.unipv.ingsw.UniBook.Model.Resource;
-import it.unipv.ingsw.UniBook.Model.SingletonManager;
 
 public class RentingDAO implements IRentingDAO {
 
@@ -78,7 +72,6 @@ public class RentingDAO implements IRentingDAO {
 			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
 			LocalDate date1 = LocalDate.parse(r.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		    LocalDate date2 = LocalDate.parse(r.getEndDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-		    System.out.println("Ciao");
 		    int daysBetween = (int)ChronoUnit.DAYS.between(date1, date2);
 		    st1.setString(4, convertDateToMysqlDate(r.getEndDate()));
 		    st1.setDouble(5, daysBetween*r.getResource().getPrezzo());
@@ -134,4 +127,39 @@ public class RentingDAO implements IRentingDAO {
 			return null;
 		}
 	}
+	
+	public Boolean checkAvailability(Renting r) throws ResourceAlreadyRentedException,DatabaseException {
+		boolean available = false;
+		conn = DBConnection.startConnection(conn, schema);
+		ResultSet rs1;
+		PreparedStatement st1;
+		try {
+			String query = "select * from unibook.affitto where ID_Risorsa = ? and ((DataInizio <= ? AND DataFine >= ?)OR(DataInizio <= ? AND DataFine >= ?))";
+			
+			st1 = conn.prepareStatement(query);
+			st1.setInt(1,r.getResource().getId());
+			st1.setString(2, convertDateToMysqlDate(r.getStartDate()));
+			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
+			st1.setString(4,convertDateToMysqlDate(r.getEndDate()));
+			st1.setString(5,convertDateToMysqlDate(r.getEndDate()));
+			rs1 = st1.executeQuery();
+			
+			if(!rs1.next()) {
+				available = true;
+			}
+			else {
+				throw new ResourceAlreadyRentedException(convertMysqlDatetoDate(rs1.getString(3)),convertMysqlDatetoDate(rs1.getString(4)));
+			}
+			
+		}catch(ResourceAlreadyRentedException e) {
+			throw e;
+		}catch(SQLException e) {
+			throw new DatabaseException();
+		}
+		DBConnection.closeConnection(conn);
+		
+		return available;
+	}
+	
+	
 }
