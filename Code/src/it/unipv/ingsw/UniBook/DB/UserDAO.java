@@ -2,8 +2,10 @@ package it.unipv.ingsw.UniBook.DB;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import it.unipv.ingsw.UniBook.Model.User;
 import java.sql.Connection;
@@ -170,5 +172,59 @@ public class UserDAO implements IUserDAO {
 		return esito;
 
 	}
+	
+	 public List<User> getUsersFromDatabase() {
+	        List<User> userList = new ArrayList<>();
+	        Connection conn = null;
+	        PreparedStatement statement = null;
+	        ResultSet resultSet = null;
 
+	        try {
+	            conn = DBConnection.startConnection(conn, schema);
+	            String query = "SELECT * FROM utente"; // Query per selezionare tutti gli utenti
+	            statement = conn.prepareStatement(query);
+	            resultSet = statement.executeQuery();
+
+	            while (resultSet.next()) {
+	                String id = resultSet.getString("Matricola");
+	                String nome = resultSet.getString("Nome");
+	                String cognome = resultSet.getString("Cognome");
+	                String tipo = resultSet.getString("Tipo");
+	                String email = resultSet.getString("Email");
+	                String corso = resultSet.getString("Corso");
+	                String password = resultSet.getString("Password");
+
+	                User user = new User(id, nome, cognome, tipo, email, corso, password);
+	                userList.add(user);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            // Gestione dell'eccezione
+	        } finally {
+	            // Chiusura delle risorse
+	            if (resultSet != null) {
+	                try {
+	                    resultSet.close();
+	                } catch (SQLException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            if (statement != null) {
+	                try {
+	                    statement.close();
+	                } catch (SQLException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            if (conn != null) {
+	                try {
+	                    conn.close();
+	                } catch (SQLException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+
+	        return userList;
+	    }
 }
