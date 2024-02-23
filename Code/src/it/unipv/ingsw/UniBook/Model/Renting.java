@@ -20,6 +20,8 @@ public class Renting {
 	
 	public Renting() {
 		this.u = SingletonManager.getInstance().getLoggedUser();
+		DiscountFactory f=new DiscountFactory();
+		s=f.getDiscountStrategy();
 	}
 	
 	public Renting(Resource r, User u, String startDate, String finishDate) {
@@ -27,12 +29,10 @@ public class Renting {
 		this.u = SingletonManager.getInstance().getLoggedUser();
 		this.startDate = startDate;
 		this.endDate = finishDate;
-		LocalDate date1 = LocalDate.parse(this.startDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-	    LocalDate date2 = LocalDate.parse(this.endDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-	    int daysBetween = (int)ChronoUnit.DAYS.between(date1, date2);
-	    this.price = r.getPrezzo()*daysBetween;
+		
 		DiscountFactory f=new DiscountFactory();
 		s=f.getDiscountStrategy();
+		setTotalPrice();
 	}
 
 	public ArrayList<Resource> updateJlistResource(){;
@@ -45,12 +45,13 @@ public class Renting {
 	public boolean tryToRent() {
 		Renting rent;
 		Boolean result = false;
+		rent = new Renting(r,u,startDate,endDate);
 		try {
-			rent = new Renting(r,u,startDate,endDate);
-			boolean c = check(rent);
-			if(c == true) {
-				result = SingletonManager.getInstance().getRentingDAO().InsertRenting(rent);
+			result = check(rent);
+			if(result) {
+				PopupManager.showPopup("L'affitto per il periodo selezionato ha un costo di: "+rent.getPrice());
 			}
+			return result;
 				
 		}catch(EmptyFieldException e) {
 			e.showPopup();
@@ -61,13 +62,21 @@ public class Renting {
 		catch(DatabaseException e) {
 			e.showPopup();
 		}
-		
-		if(result) {
-			PopupManager.showPopup("Affitto effettuato con successo");
-		}
 		return result;
+
 		
 	}
+	
+	
+	public boolean tryToInsert() throws DatabaseException {
+		Renting rent = new Renting(r,u,startDate,endDate);
+		if(SingletonManager.getInstance().getRentingDAO().InsertRenting(rent)) {
+			PopupManager.showPopup("Affitto effettuato con successo!");
+			return true;
+		}
+		return false;
+	}
+	
 	
 	public boolean check(Renting r) throws EmptyFieldException,ResourceAlreadyRentedException,DatabaseException {
 		Boolean c = true;
@@ -128,8 +137,15 @@ public class Renting {
 		return this.price;
 	}
 	
-	public double getTotalPrice() {
-		return s.getFinal(this);
+	public void setTotalPrice() {
+		LocalDate date1 = LocalDate.parse(this.startDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	    LocalDate date2 = LocalDate.parse(this.endDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	    int daysBetween = (int)ChronoUnit.DAYS.between(date1, date2);
+	    if(daysBetween == 0)
+	    	this.price = r.getPrezzo();
+	    else
+	    	this.price = r.getPrezzo()*daysBetween;
+		this.price = s.getFinal(this);
 	}
 	
 

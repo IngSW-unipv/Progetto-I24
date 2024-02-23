@@ -15,7 +15,6 @@ import java.util.Calendar;
 
 public class RentingView extends JFrame {
 	
-	//private RentingController controller;
 	private Renting r;
 	private JDateChooser startDate;
 	private JDateChooser endDate;

@@ -1,6 +1,7 @@
 package it.unipv.ingsw.UniBook.Controller;
 
 import it.unipv.ingsw.UniBook.Exception.AuthorizationDeniedException;
+import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.CondivisioneModel;
 import it.unipv.ingsw.UniBook.Model.Renting;
@@ -17,6 +18,8 @@ import it.unipv.ingsw.UniBook.View.RentingView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -76,8 +79,7 @@ public class HomeController {
 			}
 
 			private void manageAction() {
-
-				openResourceRenting();
+				openRentChoose();
 			}
 		};
 		// Associazione listener-button
@@ -182,7 +184,29 @@ public class HomeController {
 
 	}
 
+	private void openRentChoose() {
+		Object[] options = {"Affitta una risorsa","Gestisci gli affitti"};
+		int choose = PopupManager.showChoosing(options);
+		switch (choose) {
+		case 0:
+			openResourceRenting();
+			break;
+		case 1:
+			openResourceRentingManagement();
+			break;
+		}
+	}
+	
+	private void openResourceRentingManagement() {
+
+		rv = new RentingView();
+		Renting r = new Renting();
+		RentingController c = new RentingController(r, rv);
+		rv.setVisible(true);
+	}
+	
 	private void openResourceRenting() {
+
 		rv = new RentingView();
 		Renting r = new Renting();
 		RentingController c = new RentingController(r, rv);
@@ -190,7 +214,6 @@ public class HomeController {
 	}
 
 	private void openSharing() {
-		System.out.println("ciaooo");
 		sv = new CondivisioneView();
 		CondivisioneModel r = new CondivisioneModel();
 		CondivisioneController c = new CondivisioneController(sv, r);

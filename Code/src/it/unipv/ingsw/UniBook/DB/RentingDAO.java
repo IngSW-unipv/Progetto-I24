@@ -67,8 +67,7 @@ public class RentingDAO implements IRentingDAO {
 			st1.setString(2,r.getU().getId());
 			st1.setString(3,convertDateToMysqlDate(r.getStartDate()));
 		    st1.setString(4, convertDateToMysqlDate(r.getEndDate()));
-		    System.out.println(r.getPrice()+"/t"+r.getTotalPrice());
-		    st1.setDouble(5, r.getTotalPrice());
+		    st1.setDouble(5, r.getPrice());
 			st1.executeUpdate();
 
 		} catch (Exception e) {
