@@ -22,6 +22,28 @@ public class ResourceDAO implements IResourceDAO {
 //			conn=DBConnection.startConnection(conn,schema);
 	}
 
+	public Resource getResourceById(int id) {
+		Resource result = new Resource();
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+		ResultSet rs1;
+		try {
+			String query = "SELECT ID,Nome,Descrizione,Indirizzo,Tipo,ID_Lab,Matricola_inserimento,Prezzo FROM unibook.risorsa WHERE risorsa.ID = ? ";
+			st1 = conn.prepareStatement(query);
+			st1.setInt(1, id);
+			rs1 = st1.executeQuery();
+			
+			rs1.next();
+			result = new Resource(rs1.getInt(1),rs1.getString(2),rs1.getString(3),rs1.getDouble(8),rs1.getString(4),rs1.getString(5),rs1.getInt(6),rs1.getString(7));
+			return result;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		DBConnection.closeConnection(conn);
+		return result;
+		
+	}
+	
 	@Override
 	public ArrayList<Resource> getAllBookableResources() {
 		ArrayList<Resource> result = new ArrayList<>();

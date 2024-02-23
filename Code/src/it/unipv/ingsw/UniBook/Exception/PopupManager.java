@@ -2,6 +2,8 @@ package it.unipv.ingsw.UniBook.Exception;
 
 import javax.swing.JOptionPane;
 
+import com.toedter.calendar.JDateChooser;
+
 public class PopupManager {
 
 	public static void showPopup(String message) {
@@ -10,6 +12,9 @@ public class PopupManager {
 	
 	public static int showChoosing(Object [] options) {
 		return JOptionPane.showOptionDialog(null, "Scegli un'opzione", "Affitti", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+	}
+	public static void dateChoosing(JDateChooser jd) {
+	 JOptionPane.showConfirmDialog(null,jd,"Start date", JOptionPane.PLAIN_MESSAGE);
 	}
 	
 }

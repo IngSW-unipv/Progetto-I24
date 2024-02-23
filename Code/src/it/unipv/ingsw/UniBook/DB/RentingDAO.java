@@ -10,6 +10,9 @@ import java.text.ParseException;
 
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.Model.Renting;
+import it.unipv.ingsw.UniBook.Model.Resource;
+import it.unipv.ingsw.UniBook.Model.SingletonManager;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -33,14 +36,14 @@ public class RentingDAO implements IRentingDAO {
 		ResultSet rs1;
 		try {
 			st1 = conn.createStatement();
-			String query = 	"select Nome, DataInizio, Durata" + 
-							"from (affitto join risorsa on affitto.ID_Risorsa = risorsa.ID)"+
+			String query = 	"select ID_risorsa, DataInizio, DataFine, Costo from (affitto join risorsa on affitto.ID_Risorsa = risorsa.ID)"+
 							"where Matricola = '"+u.getId()+"'";
 
 			rs1 = st1.executeQuery(query);
 
 			while (rs1.next()) {
-				result.add(new Renting());
+				Resource r = SingletonManager.getInstance().getResourceDAO().getResourceById(rs1.getInt(1));
+				result.add(new Renting(r, u, convertMysqlDatetoDate(rs1.getString(2)),convertMysqlDatetoDate(rs1.getString(3)),rs1.getDouble(4)));
 			}
 
 		} catch (Exception e) {
@@ -51,6 +54,32 @@ public class RentingDAO implements IRentingDAO {
 		return result;
 	}
 
+	public boolean ModifyRenting(Renting r) {
+		conn = DBConnection.startConnection(conn, schema);
+		PreparedStatement st1;
+
+		boolean esito = true;
+
+		try {
+
+			String query = "update affitto set DataFine = ?, Costo = ? where Id_Risorsa = ? and Matricola = ? and DataInizio = ?";
+			st1 = conn.prepareStatement(query);
+			st1.setString(1, convertDateToMysqlDate(r.getEndDate()));
+			st1.setDouble(2, r.getPrice());
+			st1.setInt(3, r.getResource().getId());
+			st1.setString(4, r.getU().getId());
+			st1.setString(5, convertDateToMysqlDate(r.getStartDate()));
+			st1.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			esito = false;
+		}
+
+		DBConnection.closeConnection(conn);
+		return esito;
+	}
+	
 	@Override
 	public boolean InsertRenting(Renting r) {
 		conn = DBConnection.startConnection(conn, schema);
@@ -111,14 +140,14 @@ public class RentingDAO implements IRentingDAO {
 		}
 	}
 	
-	public Boolean checkAvailability(Renting r) throws ResourceAlreadyRentedException,DatabaseException {
+	public Boolean checkAvailability(Renting r,int rows) throws ResourceAlreadyRentedException,DatabaseException {
 		boolean available = false;
 		conn = DBConnection.startConnection(conn, schema);
 		ResultSet rs1;
 		PreparedStatement st1;
 		try {
 			String query = "select * from unibook.affitto where ID_Risorsa = ? and ((DataInizio <= ? AND DataFine >= ?)OR(DataInizio <= ? AND DataFine >= ?))";
-			
+			int c = 0;
 			st1 = conn.prepareStatement(query);
 			st1.setInt(1,r.getResource().getId());
 			String date =convertDateToMysqlDate(r.getStartDate());
@@ -128,8 +157,9 @@ public class RentingDAO implements IRentingDAO {
 			st1.setString(4,date);
 			st1.setString(5,date);
 			rs1 = st1.executeQuery();
-			
-			if(!rs1.next()) {
+			while(rs1.next())
+				c++;
+			if(c==rows) {
 				available = true;
 			}
 			else {

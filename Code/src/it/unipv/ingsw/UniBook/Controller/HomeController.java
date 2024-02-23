@@ -11,6 +11,7 @@ import it.unipv.ingsw.UniBook.View.BookingView;
 import it.unipv.ingsw.UniBook.View.ChatView;
 import it.unipv.ingsw.UniBook.View.CondivisioneView;
 import it.unipv.ingsw.UniBook.View.HomeView;
+import it.unipv.ingsw.UniBook.View.ManagementRentingView;
 import it.unipv.ingsw.UniBook.View.ManagementView;
 import it.unipv.ingsw.UniBook.View.RegistrationView;
 import it.unipv.ingsw.UniBook.View.RentingView;
@@ -29,6 +30,7 @@ public class HomeController {
 	private ManagementView mv;
 	private BookingView bv;
 	private RentingView rv;
+	private ManagementRentingView rmv;
 	private CondivisioneView sv;
 	private User u;
 
@@ -84,6 +86,7 @@ public class HomeController {
 		};
 		// Associazione listener-button
 		hv.getButtonRT().addActionListener(RT);
+		
 
 		ActionListener EX = new ActionListener() {
 
@@ -130,6 +133,9 @@ public class HomeController {
 		};
 		// Aggiungo il listener al bottone
 		hv.getButtonF().addActionListener(CF);
+		
+		
+		
 	}
 
 	// Controllo se l'utente è un professore o un ricercatore
@@ -199,10 +205,10 @@ public class HomeController {
 	
 	private void openResourceRentingManagement() {
 
-		rv = new RentingView();
+		rmv = new ManagementRentingView();
 		Renting r = new Renting();
-		RentingController c = new RentingController(r, rv);
-		rv.setVisible(true);
+		RentingController c = new RentingController(r,rmv);
+		
 	}
 	
 	private void openResourceRenting() {

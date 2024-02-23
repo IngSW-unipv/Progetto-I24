@@ -14,4 +14,8 @@ public class WrongFieldException extends Exception{
 		PopupManager.showPopup(errorMessage);
 	}
 	
+	public void showPopup(String s) {
+		PopupManager.showPopup(s);
+	}
+	
 }
