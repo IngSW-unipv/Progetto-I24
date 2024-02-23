@@ -1,16 +1,11 @@
 package it.unipv.ingsw.UniBook.Model;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.DB.BookingDAO;
-import it.unipv.ingsw.UniBook.DB.LaboratoryDAO;
-import it.unipv.ingsw.UniBook.Model.SingletonManager;
 
 public class Booking {
 
@@ -124,11 +119,8 @@ public class Booking {
 
 	public ArrayList<Resource> updateJListResources() {
 
-		ResourceDAO resourceDAO = SingletonManager.getInstance().getResourceDAO();
-		LaboratoryDAO laboratoryDAO = SingletonManager.getInstance().getLaboratoryDAO();
-
-		ArrayList<Resource> availableResources = resourceDAO.getAllBookableResources();
-		availableResources.addAll(laboratoryDAO.selectAllLaboratory());
+		ArrayList<Resource> availableResources = SingletonManager.getInstance().getResourceDAO().getAllBookableResources();
+		availableResources.addAll(SingletonManager.getInstance().getLaboratoryDAO().selectAllLaboratory());
 
 		return availableResources;
 	}
@@ -184,18 +176,14 @@ public class Booking {
 
 	public boolean tryToBook() {
 
-		Booking ttb = null;
 		Boolean result = false;
 
 		try {
 
-			ttb = new Booking(r, u, date, time, duration);
-
 			if (r.getNome().toLowerCase().contains("laboratorio")) {
-				result = laboratoryManagement(ttb);
+				result = laboratoryManagement();
 			} else {
-				// Se non è un laboratorio
-				result = resourceManagement(ttb);
+				result = resourceManagement();
 			}
 
 			if (result) {
@@ -218,16 +206,16 @@ public class Booking {
 
 	}
 
-	public boolean resourceManagement(Booking ttb) throws EmptyFieldException, OverbookingException, DurationException {
+	public boolean resourceManagement() throws EmptyFieldException, OverbookingException, DurationException {
 		checkEmptyDate();
 		checkDuration();
-		checkAvailability(ttb);
+		checkAvailability(this);
 
-		boolean succesfulInsertion = bDAO.insertBooking(ttb);
+		boolean succesfulInsertion = bDAO.insertBooking(this);
 		return succesfulInsertion;
 	}
 
-	public boolean laboratoryManagement(Booking ttb)
+	public boolean laboratoryManagement()
 			throws EmptyFieldException, DurationException, OverbookingException {
 
 		try {
@@ -241,15 +229,15 @@ public class Booking {
 			int capacity = SingletonManager.getInstance().getLaboratoryDAO().getCapacity(r);
 
 			// Se l'aula è prenotata più della metà non consento la prenotazione al prof
-			if (bDAO.getAlreadyPresentBooking(ttb).size() < (capacity / 2)) {
+			if (bDAO.getAlreadyPresentBooking(this).size() < (capacity / 2)) {
 
 				// Ottengo le risorse prenotate in quella data e in quell'ora nel laboratorio
-				for (Booking booking : bDAO.getAlreadyPresentBooking(ttb)) {
+				for (Booking booking : bDAO.getAlreadyPresentBooking(this)) {
 					bDAO.deleteSelectedBooking(booking); // Cancello le prenotazioni degli studenti
 				}
 				// Ciclo con cui vado a prenotare tutte le risorse di quel laboratorio
 				for (Resource resource : SingletonManager.getInstance().getResourceDAO()
-						.getResourceByLab((ttb.getR()))) {
+						.getResourceByLab((this.getR()))) {
 					bDAO.insertBooking(new Booking(resource, u, date, time, duration));
 				}
 

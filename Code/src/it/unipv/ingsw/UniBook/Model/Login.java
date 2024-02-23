@@ -2,17 +2,13 @@ package it.unipv.ingsw.UniBook.Model;
 
 import javax.swing.JFrame;
 import it.unipv.ingsw.UniBook.Controller.HomeController;
-import it.unipv.ingsw.UniBook.DB.UserDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
 public class Login extends Authentication {
 
-	private UserDAO uDAO;
-
 	public Login(User u) {
 		super(u);
-		this.uDAO = SingletonManager.getInstance().getUserDAO();
 	}
 
 	public boolean login() {
@@ -65,7 +61,7 @@ public class Login extends Authentication {
 
 	public void passwordCheck() throws WrongFieldException {
 
-		if (!u.getPassword().equals(uDAO.selectPassword(u))) {
+		if (!u.getPassword().equals(SingletonManager.getInstance().getUserDAO().selectPassword(u))) {
 			throw new WrongFieldException();
 		}
 

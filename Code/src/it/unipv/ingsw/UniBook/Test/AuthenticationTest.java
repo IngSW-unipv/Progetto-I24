@@ -11,8 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import it.unipv.ingsw.UniBook.Exception.EmptyFieldException;
-import it.unipv.ingsw.UniBook.Exception.WrongFieldException;
+
 
 public class AuthenticationTest {
 

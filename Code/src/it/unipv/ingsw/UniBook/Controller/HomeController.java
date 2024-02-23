@@ -20,7 +20,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -31,7 +30,6 @@ public class HomeController {
 	private BookingView bv;
 	private RentingView rv;
 	private CondivisioneView sv;
-	private User u;
 
 	public HomeController(HomeView view) {
 		hv = view;

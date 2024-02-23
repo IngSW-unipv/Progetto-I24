@@ -1,19 +1,13 @@
 package it.unipv.ingsw.UniBook.Controller;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import it.unipv.ingsw.UniBook.Model.Booking;
-import it.unipv.ingsw.UniBook.Model.Resource;
-import it.unipv.ingsw.UniBook.DB.ResourceDAO;
+
 import it.unipv.ingsw.UniBook.View.BookingView;
 import it.unipv.ingsw.UniBook.View.DeleteBookingView;
-import it.unipv.ingsw.UniBook.DB.BookingDAO;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
-import it.unipv.ingsw.UniBook.Exception.*;
-import it.unipv.ingsw.UniBook.View.DeleteBookingView;
 
 public class BookingController {
 

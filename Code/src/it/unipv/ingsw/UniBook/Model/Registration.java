@@ -3,19 +3,13 @@ package it.unipv.ingsw.UniBook.Model;
 import javax.swing.JFrame;
 
 import it.unipv.ingsw.UniBook.Controller.HomeController;
-import it.unipv.ingsw.UniBook.DB.UserDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
 import it.unipv.ingsw.UniBook.View.HomeView;
 
 public class Registration extends Authentication{
 
-	private UserDAO uDAO;
-
 	public Registration(User u) {
 		super(u);
-
-		this.uDAO = SingletonManager.getInstance().getUserDAO();
-
 	}
 
 	public boolean register(String ConfirmPassword) {
@@ -24,11 +18,11 @@ public class Registration extends Authentication{
 		
 		try{
 			
-			matricolaCompatibileCheck();
+			idCheck();
 			accountCheck();
 			fieldCheck(ConfirmPassword);
 			passwordCheck(ConfirmPassword);
-			succesfulOperationCheck();
+			successfulOperationCheck();
 			
 			setTypeOfUser();
 			
@@ -74,7 +68,7 @@ public class Registration extends Authentication{
 
 	// Controlla che se un utente inserisce la matricola con S, sia effettivaemente
 	// uno studente..
-	public void matricolaCompatibileCheck() throws WrongFieldException {
+	private void idCheck() throws WrongFieldException {
 
 		// Verifica formato matricola
 		if (this.u.getId().matches("[SPR]\\d{6}")) {
@@ -108,23 +102,23 @@ public class Registration extends Authentication{
 
 	}
 
-	public void passwordCheck(String password) throws WrongFieldException {
+	private void passwordCheck(String password) throws WrongFieldException {
 
 		if (!String.valueOf(this.u.getPassword()).equals(password))
 			throw new WrongFieldException();
 	}
 
-	public void succesfulOperationCheck() throws DatabaseException {
+	private void successfulOperationCheck() throws DatabaseException {
 
-		boolean inserimentoRiuscito = uDAO.insertUser(u);
+		boolean inserimentoRiuscito = SingletonManager.getInstance().getUserDAO().insertUser(u);
 
 		if (!inserimentoRiuscito)
 			throw new DatabaseException();
 
 	}
 	
-	public void accountCheck() throws AccountAlreadyExistsException {
-		if(this.u.getId().equals(uDAO.selectMatricola(u))) {	
+	private void accountCheck() throws AccountAlreadyExistsException {
+		if(this.u.getId().equals(SingletonManager.getInstance().getUserDAO().selectMatricola(u))) {	
 			throw new AccountAlreadyExistsException();
 		}
 	}
