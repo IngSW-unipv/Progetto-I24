@@ -2,8 +2,6 @@ package it.unipv.ingsw.UniBook.View;
 
 import javax.swing.*;
 import java.awt.*;
-import it.unipv.ingsw.UniBook.Controller.BookingController;
-import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.Resource;
 

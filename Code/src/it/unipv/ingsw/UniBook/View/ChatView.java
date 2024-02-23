@@ -64,14 +64,6 @@ public class ChatView {
 
 	}
 	
-	public void avviaChat(List<Messaggio> messaggi) {
-
-		for (Messaggio m : messaggi) {
-			aggiungiMessaggio(m);
-		}
-		
-	}
-	
 	public void aggiungiMessaggio(Messaggio messaggio) {
 		String messaggioStr = String.format("[%s] %s: %s%n", messaggio.getDataOra(), messaggio.getMittente().getId(),
 				messaggio.getTesto());

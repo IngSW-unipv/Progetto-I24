@@ -1,5 +1,6 @@
 package it.unipv.ingsw.UniBook.Controller;
 
+import it.unipv.ingsw.UniBook.Chat.ChatUpdater;
 import it.unipv.ingsw.UniBook.Exception.AuthorizationDeniedException;
 import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.Booking;
@@ -20,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -32,7 +32,6 @@ public class HomeController {
 	private RentingView rv;
 	private ManagementRentingView rmv;
 	private CondivisioneView sv;
-	private User u;
 
 	public HomeController(HomeView view) {
 		hv = view;
@@ -184,8 +183,6 @@ public class HomeController {
 		RegistrationView view = new RegistrationView();
 		RegistrationController c = new RegistrationController(view, model);
 
-		// RegistrationView v = new RegistrationView();
-		// RegistrationController c = new RegistrationController(v);
 		view.setVisible(true);
 
 	}
@@ -228,6 +225,7 @@ public class HomeController {
 
 	private void openChat() {
 
+		//Apertura Chat e scelta interlocutore
 		User userLoggato = SingletonManager.getInstance().getLoggedUser();
 
 		List<User> listaUtenti = SingletonManager.getInstance().getUserDAO().getUsersFromDatabase();
@@ -243,8 +241,14 @@ public class HomeController {
 			ChatView cv = new ChatView(userLoggato, destinatario);
 			ChatController controller = new ChatController(cv, userLoggato, destinatario);
 			cv.setVisible(true);
-
+			
+			//Istanza e run del thread
+			ChatUpdater updater = new ChatUpdater(controller, userLoggato, destinatario);
+		    updater.start();
+			
 		}
 	}
+	
+
 
 }

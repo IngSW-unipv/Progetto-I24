@@ -2,6 +2,9 @@ package it.unipv.ingsw.UniBook.DB;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.toedter.calendar.JDateChooser;
 
 import java.sql.PreparedStatement;
@@ -33,12 +36,17 @@ public class BookingDAO implements IBookingDAO {
 		Statement st1;
 		ResultSet rs1;
 
+		LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+		
 		try {
 
 			st1 = conn.createStatement();
 			String query = "select Nome, DataOra, tempo"
 					+ " from (prenotazione join risorsa on prenotazione.ID_Risorsa = risorsa.ID)"
-					+ " where Matricola = '" + u.getId() + "'";
+					+ " where Matricola = '" + u.getId() + "'"
+					+ " AND DataOra> '"+  formattedDateTime + "'" ;
 
 			rs1 = st1.executeQuery(query);
 
