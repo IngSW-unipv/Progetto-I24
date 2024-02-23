@@ -38,7 +38,6 @@ public class DBConnection {
 	public static Connection startConnection(Connection conn, String schema)
 	{
 		init();
-		System.out.println(dbURL);
 	
 		
 		
