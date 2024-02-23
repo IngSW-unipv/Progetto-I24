@@ -4,19 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.text.View;
-
-import it.unipv.ingsw.UniBook.DB.MessaggioDAO;
-import it.unipv.ingsw.UniBook.DB.UserDAO;
-import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.Messaggio;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Model.User;
 import it.unipv.ingsw.UniBook.View.ChatView;
-import it.unipv.ingsw.UniBook.View.DeleteBookingView;
 
 public class ChatController {
 	private ChatView view;
@@ -33,7 +24,7 @@ public class ChatController {
 	}
 
 	private void initComponents() {
-		
+
 		caricaChat();
 
 		ActionListener invia = new ActionListener() {
@@ -52,8 +43,6 @@ public class ChatController {
 
 				if (m.provaInvio()) {
 					view.aggiungiMessaggio(m);
-				}else {
-					PopupManager.showPopup("Inserisci un messaggio valido");
 				}
 
 			}
@@ -64,20 +53,26 @@ public class ChatController {
 
 	}
 
+	//Metodo con cui inizializzo la chat caricando i messaggi precedenti
 	public void caricaChat() {
 		List<Messaggio> messaggi = SingletonManager.getInstance().getMessaggioDAO().getMessaggi(mittente, destinatario);
-		view.avviaChat(messaggi);
+		
+		//Setto come letti gli eventuali nuovi messaggi
+		for (Messaggio mes : messaggi) {
+			SingletonManager.getInstance().getMessaggioDAO().setMessaggioLetto(mes);
+		}
+		
+		//Mostro i messaggi nella view
+		updateChat(messaggi);
 	}
+	
+	//Passo i messaggi alla view e li aggiungo
+	public void updateChat(List<Messaggio> messaggi) {
 
-	/*
-	 * public List<Messaggio> getMessaggiNonLetti() { return
-	 * SingletonManager.getInstance().getMessaggioDAO().getMessaggiNonLetti(
-	 * destinatario, mittente); }
-	 * 
-	 * 
-	 * 
-	 * public void setMessaggioLetto(Messaggio messaggio) {
-	 * messaggioDAO.setMessaggioLetto(messaggio); }
-	 */
+		for (Messaggio m : messaggi) {
+			view.aggiungiMessaggio(m);
+		}
+			
+	}
 
 }

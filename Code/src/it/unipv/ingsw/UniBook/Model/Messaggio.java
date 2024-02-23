@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import it.unipv.ingsw.UniBook.Exception.PopupManager;
+
 public class Messaggio {
 
 	private User mittente;
@@ -65,26 +67,25 @@ public class Messaggio {
 		this.letto = letto;
 	}
 
-	
-
+	//Metodo con cui si prova ad inviare un nuovo messaggio
 	public boolean provaInvio() {
-
-		if (!testo.isEmpty()) {
-			
+		
+		if (!testo.isEmpty()) {			
 			SingletonManager.getInstance().getMessaggioDAO().inserisciMessaggio(this);
-			
 			return true;
 		} else {
+			PopupManager.showPopup("Inserisci un messaggio valido");
 			return false;
-			
 		}
 
 	}
 	
+	//Metodo che mi restituisce i messaggi non letti
 	public List<Messaggio> getMessaggiNonLetti() {
         return SingletonManager.getInstance().getMessaggioDAO().getMessaggiNonLetti(destinatario, mittente);
     }
 	
+	//Metodo con cui setto come letto un messaggio
 	public void setMessaggioLetto(Messaggio messaggio) {
         SingletonManager.getInstance().getMessaggioDAO().setMessaggioLetto(messaggio);
     }
