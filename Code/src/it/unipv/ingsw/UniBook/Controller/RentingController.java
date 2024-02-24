@@ -119,10 +119,11 @@ public class RentingController {
 			private void manageAction() {
 				try {
 					LocalDate today = LocalDate.now();
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 					Renting r = mrView.getSelectedRow();
-					LocalDate date = LocalDate.parse(r.getEndDate());
+					LocalDate date = LocalDate.parse(r.getEndDate(),formatter);
 					if (date.compareTo(today) >= 0) {
-						PopupManager.dateChoosing(mrView.getNewEndDateChooser());
+						PopupManager.dateChoosing(mrView.getNewEndDateChooser(),date);
 						r.setEndDate(mrView.getNewEndDate());
 						double p = r.getPrice();
 						r.setTotalPrice();
