@@ -11,6 +11,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class CondivisioneController {
 
@@ -60,16 +63,23 @@ public class CondivisioneController {
         }
     }
 
-
-    private class DownloadButtonListener implements ActionListener {
+    public class DownloadButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                model.simulaDownload();
-                view.showMessage("File scaricato con successo!", "Download completato");
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
+            String folderPath = "/Users/houssembenturkia/Progetto-I24/src/main/resources/download condivisione file/Risorse UniBook";
+            System.out.println("Percorso cartella: " + folderPath);
+
+            JFileChooser fileChooser = new JFileChooser(folderPath);
+            fileChooser.setDialogTitle("Seleziona il file da scaricare");
+
+            int result = fileChooser.showOpenDialog(null);
+
+            if (result == JFileChooser.APPROVE_OPTION) {
+            	File selectedFile = fileChooser.getSelectedFile();
+
+             
+                JOptionPane.showMessageDialog(null, "Download completato con successo per il file: " + selectedFile.getName(), "Download completato", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
-} 
+}

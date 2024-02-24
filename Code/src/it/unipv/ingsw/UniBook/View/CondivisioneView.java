@@ -14,8 +14,8 @@ public class CondivisioneView extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         // Imposta l'icona dell'applicazione
-        ImageIcon icon = new ImageIcon("/Users/houssembenturkia/Progetto-I24/src/main/resources/logo.png");
-        setIconImage(icon.getImage());
+      //  ImageIcon icon = new ImageIcon("/Users/houssembenturkia/Progetto-I24/src/main/resources/logo.png");
+     //   setIconImage(icon.getImage());
         
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(100, 200, 100, 200));
