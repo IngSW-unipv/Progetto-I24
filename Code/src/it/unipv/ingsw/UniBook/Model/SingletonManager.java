@@ -95,6 +95,11 @@ public class SingletonManager {
 				}
 			}
 		}
+	}
+
+	public boolean isCurrentUserProfessor() {
+		// TODO Auto-generated method stub
+		return false;
 	}	
 
 }

@@ -30,10 +30,8 @@ public class CondivisioneController {
         public void actionPerformed(ActionEvent e) {
             try {
                 SingletonManager manager = SingletonManager.getInstance();
-                
-                User currentUser = manager.getLoggedUser();
-                
-                if (currentUser instanceof Professor) {
+
+                if (manager.isCurrentUserProfessor()) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
                     int result = fileChooser.showOpenDialog(view);
@@ -56,13 +54,12 @@ public class CondivisioneController {
                 } else {
                     view.showMessage("Non hai i permessi per eseguire l'upload.", "Sistema");
                 }
-            } catch (ClassCastException ex) {
-                AuthorizationDeniedException ecc = new AuthorizationDeniedException();
-                ecc.showPopup();
-                System.out.println(ecc.toString());
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }
+
 
     private class DownloadButtonListener implements ActionListener {
         @Override

@@ -12,7 +12,11 @@ public class CondivisioneView extends JFrame {
         setTitle("Condivisione File");
         setSize(400, 300); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+        
+        // Imposta l'icona dell'applicazione
+        ImageIcon icon = new ImageIcon("/Users/houssembenturkia/Progetto-I24/src/main/resources/logo.png");
+        setIconImage(icon.getImage());
+        
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(100, 200, 100, 200));
         buttonPanel.setBackground(new Color(214, 255, 255));
@@ -42,4 +46,4 @@ public class CondivisioneView extends JFrame {
     public void showMessage(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
-} 
+}
