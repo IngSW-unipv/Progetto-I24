@@ -10,28 +10,28 @@ public class CondivisioneView extends JFrame {
 
     public CondivisioneView() {
         setTitle("Condivisione File");
-        setSize(800, 600); // Imposta le dimensioni della finestra
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Crea un pannello per contenere i bottoni
+        setSize(400, 300); 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        // Imposta l'icona dell'applicazione
+      //  ImageIcon icon = new ImageIcon("/Users/houssembenturkia/Progetto-I24/src/main/resources/logo.png");
+     //   setIconImage(icon.getImage());
+        
         JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 10, 10));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(100, 200, 100, 200));
-        
-        // Crea i bottoni
+        buttonPanel.setBackground(new Color(214, 255, 255));
         uploadButton = new JButton("Upload File");
         downloadButton = new JButton("Download File");
 
-        // Aggiungi i bottoni al pannello
         buttonPanel.add(uploadButton);
         buttonPanel.add(downloadButton);
 
-        // Aggiungi il pannello dei bottoni al contenitore principale
         getContentPane().add(buttonPanel, BorderLayout.CENTER);
         
-        // Centra la finestra
         setLocationRelativeTo(null);
 
         pack();
+        
         setVisible(true);
     }
 
@@ -43,8 +43,7 @@ public class CondivisioneView extends JFrame {
         downloadButton.addActionListener(listener);
     }
 
-    // Metodo per mostrare un popup con un messaggio personalizzato
     public void showMessage(String message, String title) {
         JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
-} 
+}
