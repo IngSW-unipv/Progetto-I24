@@ -81,7 +81,7 @@ public class Booking {
 	}
 
 	// Metodo che controlla che un utente non prenoti quando l'università è chiusa
-	public void checkDuration() throws DurationException {
+	private void checkDuration() throws DurationException {
 
 		boolean valid;
 
@@ -127,15 +127,15 @@ public class Booking {
 
 	// Metodo che controlla la disponibilità della risorsa scelta nella data e ora
 	// selezionate
-	public void checkAvailability(Booking b) throws OverbookingException {
+	private void checkAvailability() throws OverbookingException {
 
-		if (!bDAO.checkAvilability(b))
+		if (!bDAO.checkAvilability(this))
 			throw new OverbookingException();
 
 	}
 
 	// Metodo che verifica l'inserimento della data
-	public void checkEmptyDate() throws EmptyFieldException {
+	private void checkEmptyDate() throws EmptyFieldException {
 		if (date == "")
 			throw new EmptyFieldException();
 	}
@@ -147,7 +147,7 @@ public class Booking {
 	}
 
 	// Metodo che consente l'eliminazione di risorse previa conferma
-	public boolean removeBooking(ArrayList<Booking> bookings, int index) {
+	private boolean removeBooking(ArrayList<Booking> bookings, int index) {
 
 		int choice;
 
@@ -206,16 +206,16 @@ public class Booking {
 
 	}
 
-	public boolean resourceManagement() throws EmptyFieldException, OverbookingException, DurationException {
+	private boolean resourceManagement() throws EmptyFieldException, OverbookingException, DurationException {
 		checkEmptyDate();
 		checkDuration();
-		checkAvailability(this);
+		checkAvailability();
 
 		boolean succesfulInsertion = bDAO.insertBooking(this);
 		return succesfulInsertion;
 	}
 
-	public boolean laboratoryManagement()
+	private boolean laboratoryManagement()
 			throws EmptyFieldException, DurationException, OverbookingException {
 
 		try {

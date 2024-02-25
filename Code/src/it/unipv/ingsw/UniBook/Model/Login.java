@@ -47,7 +47,7 @@ public class Login extends Authentication {
 
 	}
 
-	public void fieldCheck() throws EmptyFieldException, WrongFieldException {
+	private void fieldCheck() throws EmptyFieldException, WrongFieldException {
 		
 		if (this.u.getId().isEmpty() == true || this.u.getPassword().isEmpty() == true) {
 			throw new EmptyFieldException();
@@ -59,7 +59,7 @@ public class Login extends Authentication {
 		
 	}
 
-	public void passwordCheck() throws WrongFieldException {
+	private void passwordCheck() throws WrongFieldException {
 
 		if (!u.getPassword().equals(SingletonManager.getInstance().getUserDAO().selectPassword(u))) {
 			throw new WrongFieldException();
