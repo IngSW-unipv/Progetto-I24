@@ -2,29 +2,21 @@ package it.unipv.ingsw.UniBook.View;
 
 import javax.swing.*;
 
-import it.unipv.ingsw.UniBook.Controller.ChatController;
-import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.Messaggio;
-import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Model.User;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ChatView {
+
+public class ChatView extends JFrame{
 
 	private JFrame frame;
 	private JTextArea chatArea;
 	private JTextField messaggioField;
 	private JButton inviaButton;
-	private User mittente;
 	private User destinatario;
 
-	public ChatView(User mittente, User destinatario) {
+	public ChatView(User destinatario) {
 
-		this.mittente = mittente;
 		this.destinatario = destinatario;
 		createAndShowGUI();
 	}
@@ -59,9 +51,9 @@ public class ChatView {
 	public String getMessaggio() {
 		return messaggioField.getText();
 	}
-
-	public void setVisible(boolean b) {
-
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 	
 	public void aggiungiMessaggio(Messaggio messaggio) {

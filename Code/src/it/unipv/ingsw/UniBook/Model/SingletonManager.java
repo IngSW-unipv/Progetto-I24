@@ -22,7 +22,6 @@ public class SingletonManager {
 	private Researcher researcher;
 	private User user;
 
-
 	// Costruttore privato
 	private SingletonManager() {
 		// Inizializzazione oggetti
@@ -32,10 +31,8 @@ public class SingletonManager {
 		this.userDAO = new UserDAO();
 		this.laboratoryDAO = new LaboratoryDAO();
 		this.messaggioDAO = new MessaggioDAO();
-		//this.student = null;
 		this.professor = null;
 		this.researcher = null;
-		//this.user=null;
 		loggedUser = new User();
 	}
 
@@ -56,7 +53,6 @@ public class SingletonManager {
 		return rentingDAO;
 	}
 
-	
 	public ResourceDAO getResourceDAO() {
 		return resourceDAO;
 	}
@@ -64,11 +60,11 @@ public class SingletonManager {
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
-	
+
 	public LaboratoryDAO getLaboratoryDAO() {
 		return laboratoryDAO;
 	}
-	
+
 	public MessaggioDAO getMessaggioDAO() {
 		return messaggioDAO;
 	}
@@ -76,9 +72,9 @@ public class SingletonManager {
 	public User getLoggedUser() {
 		return loggedUser;
 	}
-	
+
 	public void setLoggedUser(User u) {
-		
+
 		try {
 			this.professor = (Professor) u;
 			this.loggedUser = u;
@@ -100,6 +96,6 @@ public class SingletonManager {
 	public boolean isCurrentUserProfessor() {
 		// TODO Auto-generated method stub
 		return false;
-	}	
+	}
 
 }

@@ -20,6 +20,10 @@ public class ChatUpdater extends Thread {
 		this.destinatario = destinatario;
 		this.running = true;
 	}
+	
+	public ChatUpdater() {
+		this.running = true;
+	}
 
 	@Override
 	public void run() {
@@ -28,7 +32,6 @@ public class ChatUpdater extends Thread {
 				try {
 	
 					Thread.sleep(2000);
-					
 					// Prelevo i nuovi messaggi e li setto come letti una volta presi, cosi non continua a mostrarli
 					List<Messaggio> messaggi = SingletonManager.getInstance().getMessaggioDAO()
 							.getMessaggiNonLetti(mittente, destinatario);

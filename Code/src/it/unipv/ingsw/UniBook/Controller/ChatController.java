@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import it.unipv.ingsw.UniBook.Model.Messaggio;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Model.User;
@@ -51,6 +52,7 @@ public class ChatController {
 
 		view.getInvia().addActionListener(invia);
 
+		
 	}
 
 	//Metodo con cui inizializzo la chat caricando i messaggi precedenti
@@ -74,5 +76,6 @@ public class ChatController {
 		}
 			
 	}
-
+	
+	 
 }

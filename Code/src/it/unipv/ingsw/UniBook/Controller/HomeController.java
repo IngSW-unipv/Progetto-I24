@@ -19,6 +19,8 @@ import it.unipv.ingsw.UniBook.View.RentingView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -85,7 +87,6 @@ public class HomeController {
 		};
 		// Associazione listener-button
 		hv.getButtonRT().addActionListener(RT);
-		
 
 		ActionListener EX = new ActionListener() {
 
@@ -132,9 +133,7 @@ public class HomeController {
 		};
 		// Aggiungo il listener al bottone
 		hv.getButtonF().addActionListener(CF);
-		
-		
-		
+
 	}
 
 	// Controllo se l'utente è un professore o un ricercatore
@@ -188,7 +187,7 @@ public class HomeController {
 	}
 
 	private void openRentChoose() {
-		Object[] options = {"Affitta una risorsa","Gestisci gli affitti"};
+		Object[] options = { "Affitta una risorsa", "Gestisci gli affitti" };
 		int choose = PopupManager.showChoosing(options);
 		switch (choose) {
 		case 0:
@@ -199,15 +198,15 @@ public class HomeController {
 			break;
 		}
 	}
-	
+
 	private void openResourceRentingManagement() {
 
 		rmv = new ManagementRentingView();
 		Renting r = new Renting();
-		RentingController c = new RentingController(r,rmv);
-		
+		RentingController c = new RentingController(r, rmv);
+
 	}
-	
+
 	private void openResourceRenting() {
 
 		rv = new RentingView();
@@ -224,8 +223,7 @@ public class HomeController {
 	}
 
 	private void openChat() {
-
-		//Apertura Chat e scelta interlocutore
+		// Apertura Chat e scelta interlocutore
 		User userLoggato = SingletonManager.getInstance().getLoggedUser();
 
 		List<User> listaUtenti = SingletonManager.getInstance().getUserDAO().getUsersFromDatabase();
@@ -235,20 +233,32 @@ public class HomeController {
 		int result = JOptionPane.showConfirmDialog(null, destinatarioComboBox, "Seleziona il destinatario",
 				JOptionPane.OK_CANCEL_OPTION);
 
+		ChatView cv = null;
+		final ChatUpdater[] updater = new ChatUpdater[1]; 
 		if (result == JOptionPane.OK_OPTION) {
 			User destinatario = (User) destinatarioComboBox.getSelectedItem();
 
-			ChatView cv = new ChatView(userLoggato, destinatario);
+			cv = new ChatView(destinatario);
 			ChatController controller = new ChatController(cv, userLoggato, destinatario);
-			cv.setVisible(true);
-			
-			//Istanza e run del thread
-			ChatUpdater updater = new ChatUpdater(controller, userLoggato, destinatario);
-		    updater.start();
-			
-		}
-	}
-	
 
+			// Istanza e run del thread
+			updater[0] = new ChatUpdater(controller, userLoggato, destinatario);
+			updater[0].start();
+		}
+
+		WindowAdapter windowListener = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+				updater[0].stopUpdating();
+			}
+		};
+
+		cv.getFrame().addWindowListener(windowListener);
+
+	}
 
 }
