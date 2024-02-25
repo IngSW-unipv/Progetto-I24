@@ -119,7 +119,7 @@ public class Resource {
 
 //LOGICA
 
-	public void tryToUpload(String nome, String descrizione, boolean isPrenotabile, boolean isAffittabile, User user, double prezzo) {
+	public void tryToUpload(boolean isPrenotabile, boolean isAffittabile) {
 	    try {
 	    	
 	        // Controllo se nessuna delle caselle è selezionata
@@ -162,14 +162,9 @@ public class Resource {
 	        nuovaRisorsa.setNome(nome);
 	        nuovaRisorsa.setDescrizione(descrizione);
 	        nuovaRisorsa.setTipo(tipo);
-	        /*
-	         * if(tipo == 'A')
-	         * nuovaRisorsa.setPrezzo(prezzo);
-	         * else
-	         * nuovaRisorsa.setPrezzo(null);
-	         * */
-	        nuovaRisorsa.setIndirizzo(user.getCorso());
-	        nuovaRisorsa.setMatricola_inserimento(user.getId());
+
+	        nuovaRisorsa.setIndirizzo(SingletonManager.getInstance().getLoggedUser().getCorso());
+	        nuovaRisorsa.setMatricola_inserimento(SingletonManager.getInstance().getLoggedUser().getId());
 
 	        // Impostazione del prezzo solo se la risorsa è affittabile
 	        if (isAffittabile) {
@@ -177,8 +172,9 @@ public class Resource {
 	        }
 
 	        // Inserimento della risorsa nel database utilizzando ResourceDAO
-	        ResourceDAO resourceDAO = new ResourceDAO();
+	        ResourceDAO resourceDAO = SingletonManager.getInstance().getResourceDAO();
 	        boolean inserimento;
+	        
 	        if (isAffittabile) {
 	            inserimento = resourceDAO.insertRisorsaAffittabile(nuovaRisorsa);
 	        } else {
@@ -190,6 +186,7 @@ public class Resource {
 	        } else {
 	            PopupManager.showPopup("Si è verificato un errore durante l'inserimento della risorsa.");
 	        }
+	        
 	    } catch (EmptyFieldException e) {
 	        e.showPopup();
 	        System.out.println(e.toString());
@@ -203,13 +200,15 @@ public class Resource {
     public static void removeResource(ArrayList<Resource> resources, int selectedRow, DefaultTableModel model) {
         if (selectedRow != -1) {
             int option = JOptionPane.showConfirmDialog(null, "Sei sicuro di voler eliminare questa risorsa?", "Conferma eliminazione", JOptionPane.YES_NO_OPTION);
+            
             if (option == JOptionPane.YES_OPTION) {
-                // Ottieni l'ID dalla riga selezionata
-                int id = resources.get(selectedRow).getId();
+
+                int id = resources.get(selectedRow).getId();               // Ottieni l'ID dalla riga selezionata
                 ResourceDAO resourceDAO = new ResourceDAO();
                 Resource resourceToRemove = new Resource();
                 resourceToRemove.setId(id);
                 boolean removed = resourceDAO.removeRisorsa(resourceToRemove);
+                
                 if (removed) {
                     JOptionPane.showMessageDialog(null, "Risorsa rimossa con successo.");
                     model.removeRow(selectedRow);
@@ -227,7 +226,4 @@ public class Resource {
 	public String toString() {
 		return this.nome;
 	}
-	
-	
-	
 }

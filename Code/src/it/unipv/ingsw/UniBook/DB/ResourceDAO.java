@@ -120,7 +120,7 @@ public class ResourceDAO implements IResourceDAO {
 	    return newId;
 	}
 	
-	//Metodo per inserire le risorse nel database
+	//Metodo per inserire le risorse prenotabili nel database
 	public boolean insertRisorsaPrenotabile(Resource r) {
 	    conn = DBConnection.startConnection(conn, schema);
 	    PreparedStatement st1;

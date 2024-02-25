@@ -5,7 +5,9 @@ import it.unipv.ingsw.UniBook.Exception.AuthorizationDeniedException;
 import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.Booking;
 import it.unipv.ingsw.UniBook.Model.CondivisioneModel;
+import it.unipv.ingsw.UniBook.Model.Professor;
 import it.unipv.ingsw.UniBook.Model.Renting;
+import it.unipv.ingsw.UniBook.Model.Researcher;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 import it.unipv.ingsw.UniBook.Model.User;
 import it.unipv.ingsw.UniBook.View.BookingView;
@@ -16,13 +18,11 @@ import it.unipv.ingsw.UniBook.View.ManagementRentingView;
 import it.unipv.ingsw.UniBook.View.ManagementView;
 import it.unipv.ingsw.UniBook.View.RegistrationView;
 import it.unipv.ingsw.UniBook.View.RentingView;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
@@ -136,28 +136,46 @@ public class HomeController {
 
 	}
 
-	// Controllo se l'utente è un professore o un ricercatore
-	private void openResourceManagementFrame() {
-		User user = SingletonManager.getInstance().getLoggedUser();
+	// Controllo se l'utente è autorizzato ad aprire la finestra di gestione delle risorse
+		private void openResourceManagementFrame() {
+		    User user = SingletonManager.getInstance().getLoggedUser();
 
-		if (user != null && (user.getTipo().equals("Professore") || user.getTipo().equals("Ricercatore"))) {
+		        try {
+		        	
+		        	 checkUserAuthorization(user);
 
-			mv = new ManagementView();
-			ManagementController c = new ManagementController(mv, user);
-			mv.setVisible(true);
+		        	 mv = new ManagementView();
+		        	 ManagementController c = new ManagementController(mv, user);
+		        	 mv.setVisible(true);
+		                
+		            } catch (ClassCastException e) {
+		            	
+		                // Se l'utente non è né un professore né un ricercatore, mostriamo un popup di autorizzazione negata
+		                AuthorizationDeniedException ex = new AuthorizationDeniedException();
+		                ex.showPopup();
+		                System.out.println(ex.toString());
+		                
+		            }
+		        }
+		
+		// Metodo per verificare se l'utente è un professore o un ricercatore
+		private void checkUserAuthorization(User user) throws ClassCastException {
+			
+		    try {
+		    	
+		        Professor professor = (Professor) user;
+		        
+		    } catch (ClassCastException e1) {
+		        try {
 
-		} else {
-			try {
+		            Researcher researcher = (Researcher) user;
 
-				throw new AuthorizationDeniedException();
-
-			} catch (AuthorizationDeniedException e) {
-
-				e.showPopup();
-
-			}
+		        } catch (ClassCastException e2) {
+		            // Se l'utente non è né un professore né un ricercatore, rilancia l'eccezione
+		            throw new ClassCastException("L'utente non è né un professore né un ricercatore.");
+		        }
+		    }
 		}
-	}
 
 	private void openResourceBooking() {
 
@@ -223,7 +241,7 @@ public class HomeController {
 	}
 
 	private void openChat() {
-		// Apertura Chat e scelta interlocutore
+		// Apertura Chat e scelta destinatario
 		User userLoggato = SingletonManager.getInstance().getLoggedUser();
 
 		List<User> listaUtenti = SingletonManager.getInstance().getUserDAO().getUsersFromDatabase();
