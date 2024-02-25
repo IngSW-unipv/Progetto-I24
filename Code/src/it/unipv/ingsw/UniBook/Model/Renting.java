@@ -53,13 +53,11 @@ public class Renting {
 	
 	
 	public boolean tryToRent() {
-		Renting rent;
 		Boolean result = false;
-		rent = new Renting(r,u,startDate,endDate);
 		try {
-			result = check(rent,0);
+			result = check(this,0);
 			if(result) {
-				PopupManager.showPopup("L'affitto per il periodo selezionato ha un costo di: "+rent.getPrice());
+				PopupManager.showPopup("L'affitto per il periodo selezionato ha un costo di: "+this.getPrice());
 			}
 			return result;
 				

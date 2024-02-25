@@ -79,7 +79,6 @@ public class RentingController {
 				pModel = new Payment(pView.getCardNumberField(), pView.getCvvField());
 				if (s) {
 					try {
-
 						if (pModel.check())
 							if (model.tryToInsert()) {
 								pView.dispose();
