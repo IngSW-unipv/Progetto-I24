@@ -108,15 +108,7 @@ public class RentingDAO implements IRentingDAO {
 		return esito;
 	}
 
-	@Override
-	public Renting getRenting(User u, int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	public String convertDateToMysqlDate(String date) {
+	private String convertDateToMysqlDate(String date) {
 		SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
@@ -128,7 +120,7 @@ public class RentingDAO implements IRentingDAO {
 		}
 	}
 	
-	public String convertMysqlDatetoDate(String date) {
+	private String convertMysqlDatetoDate(String date) {
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {

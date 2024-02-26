@@ -12,7 +12,7 @@ public interface IBookingDAO {
 	public boolean insertBooking(Booking b);
 	public Booking getBooking(User u, int index);
 	public boolean deleteSelectedBooking(Booking b);
-	public boolean checkAvilability(Booking b);
+	public boolean checkAvailability(Booking b);
 	public ArrayList<Booking> getAlreadyPresentBooking(Booking b);
 
 }

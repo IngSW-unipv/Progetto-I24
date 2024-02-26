@@ -168,7 +168,7 @@ public class BookingDAO implements IBookingDAO {
 
 	}
 
-	public boolean checkAvilability(Booking b) {
+	public boolean checkAvailability(Booking b) {
 
 		boolean available = false;
 		conn = DBConnection.startConnection(conn, schema);

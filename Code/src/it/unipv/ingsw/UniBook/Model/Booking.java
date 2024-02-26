@@ -129,7 +129,7 @@ public class Booking {
 	// selezionate
 	private void checkAvailability() throws OverbookingException {
 
-		if (!bDAO.checkAvilability(this))
+		if (!bDAO.checkAvailability(this))
 			throw new OverbookingException();
 
 	}

@@ -21,7 +21,7 @@ public class DBConnection {
 		try {
 			
 			username="root";
-			password= "HoussemHoussem";
+			password= "0000";
 			dbDriver = "com.mysql.cj.jdbc.Driver";
 			dbURL = "jdbc:mysql://127.0.0.1:3306/";
 			
@@ -42,8 +42,6 @@ public class DBConnection {
 		try 
 		{
 			
-			//dbURL=String.format(dbURL,schema); 
-			System.out.println(dbURL);
 			Class.forName(dbDriver);
 			
 			conn = DriverManager.getConnection(dbURL+schema+"?user=root?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", username, password);// Apertura connessione
