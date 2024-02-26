@@ -92,12 +92,16 @@ public class RentingController {
 					}
 				} else {
 					try {
-						if (model.tryToModify()) {
-							pView.dispose();
-							mrView.dispose();
-						} else
-							pView.dispose();
+						if (pModel.check())
+							if (model.tryToModify()) {
+								pView.dispose();
+								mrView.dispose();
+							} else
+								pView.dispose();
 					} catch (DatabaseException e) {
+						e.showPopup();
+					}
+					catch(WrongFieldException e) {
 						e.showPopup();
 					}
 				}
@@ -120,10 +124,10 @@ public class RentingController {
 					LocalDate today = LocalDate.now();
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 					Renting r = mrView.getSelectedRow();
-					LocalDate date = LocalDate.parse(r.getEndDate(),formatter);
+					LocalDate date = LocalDate.parse(r.getEndDate(), formatter);
 					if (date.compareTo(today) >= 0) {
-						PopupManager.dateChoosing(mrView.getNewEndDateChooser(),date);
-						if(mrView.getNewEndDate() == "")
+						PopupManager.dateChoosing(mrView.getNewEndDateChooser(), date);
+						if (mrView.getNewEndDate() == "")
 							throw new EmptyFieldException();
 						r.setEndDate(mrView.getNewEndDate());
 						double p = r.getPrice();
@@ -132,8 +136,7 @@ public class RentingController {
 							createPaymentView(r, false, p);
 							pView.setVisible(true);
 						}
-					}
-					else {
+					} else {
 						new WrongFieldException().showPopup("Il periodo di affitto è già scaduto");
 					}
 				} catch (DatabaseException e) {
