@@ -315,4 +315,33 @@ public class ResourceDAO implements IResourceDAO {
 	    DBConnection.closeConnection(conn);
 	    return result;
 	}
+	
+	public boolean insertFile(Resource r) {
+	    conn = DBConnection.startConnection(conn, schema);
+	    PreparedStatement st1;
+	    boolean esito = true;
+
+	    try {
+	        // Ottieni il nuovo ID
+	        int newId = getMaxID();
+	        
+	        String query = "INSERT INTO unibook.risorsa (ID, Nome, Descrizione, Indirizzo, Tipo, Matricola_Inserimento) VALUES (?, ?, ?, ?, ?, ?);";
+	        st1 = conn.prepareStatement(query);
+	        st1.setInt(1, newId); // Nuovo ID creato
+	        st1.setString(2, r.getNome());
+	        st1.setString(3, r.getDescrizione());
+	        st1.setString(4, r.getIndirizzo());
+	        st1.setString(5,  "F");
+	        st1.setString(6, r.getMatricola_inserimento());
+
+	        st1.executeUpdate();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        esito = false;
+	    }
+
+	    DBConnection.closeConnection(conn);
+	    return esito;
+	}
 }

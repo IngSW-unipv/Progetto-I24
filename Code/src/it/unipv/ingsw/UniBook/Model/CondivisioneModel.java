@@ -8,10 +8,10 @@ public class CondivisioneModel {
         return extension.equals("txt") || extension.equals("pdf") || extension.equals("docx") || extension.equals("pptx");
     }
 
-    public boolean verificaDimensione(long fileSize) {
+   /* public boolean verificaDimensione(long fileSize) {
        
     	return fileSize <= 100 * 1024 * 1024; 
-    }
+    }*/
   
     public void simulaDownload() throws InterruptedException {
        
