@@ -24,6 +24,16 @@ public class Resource {
 	public Resource() {
 
 	}
+	
+	//Costruttore per file
+			public Resource(int id, String nome, String descrizione, String matricola_inserimento) {
+				
+		        this.id = id;
+		        this.nome = nome;
+		        this.descrizione = descrizione;
+		        this.matricola_inserimento = matricola_inserimento;
+		        
+		    }
 
 	//Costruttore per prenotazioni 
 	public Resource(int id, String nome, String descrizione, String indirizzo, String tipo, int idLab, String matricola_inserimento) {

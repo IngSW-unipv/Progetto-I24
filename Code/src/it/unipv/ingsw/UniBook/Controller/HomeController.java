@@ -13,6 +13,8 @@ import it.unipv.ingsw.UniBook.Model.User;
 import it.unipv.ingsw.UniBook.View.BookingView;
 import it.unipv.ingsw.UniBook.View.ChatView;
 import it.unipv.ingsw.UniBook.View.CondivisioneView;
+import it.unipv.ingsw.UniBook.View.FileDownloadFrame;
+import it.unipv.ingsw.UniBook.View.FileSelectionFrame;
 import it.unipv.ingsw.UniBook.View.HomeView;
 import it.unipv.ingsw.UniBook.View.ManagementRentingView;
 import it.unipv.ingsw.UniBook.View.ManagementView;
@@ -34,6 +36,8 @@ public class HomeController {
 	private RentingView rv;
 	private ManagementRentingView rmv;
 	private CondivisioneView sv;
+	private FileSelectionFrame fs;
+    private FileDownloadFrame df;
 
 	public HomeController(HomeView view) {
 		hv = view;
@@ -127,7 +131,7 @@ public class HomeController {
 
 			private void manageAction() {
 
-				openSharing();
+				openSharingChoose();
 
 			}
 		};
@@ -233,11 +237,55 @@ public class HomeController {
 		rv.setVisible(true);
 	}
 
-	private void openSharing() {
-		sv = new CondivisioneView();
-		CondivisioneModel r = new CondivisioneModel();
-		CondivisioneController c = new CondivisioneController(sv, r);
-		sv.setVisible(true);
+	private void openSharingChoose() {
+
+		Object[] options = { "Upload file", "Download file" };
+		int choose = PopupManager.showChoosing(options);
+		switch (choose) {
+		case 0:
+			openSelectionFrame();
+			break;
+		case 1:
+			openDownloadFrame();
+			break;
+		}
+		
+	}
+	
+	// Nel metodo openSelectionFrame() della classe HomeController
+	private void openSelectionFrame() {
+	    User user = SingletonManager.getInstance().getLoggedUser();
+
+	    try {
+	        checkUserAuthorization(user);
+	        
+	        // Solo se l'utente è un professore o un ricercatore consenti l'apertura del frame di selezione file
+	        sv = new CondivisioneView();
+	        fs = new FileSelectionFrame(null);
+	        df = new FileDownloadFrame();
+	        CondivisioneModel r = new CondivisioneModel();
+	        
+	        // Passa fs e df al costruttore di CondivisioneController
+	        CondivisioneController c = new CondivisioneController(sv, r, fs,df);
+	        fs.setVisible(true);
+	        
+	    } catch (ClassCastException e) {
+	        // Se l'utente non è un professore né un ricercatore, mostri un popup di autorizzazione negata
+	        AuthorizationDeniedException ex = new AuthorizationDeniedException();
+	        ex.showPopup();
+	        System.out.println(ex.toString());
+	    }
+	}
+	
+	private void openDownloadFrame() {
+
+	        sv = new CondivisioneView();
+	        fs = new FileSelectionFrame(null);
+	        df = new FileDownloadFrame();
+	        CondivisioneModel r = new CondivisioneModel();
+	        CondivisioneController c = new CondivisioneController(sv, r, fs, df);
+	        df.setVisible(true);
+
 	}
 
 	private void openChat() {

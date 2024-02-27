@@ -17,7 +17,6 @@ public class SingletonManager {
 	private LaboratoryDAO laboratoryDAO;
 	private MessaggioDAO messaggioDAO;
 	private User loggedUser;
-	private Resource r;
 	private Professor professor;
 	private Researcher researcher;
 	private User user;

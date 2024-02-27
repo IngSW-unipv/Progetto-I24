@@ -344,4 +344,33 @@ public class ResourceDAO implements IResourceDAO {
 	    DBConnection.closeConnection(conn);
 	    return esito;
 	}
+	
+	public ArrayList<Resource> getResourceFile() {
+		conn = DBConnection.startConnection(conn, schema);
+        ArrayList<Resource> resources = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try { 
+        	
+            String query = "SELECT * FROM risorsa WHERE Tipo = 'F'";
+            stmt = conn.prepareStatement(query);
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String nome = rs.getString("Nome");
+                String descrizione = rs.getString("Descrizione");
+                String matricolaInserimento = rs.getString("Matricola_Inserimento");
+
+                Resource resource = new Resource(id, nome, descrizione, matricolaInserimento);
+                resources.add(resource);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Gestisci gli errori in modo adeguato
+        }
+
+        return resources;
+    }
+	
 }
