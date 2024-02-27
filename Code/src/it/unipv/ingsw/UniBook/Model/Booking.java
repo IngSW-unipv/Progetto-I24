@@ -100,23 +100,6 @@ public class Booking {
 		}
 	}
 
-	// Metodo che ritorna gli orari di prenotazione per la view
-	public String[] timeChoice() {
-		// Creo un array di orari disponibili da 8 a 18
-		String[] availableTime = new String[11];
-		for (int i = 0; i < 11; i++) {
-			int ora = 8 + i;
-			availableTime[i] = String.format("%02d:00", ora); // Formatto l'ora come "HH:00"
-		}
-		return availableTime;
-	}
-
-	// Metodo che ritorna i valori della durata per la view
-	public Integer[] durationChoice() {
-		// Creo un array di durate disponibili da 1 a 4 ore
-		return new Integer[] { 1, 2, 3, 4 };
-	}
-
 	public ArrayList<Resource> updateJListResources() {
 
 		ArrayList<Resource> availableResources = SingletonManager.getInstance().getResourceDAO().getAllBookableResources();
@@ -147,7 +130,7 @@ public class Booking {
 	}
 
 	// Metodo che consente l'eliminazione di risorse previa conferma
-	private boolean removeBooking(ArrayList<Booking> bookings, int index) {
+	private boolean removeBooking(int index) {
 
 		int choice;
 
@@ -167,11 +150,12 @@ public class Booking {
 	}
 
 	public boolean delete(int index) {
-		if (removeBooking(getUserBookings(SingletonManager.getInstance().getLoggedUser()), index))
+		if (removeBooking(index)) {
 			return true;
-
-		return false;
-
+		}else {
+			PopupManager.showPopup("Cancellazione fallita");
+			return false;
+		}
 	}
 
 	public boolean tryToBook() {

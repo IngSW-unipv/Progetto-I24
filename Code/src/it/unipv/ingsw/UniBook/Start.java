@@ -1,20 +1,22 @@
 package it.unipv.ingsw.UniBook;
 
+import it.unipv.ingsw.UniBook.Controller.RegistrationController;
+import it.unipv.ingsw.UniBook.View.RegistrationView;
+import it.unipv.ingsw.UniBook.Model.SingletonManager;
+import it.unipv.ingsw.UniBook.Model.User;
 import javax.swing.JFrame;
-
-import it.unipv.ingsw.UniBook.Controller.HomeController;
-import it.unipv.ingsw.UniBook.View.HomeView;
 
 public class Start {
 
 	public static void main(String[] args) {
 
-		HomeView f = new HomeView();
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
+		User model = SingletonManager.getInstance().getLoggedUser();
+		RegistrationView view = new RegistrationView();
+		RegistrationController c = new RegistrationController(view, model);
 
-		HomeController controller = new HomeController(f);
-		 
-	} 
+		view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		view.setVisible(true);
+
+	}
 
 }

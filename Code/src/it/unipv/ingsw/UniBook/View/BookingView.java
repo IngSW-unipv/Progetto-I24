@@ -47,11 +47,11 @@ public class BookingView extends JFrame {
         dateChooser.setMinSelectableDate(minDate.getTime());
 		
 		JLabel oraLabel = new JLabel("Ora:");
-		oraComboBox = new JComboBox<>(b.timeChoice());
+		oraComboBox = new JComboBox<>(timeChoice());
 		oraComboBox.setSelectedIndex(0); // Imposto l'ora predefinita a 8
 
 		JLabel durataLabel = new JLabel("Durata (ore):");
-		durataComboBox = new JComboBox<>(b.durationChoice());
+		durataComboBox = new JComboBox<>(durationChoice());
 
 		JLabel risorsaLabel = new JLabel("Risorsa:");
 		risorsaComboBox = new JComboBox<Resource>(b.updateJListResources().toArray(new Resource[0]));
@@ -133,6 +133,23 @@ public class BookingView extends JFrame {
 
 	public JComboBox<Resource> getRisorsaComboBox() {
 		return risorsaComboBox;
+	}
+	
+	// Metodo che ritorna gli orari di prenotazione
+	public String[] timeChoice() {
+		// Creo un array di orari disponibili da 8 a 18
+		String[] availableTime = new String[11];
+		for (int i = 0; i < 11; i++) {
+			int ora = 8 + i;
+			availableTime[i] = String.format("%02d:00", ora); // Formatto l'ora come "HH:00"
+		}
+		return availableTime;
+	}
+
+	// Metodo che ritorna i valori della durata
+	public Integer[] durationChoice() {
+		// Creo un array di durate disponibili da 1 a 4 ore
+		return new Integer[] { 1, 2, 3, 4 };
 	}
 
 

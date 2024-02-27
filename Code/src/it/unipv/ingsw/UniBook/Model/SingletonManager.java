@@ -31,8 +31,6 @@ public class SingletonManager {
 		this.userDAO = new UserDAO();
 		this.laboratoryDAO = new LaboratoryDAO();
 		this.messaggioDAO = new MessaggioDAO();
-		this.professor = null;
-		this.researcher = null;
 		loggedUser = new User();
 	}
 
@@ -91,11 +89,6 @@ public class SingletonManager {
 				}
 			}
 		}
-	}
-
-	public boolean isCurrentUserProfessor() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }
