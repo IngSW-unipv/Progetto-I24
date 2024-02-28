@@ -25,18 +25,14 @@ public class CondivisioneView extends JFrame {
 
         pack();
 
-        setVisible(true);
     }
 
-    public void DownloadButtonListener(ActionListener listener) {
-        downloadButton.addActionListener(listener);
+    public JButton getDownloadButton() {
+    	return downloadButton;
+    }
+    
+    public JButton getUploadButton() {
+    	return uploadButton;
     }
 
-    public void showMessage(String message, String title) {
-        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    public void UploadButtonListener(ActionListener listener) {
-        uploadButton.addActionListener(listener);
-    }
 }

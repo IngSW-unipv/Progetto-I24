@@ -9,5 +9,9 @@ public interface IUserDAO {
 	public boolean insertUser(User u);
 	public String selectPassword(User u);
 	public List<User> getUsersFromDatabase();
+	public boolean deleteUser(User u);
+	public User selectUserByMatricola(User u);
+	public String selectMatricola(User u);
+	
 	
 }

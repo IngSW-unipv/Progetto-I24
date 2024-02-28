@@ -9,5 +9,14 @@ public interface IResourceDAO {
 	public boolean insertRisorsaAffittabile(Resource f);
 	public boolean removeRisorsa(Resource f);
 	public int getMaxID(); 
+	public ArrayList<Resource> getResourceFile();
+	public Resource getResourceById(int id);
+	public ArrayList<Resource> getResourceByLab(Resource r);
+	public ArrayList<Resource> getAllRentableResources();
+	public ArrayList<Resource> getResourceByMatricola(String matricola);
+	public boolean insertFile(Resource r);
+	
+
+
 
 }

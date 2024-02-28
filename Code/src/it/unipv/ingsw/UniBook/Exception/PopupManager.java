@@ -17,7 +17,7 @@ public class PopupManager {
 	}
 
 	public static int showChoosing(Object[] options) {
-		return JOptionPane.showOptionDialog(null, "Scegli un'opzione", "Affitti", JOptionPane.DEFAULT_OPTION,
+		return JOptionPane.showOptionDialog(null, "Scegli un'opzione", "Sistema", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, null, options, null);
 	}
 

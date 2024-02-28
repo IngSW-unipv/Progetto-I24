@@ -2,7 +2,6 @@ package it.unipv.ingsw.UniBook.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 public class FileSelectionFrame extends JFrame {
@@ -50,8 +49,6 @@ public class FileSelectionFrame extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         add(mainPanel);
-
-        setVisible(true);
         
     }
     
@@ -68,12 +65,12 @@ public class FileSelectionFrame extends JFrame {
         void onFileSelected(File selectedFile, String fileNameWithoutExtension);
     }
     
-    public void addSelectFileListener(ActionListener listener) {
-        selectFileButton.addActionListener(listener);
+    public JButton getSelectButton() {
+    	return selectFileButton;
     }
-
-    public void addUploadListener(ActionListener listener) {
-        uploadButton.addActionListener(listener);
+    
+    public JButton getUploadButton() {
+    	return uploadButton;
     }
 
     public File showFileChooser() {

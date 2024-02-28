@@ -132,6 +132,8 @@ public class Resource {
 	public void tryToUpload(boolean isPrenotabile, boolean isAffittabile) {
 	    try {
 	    	
+	    	System.out.println("Resource è "+isAffittabile + "Prezzo "+prezzo);
+	    	
 	        // Controllo se nessuna delle caselle è selezionata
 	        if ((!isPrenotabile && !isAffittabile)) {
 	            throw new EmptyFieldException();

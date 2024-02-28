@@ -54,8 +54,8 @@ public class HomeController {
 
 			private void manageAction() {
 
-				openResourceManagementFrame(); // controller non frame
-
+				openResourceManagementFrame();
+				
 			}
 		};
 
@@ -252,25 +252,22 @@ public class HomeController {
 		
 	}
 	
-	// Nel metodo openSelectionFrame() della classe HomeController
 	private void openSelectionFrame() {
 	    User user = SingletonManager.getInstance().getLoggedUser();
 
 	    try {
 	        checkUserAuthorization(user);
 	        
-	        // Solo se l'utente è un professore o un ricercatore consenti l'apertura del frame di selezione file
+	        // Solo se l'utente è un professore o un ricercatore consento l'apertura del frame di selezione file
 	        sv = new CondivisioneView();
 	        fs = new FileSelectionFrame(null);
 	        df = new FileDownloadFrame();
 	        CondivisioneModel r = new CondivisioneModel();
 	        
-	        // Passa fs e df al costruttore di CondivisioneController
 	        CondivisioneController c = new CondivisioneController(sv, r, fs,df);
 	        fs.setVisible(true);
 	        
 	    } catch (ClassCastException e) {
-	        // Se l'utente non è un professore né un ricercatore, mostri un popup di autorizzazione negata
 	        AuthorizationDeniedException ex = new AuthorizationDeniedException();
 	        ex.showPopup();
 	        System.out.println(ex.toString());
@@ -311,20 +308,22 @@ public class HomeController {
 			// Istanza e run del thread
 			updater[0] = new ChatUpdater(controller, userLoggato, destinatario);
 			updater[0].start();
+			
+			WindowAdapter windowListener = new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					manageAction();
+				}
+
+				private void manageAction() {
+					updater[0].stopUpdating();
+				}
+			};
+
+			cv.getFrame().addWindowListener(windowListener);
+			
 		}
-
-		WindowAdapter windowListener = new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				manageAction();
-			}
-
-			private void manageAction() {
-				updater[0].stopUpdating();
-			}
-		};
-
-		cv.getFrame().addWindowListener(windowListener);
+	
 
 	}
 

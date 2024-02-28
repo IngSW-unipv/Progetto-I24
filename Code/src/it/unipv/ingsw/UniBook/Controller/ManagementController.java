@@ -52,11 +52,8 @@ public ManagementController(ManagementView interfaccia, User user) {
 
         Resource nuovaRisorsa;
 
-        if (isAffittabile) {
             nuovaRisorsa = new Resource(0, nome, descrizione, prezzo, user.getCorso(), isPrenotabile ? "P" : "A", 0, user.getId());
-        } else {
-            nuovaRisorsa = new Resource(0, nome, descrizione, user.getCorso(), isPrenotabile ? "P" : "A", 0, user.getId());
-        }
+        
 
         nuovaRisorsa.tryToUpload(isPrenotabile, isAffittabile);
     }

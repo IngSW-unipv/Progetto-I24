@@ -3,7 +3,10 @@ package it.unipv.ingsw.UniBook.View;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import it.unipv.ingsw.UniBook.DB.ResourceDAO;
+import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.Resource;
+import it.unipv.ingsw.UniBook.Model.SingletonManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,12 +46,10 @@ public class FileDownloadFrame extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
 
         setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     public void updateTable() {
-        ResourceDAO resourceDAO = new ResourceDAO();
-        ArrayList<Resource> resources = resourceDAO.getResourceFile();
+        ArrayList<Resource> resources = SingletonManager.getInstance().getResourceDAO().getResourceFile();
 
         model.setRowCount(0);
         for (Resource r : resources) {
@@ -62,8 +63,7 @@ public class FileDownloadFrame extends JFrame {
             String nomeFile = (String) model.getValueAt(selectedRow, 0);
             int confirm = JOptionPane.showConfirmDialog(this, "Confermi il download di \"" + nomeFile + "\"?", "Conferma Download", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
-                // Logica per il download del file
-                JOptionPane.showMessageDialog(this, "Download completato!");
+            	PopupManager.showPopup("Download completato!");
             }
         } else {
             JOptionPane.showMessageDialog(this, "Seleziona un file dalla tabella.", "Errore", JOptionPane.ERROR_MESSAGE);
