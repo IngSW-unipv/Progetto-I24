@@ -2,14 +2,11 @@ package it.unipv.ingsw.UniBook.View;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.Exception.PopupManager;
 import it.unipv.ingsw.UniBook.Model.Resource;
 import it.unipv.ingsw.UniBook.Model.SingletonManager;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class FileDownloadFrame extends JFrame {
@@ -35,17 +32,17 @@ public class FileDownloadFrame extends JFrame {
         updateTable();
 
         downloadButton = new JButton("Download");
-        downloadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                confermaDownload();
-            }
-        });
+        
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(downloadButton);
         add(buttonPanel, BorderLayout.SOUTH);
+        
 
         setLocationRelativeTo(null);
+    }
+    
+    public JButton getDownloadFrameButton() {
+    	return downloadButton;
     }
 
     public void updateTable() {
@@ -57,7 +54,7 @@ public class FileDownloadFrame extends JFrame {
         }
     }
 
-    private void confermaDownload() {
+    public void confermaDownload() {
         int selectedRow = table.getSelectedRow();
         if (selectedRow != -1) {
             String nomeFile = (String) model.getValueAt(selectedRow, 0);

@@ -1,23 +1,16 @@
 package it.unipv.ingsw.UniBook.Model;
 
 import java.io.File;
-import java.util.ArrayList;
+
 
 import javax.swing.JOptionPane;
-import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.Exception.PopupManager;
-import it.unipv.ingsw.UniBook.View.FileDownloadFrame;
 
 public class CondivisioneModel {
 
-	private FileDownloadFrame df;
 
 	public CondivisioneModel() {
 
-	}
-
-	public CondivisioneModel(FileDownloadFrame df) {
-		this.df = df;
 	}
 
 	public void tryToUploadFile(File selectedFile, String fileNameWithoutExtension, String fileExtension) {

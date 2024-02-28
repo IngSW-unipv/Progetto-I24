@@ -43,7 +43,7 @@ public class CondivisioneController {
 
 			}
 		};
-		
+
 		view.getUploadButton().addActionListener(UploadButtonListener);
 
 		ActionListener DownloadButtonListener = new ActionListener() {
@@ -55,12 +55,11 @@ public class CondivisioneController {
 			private void manageAction() {
 
 				tryToDownloadFile();
-				
 
 			}
 		};
 
-		view.getDownloadButton().addActionListener(UploadButtonListener);
+		view.getDownloadButton().addActionListener(DownloadButtonListener);
 
 		ActionListener InsertFile = new ActionListener() {
 			@Override
@@ -99,6 +98,22 @@ public class CondivisioneController {
 
 		fs.getSelectButton().addActionListener(SelectFileToUpload);
 
+		ActionListener dw = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manageAction();
+			}
+
+			private void manageAction() {
+
+				df.confermaDownload();
+
+			}
+		};
+
+		df.getDownloadFrameButton().addActionListener(dw);
+		;
+
 	}
 
 	private void showFileSelectionFrame() {
@@ -118,10 +133,10 @@ public class CondivisioneController {
 		// Passa il nome del file e l'estensione al modello
 		model.tryToUploadFile(selectedFile, fileNameWithoutExtension, fileExtension);
 	}
-	
+
 	public void tryToDownloadFile() {
-        ArrayList<Resource> fileResources = SingletonManager.getInstance().getResourceDAO().getResourceFile();
-        df.setVisible(true);
-    }
+		ArrayList<Resource> fileResources = SingletonManager.getInstance().getResourceDAO().getResourceFile();
+		df.setVisible(true);
+	}
 
 }
