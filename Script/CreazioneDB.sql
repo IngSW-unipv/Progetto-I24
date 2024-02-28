@@ -22,7 +22,7 @@ primary key (ID)
 
 create table if not exists risorsa(
 ID		int not null,
-Nome 	varchar(15) not null,
+Nome 	varchar(50) not null,
 Descrizione	TINYTEXT,
 Indirizzo	varchar(10) not null,
 Tipo	varchar(10) not null,
