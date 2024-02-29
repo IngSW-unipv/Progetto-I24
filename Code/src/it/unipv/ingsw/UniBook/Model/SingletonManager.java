@@ -17,9 +17,6 @@ public class SingletonManager {
 	private LaboratoryDAO laboratoryDAO;
 	private MessaggioDAO messaggioDAO;
 	private User loggedUser;
-	private Professor professor;
-	private Researcher researcher;
-	private User user;
 
 	// Costruttore privato
 	private SingletonManager() {
@@ -71,23 +68,9 @@ public class SingletonManager {
 	}
 
 	public void setLoggedUser(User u) {
-
-		try {
-			this.professor = (Professor) u;
-			this.loggedUser = u;
-		} catch (ClassCastException e1) {
-			try {
-				this.researcher = (Researcher) u;
-				this.loggedUser = u;
-			} catch (ClassCastException e2) {
-				try {
-					this.user = (User) u;
-					this.loggedUser = u;
-				} catch (ClassCastException e3) {
-					System.err.println("Impossibile impostare l'utente loggato: tipo utente non riconosciuto.");
-				}
-			}
-		}
+		
+		this.loggedUser=u;
+		
 	}
 
 }

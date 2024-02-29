@@ -131,9 +131,7 @@ public class Resource {
 
 	public void tryToUpload(boolean isPrenotabile, boolean isAffittabile) {
 	    try {
-	    	
-	    	System.out.println("Resource è "+isAffittabile + "Prezzo "+prezzo);
-	    	
+	    		    	
 	        // Controllo se nessuna delle caselle è selezionata
 	        if ((!isPrenotabile && !isAffittabile)) {
 	            throw new EmptyFieldException();
@@ -216,10 +214,9 @@ public class Resource {
             if (option == JOptionPane.YES_OPTION) {
 
                 int id = resources.get(selectedRow).getId();               // Ottieni l'ID dalla riga selezionata
-                ResourceDAO resourceDAO = new ResourceDAO();
                 Resource resourceToRemove = new Resource();
                 resourceToRemove.setId(id);
-                boolean removed = resourceDAO.removeRisorsa(resourceToRemove);
+                boolean removed = SingletonManager.getInstance().getResourceDAO().removeRisorsa(resourceToRemove);
                 
                 if (removed) {
                     JOptionPane.showMessageDialog(null, "Risorsa rimossa con successo.");

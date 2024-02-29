@@ -150,7 +150,7 @@ public class BookingDAO implements IBookingDAO {
 			String query = "DELETE FROM unibook.prenotazione WHERE ID_Risorsa = ? AND Matricola = ? AND DataOra = ? AND tempo = ?";
 			st1 = conn.prepareStatement(query);
 
-			// Imposta i parametri nella query
+			// Imposto i parametri nella query
 			st1.setInt(1, b.getR().getId());
 			st1.setString(2, b.getU().getId());
 			st1.setString(3, dateTime);
@@ -259,7 +259,7 @@ public class BookingDAO implements IBookingDAO {
 			return new String[] { date, time };
 		} catch (ParseException e) {
 			e.printStackTrace();
-			return null; // Gestione dell'errore
+			return null; 
 		}
 	}
 

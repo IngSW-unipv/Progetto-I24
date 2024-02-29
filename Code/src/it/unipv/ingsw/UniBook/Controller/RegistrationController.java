@@ -13,10 +13,6 @@ public class RegistrationController {
 	private RegistrationView view;
 	private User model;
 
-	public RegistrationController(RegistrationView view) {
-		this.view = view;
-	}
-
 	public RegistrationController(RegistrationView view, User model) {
 		this.view = view;
 		this.model = model;

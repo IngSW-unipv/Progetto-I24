@@ -14,7 +14,6 @@ import it.unipv.ingsw.UniBook.Model.Resource;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
-
 @RunWith(BlockJUnit4ClassRunner.class)
 
 public class BookingTest {
@@ -45,14 +44,11 @@ public class BookingTest {
 		for (Booking booking : b) {
 			assertTrue(booking.tryToBook());
 		}
-		
+
 		clear();
-		
-		
-		
+
 	}
 
-	//Prenotazioni sovrapposte alle precedenti
 	@Test
 	public void testBookingNotOk1() {
 
@@ -63,21 +59,18 @@ public class BookingTest {
 		for (Booking booking : b) {
 			assertFalse(booking.tryToBook());
 		}
-		
+
 	}
-		
-	
+
 	public void clear() {
-		
+
 		b[0] = new Booking(r1, u1, "2021-05-06", "08:00:00", 1);
 		b[1] = new Booking(r2, u1, "2021-05-07", "12:00:00", 2);
 		b[2] = new Booking(r3, u1, "2021-05-07", "15:00:00", 3);
-	
-		
+
 		for (Booking booking : b) {
 			SingletonManager.getInstance().getBookingDAO().deleteSelectedBooking(booking);
 		}
 	}
-	
 
 }

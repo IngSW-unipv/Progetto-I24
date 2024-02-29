@@ -120,10 +120,6 @@ public class CondivisioneController {
 		fs.setVisible(true);
 	}
 
-	private void showFileDownloadFrame() {
-		df.setVisible(true);
-	}
-
 	// Metodo per provare a caricare il file nel modello
 	private void inserisciFile(File selectedFile) {
 		String fileName = selectedFile.getName();
