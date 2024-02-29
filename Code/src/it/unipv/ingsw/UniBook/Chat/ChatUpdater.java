@@ -33,8 +33,7 @@ public class ChatUpdater extends Thread {
 	
 					Thread.sleep(2000);
 					// Prelevo i nuovi messaggi e li setto come letti una volta presi, cosi non continua a mostrarli
-					List<Messaggio> messaggi = SingletonManager.getInstance().getMessaggioDAO()
-							.getMessaggiNonLetti(mittente, destinatario);
+					List<Messaggio> messaggi = SingletonManager.getInstance().getMessaggioDAO().getMessaggiNonLetti(mittente, destinatario);
 					
 					for (Messaggio mes : messaggi) {
 						SingletonManager.getInstance().getMessaggioDAO().setMessaggioLetto(mes);

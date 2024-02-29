@@ -30,6 +30,7 @@ public class MessaggioDAO {
 
 	public List<Messaggio> getMessaggi(User mittente, User destinatario) {
 		conn = DBConnection.startConnection(conn, schema);
+		
 		List<Messaggio> messaggi = new ArrayList<>();
 		String query = "SELECT * FROM messaggio WHERE (mittente = ? AND destinatario = ?) OR (mittente = ? AND destinatario = ?) ORDER BY dataOra ASC";
 		try (PreparedStatement statement = conn.prepareStatement(query)) {
@@ -38,6 +39,7 @@ public class MessaggioDAO {
 			statement.setString(3, destinatario.getId());
 			statement.setString(4, mittente.getId());
 			ResultSet resultSet = statement.executeQuery();
+			
 			while (resultSet.next()) {
 				String idm = resultSet.getString(2);
 				String idd = resultSet.getString(3);
@@ -61,6 +63,7 @@ public class MessaggioDAO {
 
 	public void inserisciMessaggio(Messaggio messaggio) {
 		conn = DBConnection.startConnection(conn, schema);
+		
 		String query = "INSERT INTO messaggio (mittente, destinatario, testo, dataOra) VALUES (?, ?, ?, NOW())";
 		try (PreparedStatement statement = conn.prepareStatement(query)) {
 			statement.setString(1, messaggio.getMittente().getId());
@@ -104,12 +107,14 @@ public class MessaggioDAO {
 
 	public void setMessaggioLetto(Messaggio messaggio) {
 		conn = DBConnection.startConnection(conn, schema);
+		
 		String query = "UPDATE messaggio SET letto = true WHERE mittente = ? AND destinatario = ? AND dataOra = ?";
 		try (PreparedStatement statement = conn.prepareStatement(query)) {
 			statement.setString(1, messaggio.getMittente().getId());
 			statement.setString(2, messaggio.getDestinatario().getId());
 			statement.setTimestamp(3, Timestamp.valueOf(messaggio.getDataOra()));
 			statement.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

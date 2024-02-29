@@ -199,32 +199,9 @@ public class UserDAO implements IUserDAO {
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	            // Gestione dell'eccezione
-	        } finally {
-	            // Chiusura delle risorse
-	            if (resultSet != null) {
-	                try {
-	                    resultSet.close();
-	                } catch (SQLException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	            if (statement != null) {
-	                try {
-	                    statement.close();
-	                } catch (SQLException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	            if (conn != null) {
-	                try {
-	                    conn.close();
-	                } catch (SQLException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-
+	        } 
+	        
+	        DBConnection.closeConnection(conn);
 	        return userList;
 	    }
 }

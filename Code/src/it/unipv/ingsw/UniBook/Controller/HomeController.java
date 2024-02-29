@@ -300,6 +300,7 @@ public class HomeController {
 		ChatView cv = null;
 		
 		final ChatUpdater[] updater = new ChatUpdater[1]; 
+		
 		if (result == JOptionPane.OK_OPTION) {
 			User destinatario = (User) destinatarioComboBox.getSelectedItem();
 
