@@ -367,7 +367,7 @@ public class ResourceDAO implements IResourceDAO {
                 resources.add(resource);
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Gestisci gli errori in modo adeguato
+            e.printStackTrace();
         }
 
         return resources;

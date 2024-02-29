@@ -16,7 +16,4 @@ public interface IResourceDAO {
 	public ArrayList<Resource> getResourceByMatricola(String matricola);
 	public boolean insertFile(Resource r);
 	
-
-
-
 }

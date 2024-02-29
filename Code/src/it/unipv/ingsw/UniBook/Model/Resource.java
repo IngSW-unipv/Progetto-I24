@@ -4,11 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
-import it.unipv.ingsw.UniBook.DB.BookingDAO;
 import it.unipv.ingsw.UniBook.DB.ResourceDAO;
 import it.unipv.ingsw.UniBook.Exception.*;
-import it.unipv.ingsw.UniBook.View.ManagementView;
 
 public class Resource {
 
@@ -147,11 +144,12 @@ public class Resource {
 	            throw new EmptyFieldException();
 	        }
 
-	        // Se la risorsa è prenotabile e ha un prezzo, solleva un'eccezione
+	        // Se la risorsa è prenotabile e ha un prezzo
 	        if (isPrenotabile && prezzo > 0) {
 	            throw new Exception("Non è possibile inserire un prezzo per una risorsa prenotabile.");
 	        }
 	        
+	        // Se la risorsa è affittabile e non ha un prezzo
 	        if (isAffittabile && prezzo <= 0.00) {
 	            throw new Exception("Inserisici il prezzo per la risorsa affittabile.");
 	        }
@@ -172,7 +170,6 @@ public class Resource {
 	        nuovaRisorsa.setNome(nome);
 	        nuovaRisorsa.setDescrizione(descrizione);
 	        nuovaRisorsa.setTipo(tipo);
-
 	        nuovaRisorsa.setIndirizzo(SingletonManager.getInstance().getLoggedUser().getCorso());
 	        nuovaRisorsa.setMatricola_inserimento(SingletonManager.getInstance().getLoggedUser().getId());
 
@@ -199,10 +196,8 @@ public class Resource {
 	        
 	    } catch (EmptyFieldException e) {
 	        e.showPopup();
-	        System.out.println(e.toString());
 	    } catch (Exception e) {
 	        PopupManager.showPopup("Si è verificato un errore: " + e.getMessage());
-	        System.out.println(e.toString());
 	    }
 	}
 	

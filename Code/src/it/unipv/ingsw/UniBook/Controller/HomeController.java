@@ -286,6 +286,7 @@ public class HomeController {
 	}
 
 	private void openChat() {
+		
 		// Apertura Chat e scelta destinatario
 		User userLoggato = SingletonManager.getInstance().getLoggedUser();
 

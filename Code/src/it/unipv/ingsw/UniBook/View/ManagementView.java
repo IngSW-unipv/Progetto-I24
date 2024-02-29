@@ -54,8 +54,9 @@ public class ManagementView extends JFrame {
         formatter.setCommitsOnValidEdit(true);
         
         priceR = new JFormattedTextField(formatter); // Aggiunto il formato per il prezzo
-        priceR.setText("0.00"); // Imposta il valore predefinito a "0.00"
+        priceR.setText("0.00"); // Valore predefinito a "0.00"
         priceR.addFocusListener(new FocusListener() {
+        	
             @Override
             public void focusGained(FocusEvent e) {
                 if (priceR.getText().equals("0.00")) {
@@ -75,7 +76,7 @@ public class ManagementView extends JFrame {
 
         panel1.setBackground(new Color(214, 255, 255));
 
-        // Pannello interno con un titolo e due spunte
+        // Pannello interno con due spunte
         JPanel panel2 = new JPanel(new GridLayout(3, 1));
         text = new JTextField();
         reservationCheck = new JCheckBox("PRENOTABILE");
@@ -105,7 +106,7 @@ public class ManagementView extends JFrame {
         mainPanel.add(panel2);
         mainPanel.add(panel3);
         
-     // FONT
+        	// FONT
      		Font font = new Font("Arial", Font.PLAIN, 25);
      		nameR.setFont(font);
      		descriptionR.setFont(font);
@@ -123,8 +124,8 @@ public class ManagementView extends JFrame {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(screenSize.width, screenSize.height);
         validate();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Chiudi solo il frame corrente quando viene chiuso
-        setLocationRelativeTo(null); // Posiziona il frame al centro dello schermo
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
 
     public JButton getConfermaButton() {
