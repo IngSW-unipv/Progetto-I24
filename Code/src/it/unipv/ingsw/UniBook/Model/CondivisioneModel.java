@@ -8,11 +8,6 @@ import it.unipv.ingsw.UniBook.Exception.PopupManager;
 
 public class CondivisioneModel {
 
-
-	public CondivisioneModel() {
-
-	}
-
 	public void tryToUploadFile(File selectedFile, String fileNameWithoutExtension, String fileExtension) {
 
 		try {

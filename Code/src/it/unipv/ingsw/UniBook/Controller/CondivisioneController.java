@@ -19,8 +19,8 @@ public class CondivisioneController {
 	private FileSelectionFrame fs;
 	private FileDownloadFrame df;
 
-	public CondivisioneController(CondivisioneView view, CondivisioneModel model, FileSelectionFrame fs,
-			FileDownloadFrame df) {
+	public CondivisioneController(CondivisioneView view, CondivisioneModel model, FileSelectionFrame fs, FileDownloadFrame df) {
+		
 		this.view = view;
 		this.model = model;
 		this.fs = fs;
