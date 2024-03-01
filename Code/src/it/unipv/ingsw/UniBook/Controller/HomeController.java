@@ -154,7 +154,6 @@ public class HomeController {
 		                
 		            } catch (ClassCastException e) {
 		            	
-		                // Se l'utente non è né un professore né un ricercatore, mostriamo un popup di autorizzazione negata
 		                AuthorizationDeniedException ex = new AuthorizationDeniedException();
 		                ex.showPopup();
 		                System.out.println(ex.toString());
@@ -170,12 +169,13 @@ public class HomeController {
 		        Professor professor = (Professor) user;
 		        
 		    } catch (ClassCastException e1) {
+		    	
 		        try {
 
 		            Researcher researcher = (Researcher) user;
 
 		        } catch (ClassCastException e2) {
-		            // Se l'utente non è né un professore né un ricercatore, rilancia l'eccezione
+
 		            throw new ClassCastException("L'utente non è né un professore né un ricercatore.");
 		        }
 		    }
