@@ -1,5 +1,0 @@
-discount.strategy.class.name = it.unipv.ingsw.UniBook.Strategy.ProfessorStrategy
-#discount.strategy.class.name = Unibook.src.it.unipv.ingsw.UniBook.Strategy.ResearcherStrategy
-
-discount.amount = 0.75
-
