@@ -12,11 +12,14 @@ import it.unipv.ingsw.UniBook.View.ChatView;
 
 public class ChatController {
 	private ChatView view;
+	
+	
 	private Messaggio m;
 	private User mittente;
 	private User destinatario;
 
 	public ChatController(ChatView view, User mittente, User destinatario) {
+		
 		this.view = view;
 		this.mittente = mittente;
 		this.destinatario = destinatario;

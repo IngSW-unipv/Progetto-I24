@@ -115,6 +115,7 @@ public class UserDAO implements IUserDAO {
 		User result = null;
 
 		conn = DBConnection.startConnection(conn, schema);
+		
 		Statement st1;
 		ResultSet rs1;
 
